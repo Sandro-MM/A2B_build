@@ -22,12 +22,12 @@ function CalendarListScreen({ control, navigation, setValue }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{zIndex:2, flex:0.5, position:'absolute', backgroundColor: '#F2F3F4', top:0, left:0, width:'100%', paddingLeft:4, paddingTop:36}}>
+            <View style={{zIndex:2, flex:0.5, position:'absolute', backgroundColor: '#F2F3F4', top:0, left:0, width:'100%', paddingLeft:4, paddingTop:0}}>
                 <TitleMap>Choose date</TitleMap>
             </View>
             {formattedDate && (
                 <CalendarList
-                    style={{ paddingTop:65}}
+                    style={{paddingTop:29}}
                     theme={{
                         calendarBackground: '#F2F3F4',
                         dayTextColor: '#000',

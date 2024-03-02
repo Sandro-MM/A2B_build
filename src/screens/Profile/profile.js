@@ -77,7 +77,7 @@ export default function Profile(props) {
                 { profileType &&
                 <IconButton
                     rippleColor='gray'
-                    style={{position:'absolute', top:38, right:0 , zIndex:3}}
+                    style={{position:'absolute', top:22, right:0 , zIndex:3}}
                     icon='cog'
                     iconColor='#1B1B1B'
                     size={26}

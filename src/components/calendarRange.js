@@ -92,7 +92,7 @@ function CalendarRange({ navigation, setValue }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{zIndex:2, flex:0.5, position:'absolute', backgroundColor: '#F2F3F4', top:0, left:0, width:'100%', paddingLeft:4, paddingTop:36}}>
+            <View style={{zIndex:2, flex:0.5, position:'absolute', backgroundColor: '#F2F3F4', top:0, left:0, width:'100%', paddingLeft:4, paddingTop:0}}>
                 <TitleMap>Choose date</TitleMap>
             </View>
             {formattedDate && (
@@ -101,7 +101,7 @@ function CalendarRange({ navigation, setValue }) {
                         monthTextColor: '#000', selectedDayBackgroundColor: '#FF5A5F', selectedDayTextColor: '#ffffff', day:{
                         borderRadius:0
                         }}}
-                    style={{ paddingTop:65}}
+                    style={{ paddingTop:29}}
                     pastScrollRange={0}
                     futureScrollRange={1}
                     minDate={formattedDate}

@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import {RadioButton} from "react-native-paper";
 
 const CheckboxForm = ({ options, setValue, param }) => {
-    const [checked, setChecked] = React.useState(options[0]);
+    const [checked, setChecked] = React.useState(options[2] || options[1]);
     const setVal = (option) =>{
         setChecked(option)
         setValue(param, option)

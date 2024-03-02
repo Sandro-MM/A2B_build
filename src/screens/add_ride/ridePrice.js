@@ -15,17 +15,24 @@ const RidePrice = ({ distance, navigation , setValue , control }) => {
 
     const decrementCount = () => {
         if (val > 0) {
-            setVal(val-1);
-            setValue('RidePrice',val)
+            setVal(count =>{
+                return count - 1
+            });
         }
+        setValue('RidePrice',val)
     };
 
     const incrementCount = () => {
         if (val < responseData.MaxPrice) {
-            setVal(val + 1);
+            setVal(count =>{
+                return count + 1
+            });
             setValue('RidePrice',val)
         }
     };
+
+
+
 
     const [responseData, setResponseData] = useState({"MaxPrice": 5} );
     const [val, setVal] = useState(0);

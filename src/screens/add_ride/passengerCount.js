@@ -2,25 +2,32 @@ import React, {useState} from 'react';
 import {IconButton} from "react-native-paper";
 import {ContainerMid, Title} from "../../styles/styles";
 import {Text, View} from "react-native";
+import A2BNextIcon from "../../components/next_icon";
 const PassengerCount = ({ navigation , setValue , control }) => {
 
-    let [count, setCount] = useState( 0);
+    let [count, setCount] = useState(0);
 
 
     const decrementCount = () => {
         if (count > 0) {
-            setCount(count-1);
-            setValue('passengerCount',count)
+            setCount(count =>{
+                return count - 1
+            });
         }
     };
 
     const incrementCount = () => {
         if (count < 5) {
-            setCount(count + 1);
-            setValue('passengerCount',count)
+            setCount(count =>{
+                return count + 1
+            });
         }
     };
 
+    const nav = () => {
+            setValue('passengerCount',count)
+            navigation.navigate("Price")
+    };
 
     return (
         <ContainerMid>
@@ -47,6 +54,7 @@ const PassengerCount = ({ navigation , setValue , control }) => {
                 onPress={incrementCount}
             />
             </View>
+            <A2BNextIcon onPress={nav}/>
         </ContainerMid>
     );
 };

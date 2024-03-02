@@ -281,7 +281,7 @@ export default function AddRide({navigation}) {
                 {({ navigation }) => (
                     <View style={{width:'100%', flex:1}}>
                         <PassengerCount  navigation={navigation} control={control} setValue={setValue}/>
-                        <A2BNextIcon onPress={() =>  navigation.navigate("Price")}/>
+
                     </View>
                 )}
             </Stack.Screen>

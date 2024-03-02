@@ -114,9 +114,9 @@ export default function Order({route}) {
     return (
         <Container>
             { data &&
-            <View style={{marginHorizontal:16, flex:1, paddingTop:'9%'}}>
+            <View style={{marginHorizontal:16, flex:1, paddingTop:'1%'}}>
                 <IconButton
-                    style={{position:'absolute', top:'3%', left:0, zIndex:3}}
+                    style={{position:'absolute', top:'0%', left:0, zIndex:3}}
                     icon="arrow-left"
                     iconColor='#7a7a7a'
                     size={32}

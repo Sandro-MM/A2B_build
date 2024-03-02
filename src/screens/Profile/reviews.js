@@ -104,7 +104,7 @@ const Reviews = (props) => {
     return (
         <Container >
             <BackButton navigation={props}/>
-            <VehicleSubtitle style={{marginTop:'20%'}}>
+            <VehicleSubtitle style={{marginTop:30}}>
                 {profileType === 'myProfile' ? 'My Reviews' : `${profileName}'s Reviews`}
             </VehicleSubtitle>
             <SurfaceArea  elevation={1}>
