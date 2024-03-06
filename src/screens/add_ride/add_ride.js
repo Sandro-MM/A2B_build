@@ -23,6 +23,7 @@ export default function AddRide({navigation}) {
     const { control, handleSubmit, watch,setValue} = useForm();
     const cf = control._formValues;
     const [reverseObj,setReverseObj]= useState(false)
+    const [noBackNav,setNoBackNav]= useState(false)
     async function createRide(data) {
         const selectedDate = control._formValues.selectedDate;
         const time = control._formValues.time;
@@ -30,6 +31,7 @@ export default function AddRide({navigation}) {
         const [hours, minutes] = time.split(':').map(Number);
         const pickUpTime = new Date(year, month - 1, day, hours, minutes);
         const pickUpTimeISOString = pickUpTime.toISOString();
+
         const fromLocality = () => {
             return new Promise(resolve => {
                 const localityComponent = cf.LeavingFrom.address_components.find(component => component.types.includes("locality"));
@@ -266,7 +268,7 @@ export default function AddRide({navigation}) {
             <Stack.Screen name="Calendar" options={{ headerShown: false }}>
                 {({ navigation }) => (
                     <View style={{width:'100%', flex:1}}>
-                        <CalendarListScreen control={control} setValue={setValue} navigation={() => navigation.navigate("ChooseTime")} />
+                        <CalendarListScreen control={control} noBackNav={noBackNav} setValue={setValue} navigation={navigation} />
                     </View>
                 )}
             </Stack.Screen>
@@ -319,7 +321,7 @@ export default function AddRide({navigation}) {
             </Stack.Screen>
             <Stack.Screen name="AreYouGoingBack" options={{ headerShown: false }}>
                 {({ navigation }) => (
-                    <AddBackRide navigation={navigation} handleYesPress={() => navigation.navigate("Calendar")} handleNoPress={()=>navigation.navigate('HomeScreen')}/>
+                    <AddBackRide navigation={navigation} handleYesPress={() => {navigation.navigate("Calendar"); setNoBackNav(true)}} handleNoPress={()=>navigation.navigate('HomeScreen')}/>
                 )}
             </Stack.Screen>
         </Stack.Navigator>

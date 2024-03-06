@@ -236,7 +236,7 @@ export const ProfileAge  = styled.Text`
 
 `;
 export const ProfileTop  = styled.View`
-  margin-top: 2%;
+  margin-top: 0;
   flex: 1;
   align-items: center;
   flex-direction: row;

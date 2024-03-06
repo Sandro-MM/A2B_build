@@ -7,7 +7,7 @@ export const OrderListHeader = ({ setModalVisible, navigation, departure, destin
 
     const categoryContainerTranslateY = scrollY.interpolate({
         inputRange: [0, 90],
-        outputRange: [50, 0],
+        outputRange: [50, 4.2],
         extrapolate: 'clamp',
     });
 
@@ -16,10 +16,10 @@ export const OrderListHeader = ({ setModalVisible, navigation, departure, destin
     };
 
     return (
-        <View style={{ width: '100%', height: categoryContainerTranslateY+10, backgroundColor: 'transparent', zIndex: 12, paddingTop:0}}>
+        <View style={{ width: '100%', height: categoryContainerTranslateY+10, backgroundColor: 'white', zIndex: 12, paddingTop:expanded?15:0}}>
             <View style={{ backgroundColor: 'white', display: expanded ? 'none' : 'block' }}>
                 <TouchableHighlight
-                    style={{ marginHorizontal: 25, marginTop: 0, marginBottom: 2, borderRadius: 16, height: 50 }}
+                    style={{ marginHorizontal: 25, marginTop: 3, marginBottom: 2, borderRadius: 16, height: 48 }}
                     onPress={() => setModalVisible(true)}
                     underlayColor="rgba(128, 128, 128, 0.5)"
                 >
@@ -43,7 +43,7 @@ export const OrderListHeader = ({ setModalVisible, navigation, departure, destin
             <Animated.View style={[styles.categoryContainer, { height:categoryContainerTranslateY ,display: expanded ? 'none' : 'block' }]}>
                 <View style={{ width: '50%', alignItems: 'center' }}>
                     <Text style={styles.categoryTitle}>Car Pool</Text>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', marginLeft:'-12%'}}>
                         <IconButton icon='car' size={25} iconColor={'#667085'} style={styles.categoryIcon} />
                         <Text style={styles.categoryText}>
                             {OrdersTotalCount}
@@ -53,7 +53,7 @@ export const OrderListHeader = ({ setModalVisible, navigation, departure, destin
                 </View>
                 <View style={{ width: '50%', alignItems: 'center' }}>
                     <Text style={styles.categoryTitle}>Intercity</Text>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', marginLeft:'-12%'}}>
                         <IconButton icon='bus' size={25} iconColor={'#667085'} style={styles.categoryIcon} />
                         <Text style={styles.categoryText}>
                             -
@@ -61,7 +61,7 @@ export const OrderListHeader = ({ setModalVisible, navigation, departure, destin
                     </View>
                 </View>
             </Animated.View>
-            <View style={{ width: '40%', height: 3, backgroundColor: '#FF5A5F', alignSelf: 'center', zIndex: 99, marginBottom: 0 }}>
+            <View style={{ width: '40%', height: 3, backgroundColor: '#FF5A5F', alignSelf: 'center', zIndex: 99, marginBottom: 0, paddingBottom:0 }}>
                 <IconButton icon={expanded?'menu-down':'menu-up'} size={25} iconColor={'#FF5A5F'} style={{ position: 'absolute', top:expanded? -22:-29, alignSelf: 'center' }} onPressOut={toggleExpand} />
             </View>
         </View>
@@ -70,9 +70,8 @@ export const OrderListHeader = ({ setModalVisible, navigation, departure, destin
 
 const styles = StyleSheet.create({
     categoryText:{
-        position:'absolute',
-        bottom:15,
-        right:28,
+        marginTop:3,
+        marginLeft:-35,
         fontWeight:'600',
         color:'#667085'
     },

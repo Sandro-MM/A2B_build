@@ -50,7 +50,7 @@ const TimePicker = ({ setValue, navigation }) => {
                 <TimeText>{time}</TimeText>
             </TimeBtn>
             <IconButton
-                style={{position:'absolute',right:60,top:3}}
+                style={{position:'absolute',right:60,top:3, zIndex:-1}}
                 icon="chevron-down"
                 iconColor='#FF5A5F'
                 size={30}

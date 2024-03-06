@@ -5,11 +5,11 @@ import {Text, View} from "react-native";
 import A2BNextIcon from "../../components/next_icon";
 const PassengerCount = ({ navigation , setValue , control }) => {
 
-    let [count, setCount] = useState(0);
+    let [count, setCount] = useState(1);
 
 
     const decrementCount = () => {
-        if (count > 0) {
+        if (count > 1) {
             setCount(count =>{
                 return count - 1
             });

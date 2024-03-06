@@ -4,15 +4,11 @@ import { FormTxtArea} from "../styles/styles";
 
 
 const A2btextarea = ({ placeholder, variant, ...props }) => {
-    const [secureTextEntry, setSecureTextEntry] = React.useState(
-        variant === 'eye'
-    );
+
 
     const renderIcon = () => {
         const isEmpty = !props.value || props.value === '';
-        const toggleSecureTextEntry = () => {
-            setSecureTextEntry((prev) => !prev);
-        };
+
 
         if (variant === 'default' && !isEmpty) {
             return (
@@ -44,7 +40,6 @@ const A2btextarea = ({ placeholder, variant, ...props }) => {
             cursorColor='black'
             mode="flat"
             placeholder={placeholder}
-            secureTextEntry={secureTextEntry}
             {...props}
         />
     );

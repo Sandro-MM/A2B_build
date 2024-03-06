@@ -114,9 +114,9 @@ export default function Order({route}) {
     return (
         <Container>
             { data &&
-            <View style={{marginHorizontal:16, flex:1, paddingTop:'1%'}}>
+            <View style={{marginHorizontal:16, flex:1, paddingTop:'0.5%'}}>
                 <IconButton
-                    style={{position:'absolute', top:'0%', left:0, zIndex:3}}
+                    style={{position:'absolute', top: -4, left:0, zIndex:3}}
                     icon="arrow-left"
                     iconColor='#7a7a7a'
                     size={32}
@@ -237,13 +237,17 @@ export default function Order({route}) {
                 <View  style={{ width:'100%', flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between'}}>
                     {getOrderDescription(data.OrderDescriptionTypeIds)}
                 </View>
-                { !data.IsUserOrder &&
+                { data.UserStatus === 0 &&
                 <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '40%', position:'absolute', bottom:'2%', left:'30%'}} buttonColor='#FF5A5F' mode='contained' onPress={onSubmit}>
                     <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>Ride!</SmallBtnText>
                 </Button>}
-                { data.IsUserOrder &&
-                    <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '50%', position:'absolute', bottom:'2%', left:'30%'}} buttonColor='#FF5A5F' mode='contained' onPress={onSubmit}>
+                { data.UserStatus === 1 &&
+                    <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '50%', position:'absolute', bottom:'2%', left:'30%'}} buttonColor='#FF5A5F' mode='contained' onPress={()=>console.log(2)}>
                         <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>Cancel Order</SmallBtnText>
+                    </Button>}
+                { data.UserStatus === 2 &&
+                    <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '50%', position:'absolute', bottom:'2%', left:'30%'}} buttonColor='#FF5A5F' mode='contained' onPress={()=>console.log(3)}>
+                        <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>Cancel Ride</SmallBtnText>
                     </Button>}
             </View>
             }

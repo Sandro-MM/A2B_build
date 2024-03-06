@@ -45,12 +45,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
             '&';
 
         try {
-            const accessToken = await getAccessToken();
             const responseData = await GetApi(`${OrderEndpoints.get.orders}?departureLatitude=${v.departureLatitude}&departureLongitude=${v.departureLongitude}&destinationLatitude=${v.destinationLatitude}&destinationLongitude=${v.destinationLongitude}&date=${formattedStart}&date=${formattedEnd}&luggageAllowed=${luggage}&musicAllowed=${music}&petsAllowed=${pets}&smokingAllowed=${smoke}&packageDelivery=${packageItem}&priceFrom=${sliderVal[0]}&priceTo=${sliderVal[1]}&Page=1&Offset=50&${TimeDiapazon}`, {
-                headers: {
-
-                    Authorization: `Bearer ${accessToken}`,
-                },
             });
             console.log(responseData)
             setValue('results', responseData)
@@ -94,7 +89,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                 <View >
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                     <Checkbox
-                        disabled={(control._formValues.results.DepartureValueCountModel?.NightOrdersCount) === 0}
+
                         color={'#FF5A5F'}
                         status={checked0_6 ? 'checked' : 'unchecked'}
                         onPress={() => {
@@ -104,7 +99,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
-                            disabled={(control._formValues.results.DepartureValueCountModel?.MorningOrdersCount) === 0}
+
                             color={'#FF5A5F'}
                             status={checked6_12 ? 'checked' : 'unchecked'}
                             onPress={() => {
@@ -114,7 +109,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
-                            disabled={(control._formValues.results.DepartureValueCountModel?.AfternoonOrdersCount) === 0}
+
                             color={'#FF5A5F'}
                             status={checked12_18 ? 'checked' : 'unchecked'}
                             onPress={() => {
@@ -124,7 +119,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
-                            disabled={(control._formValues.results.DepartureValueCountModel?.EveningOrdersCount) === 0}
+
                             color={'#FF5A5F'}
                             status={checked18_0 ? 'checked' : 'unchecked'}
                             onPress={() => {
@@ -139,7 +134,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                 <View >
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
-                            disabled={(control._formValues.results.ComfortCountModel.SmokingAllowedCount) === 0}
+
                             color={'#FF5A5F'}
                             status={smoke ? 'checked' : 'unchecked'}
                             onPress={() => {
@@ -157,7 +152,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
-                            disabled={(control._formValues.results.ComfortCountModel.PetsAllowedCount) === 0}
+
                             color={'#FF5A5F'}
                             status={pets ? 'checked' : 'unchecked'}
                             onPress={() => {
@@ -175,7 +170,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
-                            disabled={(control._formValues.results.ComfortCountModel.MusicAllowedCount) === 0}
+
                             color={'#FF5A5F'}
                             status={music ? 'checked' : 'unchecked'}
                             onPress={() => {
@@ -193,7 +188,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
-                            disabled={(control._formValues.results.ComfortCountModel.LuggageAllowedCount) === 0}
+
                             color={'#FF5A5F'}
                             status={luggage ? 'checked' : 'unchecked'}
                             onPress={() => {
@@ -210,7 +205,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center', width:250}}>
                         <Checkbox
-                            disabled={(control._formValues.results.ComfortCountModel.PackageDeliveryCount) === 0}
+
                             color={'#FF5A5F'}
                             status={packageItem ? 'checked' : 'unchecked'}
                             onPress={() => {

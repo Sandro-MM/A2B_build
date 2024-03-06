@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+    BackHandler,
     SafeAreaView,
     StyleSheet,
     View,
@@ -7,14 +8,62 @@ import {
 import { CalendarList } from 'react-native-calendars';
 import { TitleMap } from "../styles/styles";
 import {calculateDates} from "../services/TodayAndThreeMonthRange";
-function CalendarListScreen({ control, navigation, setValue }) {
+function CalendarListScreen({ control, navigation, setValue, noBackNav }) {
     const [formattedDate, setFormattedDate] = useState('');
     const [maxDate, setMaxDate] = useState('');
+    const [startDay, setStartDay] = useState('');
+
+    useEffect(() => {
+        const backAction = () => {
+            if (noBackNav) {
+                navigation.navigate('HomeScreen'); // Navigate to HomeScreen instead of allowing default back navigation
+                return true; // Prevent default back navigation
+            }
+            return false; // Allow default back navigation
+        };
+
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+        return () => backHandler.remove();
+    }, [noBackNav, navigation]);
+
     const handleDayPress = (day) => {
-        const selectedDate = day.dateString;
-        setValue('selectedDate', selectedDate);
-        navigation()
+        if (!startDay) {
+            console.log(0)
+            setStartDay(day.dateString);
+        }
+        setValue('selectedDate', day.dateString);
+        navigation.navigate("ChooseTime")
     };
+
+    const styles = StyleSheet.create({
+        startEndDays: {
+            color:'blue',
+            backgroundColor:'red'
+        },
+        range: {
+            marginTop: 4,
+            backgroundColor:'#FEE4E2',
+            borderRadius:0,
+            height:26,
+            width:47
+        },
+    })
+
+    const getMarked = () => {
+        let marked = {};
+         if (startDay) {
+            marked[startDay] = {
+                color: '#FF5A5F',
+                textColor: 'white',
+                startingDay: true,
+                endingDay: true,
+            };
+        }
+
+        return marked;
+    };
+
 
     useEffect(() => {
         calculateDates(setFormattedDate, setMaxDate);
@@ -28,18 +77,18 @@ function CalendarListScreen({ control, navigation, setValue }) {
             {formattedDate && (
                 <CalendarList
                     style={{paddingTop:29}}
-                    theme={{
-                        calendarBackground: '#F2F3F4',
-                        dayTextColor: '#000',
-                        monthTextColor: '#000',
-                        todayTextColor:'#FF5A5F'
-                    }}
+                    theme={{calendarBackground: '#F2F3F4', todayTextColor:'#FF5A5F',  dayTextColor: '#000',
+                        monthTextColor: '#000', selectedDayBackgroundColor: '#FF5A5F', selectedDayTextColor: '#ffffff', day:{
+                            borderRadius:0
+                        }}}
                     onDayPress={handleDayPress}
                     minDate={formattedDate}
                     pastScrollRange={0}
+                    markingType="period"
                     futureScrollRange={3}
                     maxDate={maxDate}
                     disableAllTouchEventsForDisabledDays={true}
+                    markedDates={getMarked()}
                 />
             )}
         </SafeAreaView>

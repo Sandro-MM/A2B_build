@@ -29,17 +29,20 @@ export default function Profile(props) {
     const hideModal = () => setModalVisible(false);
 
     const deleteButtonPress = () => {
-        showModal();
+        if (responseData?.UserDetail.Description){
+            showModal();
+        }
     };
-    const profileType = props.route.params.IsUserOrder;
+
+    const profileType = props.route.params.IsUserOrder === 1;
     const userName = props.route.params?.userName;
     const navigation = props.navigation
     const [responseData, setResponseData] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const accessToken = await getAccessToken();
-                if (profileType === true) {
+                if (profileType) {
+                    const accessToken = await getAccessToken();
                     const responseData = await GetApi(accEndpoints.get.Profile, {
                         headers: {
                             ...headersTextToken.headers,
@@ -48,11 +51,10 @@ export default function Profile(props) {
                     });
                     setResponseData(responseData);
                     console.log(responseData.UserDetail.UserContacts)
-                } else if (profileType === false) {
+                } else {
                     const responseData = await GetApi(`${accEndpoints.get.CommonProfile}?userName=${userName}&`, {
                         headers: {
                             ...headersTextToken.headers,
-                            Authorization: `Bearer ${accessToken}`,
                         },
                     });
                     setResponseData(responseData);
@@ -77,7 +79,7 @@ export default function Profile(props) {
                 { profileType &&
                 <IconButton
                     rippleColor='gray'
-                    style={{position:'absolute', top:22, right:0 , zIndex:3}}
+                    style={{position:'absolute', top:8, right:0 , zIndex:3}}
                     icon='cog'
                     iconColor='#1B1B1B'
                     size={26}
@@ -183,7 +185,7 @@ export default function Profile(props) {
                             color='#FF5A5F'
                             size={18}
                         />
-                        <AboutMe>  {responseData.Email || responseData?.IsEmailVerified ? "Verified email":'Email not verified'} </AboutMe>
+                        <AboutMe>  {responseData.Email || (responseData?.IsEmailVerified ? "Verified email":'Email not verified')} </AboutMe>
                         {responseData?.IsEmailVerified ? (
                         <Icon
                             source="check-decagram"
@@ -198,7 +200,7 @@ export default function Profile(props) {
                             color='#FF5A5F'
                             size={18}
                         />
-                        <AboutMe>  {responseData?.PhoneNumber || 'add number'} </AboutMe>
+                        <AboutMe>  {responseData?.PhoneNumber || 'No Phone Number'} </AboutMe>
                         {responseData?.IsPhoneNumberVerified ? (
                             <Icon
                                 source="check-decagram"

@@ -124,12 +124,15 @@ export const  OrdersList = ({ navigation, data, setValue }) => {
                         <Image style={{backgroundColor:beltColor(item.Order.SeatsLeft), width:24, height:24, borderRadius:12, marginTop:-1}} source={BeltImage}/>
                         <Text style={{fontSize:16, color:beltColor(item.Order.SeatsLeft)}}> {item.Order.SeatsLeft} Seats left</Text>
                     </View>
-                    <View style={{flexDirection:'row',  justifyContent:'flex-end', width:'100%', marginLeft:'-8%'}}>
+                    <View style={{flexDirection:'row',  justifyContent:'flex-end', width:'100%', marginLeft:'-8%', height:48}}>
                         {getOrderDescription(item.Order.OrderDescriptionTypes)}
                     </View>
                 </View>
-
-                <View style={{flexDirection:'row', height:60, marginBottom:15, width:'100%', marginTop:13, paddingHorizontal:20}}>
+                <TouchableHighlight
+                    onPress={()=>navigation.navigate('Profile',{IsUserOrder: item.UserStatus, userName:item.User.UserName})}
+                    style={{ height:60, marginBottom:15, width:'100%', marginTop:13}}
+                    underlayColor="rgba(128, 128, 128, 0.5)">
+                <View style={{flexDirection:'row', height:60, width:'100%',  paddingHorizontal:20}}>
                     { item.User.ProfilePictureUrl !== null &&
                     <ListPic
                         source={{ uri: item.User.ProfilePictureUrl}}
@@ -154,6 +157,7 @@ export const  OrdersList = ({ navigation, data, setValue }) => {
                     </View>
                     <Text style={{fontSize:28, position:'absolute' , bottom:15, right:20}}>₾{item.Order.OrderPrice}</Text>
                 </View>
+                </TouchableHighlight>
             </View>
             </ImageBackground>
         </SurfaceListItem>

@@ -15,7 +15,7 @@ const Description = ({setValue, navigation, onSubmit}) => {
                 icon="arrow-left"
                 iconColor='#7a7a7a'
                 size={32}
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate("Description")}
             />
             <View style={{flexDirection:'row'}}>
                 <Icon

@@ -26,49 +26,29 @@ import RideHistory from "./src/screens/rideHistory/rideHistory";
 import Order from "./src/screens/home/order";
 import MapPointViewScreen from "./src/components/mapPointView";
 import {ListFilter} from "./src/components/listFilter";
+import {StatusBar} from "react-native";
 
 
 
 export default function App() {
     enableLatestRenderer();
     const Stack = createStackNavigator();
-    const [isAuthenticated, setIsAuthenticated] = useState(null);
-    useEffect(() => {
-        async function checkAuth() {
-            try {
-                const accessToken = await getAccessToken();
-                if (accessToken) {
-                    setIsAuthenticated(true);
-                } else {
-                    setIsAuthenticated(false);
-                }
-            } catch (error) {
-                console.error('Error checking authentication:', error);
-                setIsAuthenticated(false);
-            }
-        }
-        checkAuth();
-    }, []);
 
-    if (isAuthenticated === null) {
-        return (
-            <Loading/>
-        );
-    }
     return (
         <Provider theme={theme}>
             <NavigationContainer>
+                <StatusBar
+                    backgroundColor="#FFF"
+                    barStyle="dark-content"
+                />
                 <Stack.Navigator>
-                    {isAuthenticated ? (
                         <Stack.Screen
                             name="HomeScreen"
                             options={{ headerShown: false , animationEnabled: false }}
                             component={HomeScreen}
 
                         />
-                    ) : (
-                        <Stack.Screen name="AuthScreen" options={{ headerShown: false }} component={AuthScreen} />
-                    )}
+                    <Stack.Screen name="AuthScreen" options={{ headerShown: false }} component={AuthScreen} />
                     <Stack.Screen name="Register_login"  options={{ headerShown: false }} component={Register_login} />
                     <Stack.Screen name="Register_form"  options={{ headerShown: false }} component={Register_form} />
                     <Stack.Screen name="Login_form"  options={{ headerShown: false }} component={Login_form} />

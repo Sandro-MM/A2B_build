@@ -1,9 +1,10 @@
 
 import * as React from "react";
 import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
-import {View,Text} from "react-native";
-import {useRef, useState} from "react";
+import {View, Text, Keyboard} from "react-native";
+import {useEffect, useRef, useState} from "react";
 import {IconButton} from "react-native-paper";
+import keyboard from "react-native-web/src/exports/Keyboard";
 
 
 
@@ -11,8 +12,16 @@ export default function PlacesSearch({navigation, setValue , type ,handleNavigat
     const [addressValue, setAddressValue] = useState('');
     const autoCompleteRef = useRef(null);
 
+    useEffect(() => {
+        if (autoCompleteRef.current) {
+            setTimeout(() => {
+                autoCompleteRef.current.focus();
+            }, 100);
+        }
+    }, []);
+
     return (
-        <View style={{marginTop:100, flex:1}}>
+        <View style={{marginTop:30, flex:1}}>
             <GooglePlacesAutocomplete
                 ref={autoCompleteRef}
                 onPress={(data, details = null) => {
