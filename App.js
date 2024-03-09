@@ -7,9 +7,6 @@ import Login_form from "./src/screens/register_login/login_form";
 import Forget_password_form from "./src/screens/register_login/forget_password_form";
 import Confirm_password_change from "./src/screens/register_login/confirm_password_change";
 import HomeScreen from "./src/screens/home/home";
-import {useEffect, useState} from "react";
-import {getAccessToken} from "./src/services/api";
-import Loading from "./src/components/loading";
 import Profile from "./src/screens/Profile/profile";
 import Vehicles from "./src/screens/Profile/vehicles";
 import {DefaultTheme, Provider} from 'react-native-paper';
@@ -27,6 +24,7 @@ import Order from "./src/screens/home/order";
 import MapPointViewScreen from "./src/components/mapPointView";
 import {ListFilter} from "./src/components/listFilter";
 import {StatusBar} from "react-native";
+import {RideAddedSucsess} from "./src/screens/add_ride/rideAddedSucsess";
 
 
 
@@ -62,12 +60,13 @@ export default function App() {
                     <Stack.Screen name="SettingInput"  options={{ headerShown: false }} component={SettingInput} />
                     <Stack.Screen name="VerifyPhoneNumber"  options={{ headerShown: false }} component={VerifyPhoneNumber} />
                     <Stack.Screen name="AddRide"  options={{ headerShown: false }} component={AddRide} />
-                    <Stack.Screen name="AddRideCheck"  options={{ headerShown: false , animationEnabled: false}} component={AddRideCheck} />
                     <Stack.Screen name="Notifications"  options={{ headerShown: false , animationEnabled: false }} component={Notifications} />
                     <Stack.Screen name="RideHistory"  options={{ headerShown: false , animationEnabled: false }} component={RideHistory} />
                     <Stack.Screen name="Order"  options={{ headerShown: false , animationEnabled: false }} component={Order} />
                     <Stack.Screen name="MapPointViewScreen"  options={{ headerShown: false , animationEnabled: false }} component={MapPointViewScreen} />
                     <Stack.Screen name="ListFilter"  options={{ headerShown: false , animationEnabled: false }} component={ListFilter} />
+                    <Stack.Screen name="AddRideCheck"  options={{ headerShown: false , animationEnabled: false}} component={AddRideCheck} />
+                    <Stack.Screen name="RideAddedSucsess"  options={{ headerShown: false , animationEnabled: false}} component={RideAddedSucsess} />
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>

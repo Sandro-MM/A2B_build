@@ -21,7 +21,7 @@ export default function PlacesSearch({navigation, setValue , type ,handleNavigat
     }, []);
 
     return (
-        <View style={{marginTop:30, flex:1}}>
+        <View style={{marginTop:30, flex:1, width:'100%'}}>
             <GooglePlacesAutocomplete
                 ref={autoCompleteRef}
                 onPress={(data, details = null) => {
@@ -36,8 +36,8 @@ export default function PlacesSearch({navigation, setValue , type ,handleNavigat
                 fetchDetails={true}
                 renderRow={rowData => {
                     return (
-                        <View>
-                            <Text style={{fontSize:18 , lineHeight:18, marginBottom:2}}>{rowData.structured_formatting.main_text}</Text>
+                        <View style={{minWidth:300,width:'77%', overflow:'hidden'}}>
+                            <Text style={{fontSize:18 , lineHeight:18, marginBottom:2, width:'100%'}}>{rowData.structured_formatting.main_text}</Text>
                             <Text style={{fontSize:14, fontWeight:'400', marginLeft:4, color:'#808080'}} >{rowData.structured_formatting.secondary_text}</Text>
                         </View>
                     )
@@ -58,8 +58,10 @@ export default function PlacesSearch({navigation, setValue , type ,handleNavigat
                         marginBottom: 20,
                     },
                     row: {
+                        flex:1,
+                        width:'100%',
                         marginVertical:5,
-                        height: 65,
+                        minHeight:65,
                         paddingLeft: 30,
                         backgroundColor:'transparent'
                     },

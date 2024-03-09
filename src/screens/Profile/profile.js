@@ -70,7 +70,7 @@ export default function Profile(props) {
 
     const handlePressPhoneNumber = () => {
         if (!responseData?.IsPhoneNumberVerified) {
-            props.navigation.navigate('VerifyPhoneNumber', { phoneNumber: responseData.PhoneNumber });
+            props.navigation.navigate('VerifyPhoneNumber', { phoneNumber: responseData.PhoneNumber , nav:'Home'});
         }
     };
     return (

@@ -85,6 +85,12 @@ export const ContainerMid = styled.View`
   justify-content: center;
   margin-top: -10%;
 `;
+export const ContainerTop = styled.View`
+  flex: 1;
+  background-color: #F2F3F4;
+  align-items: center;
+  margin-top: -10%;
+`;
 
 export const Logo = styled.Image`
   width: 90px;

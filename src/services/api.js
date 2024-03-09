@@ -50,6 +50,8 @@ export const accEndpoints = {
         UserReview:'/account/user-reviews',
         UserSendReview:'/account/user-send-reviews',
         ChangeLang:'/account/change-language',
+        ActiveRidesNumber:'/account/ride-number',
+        IsUserVerified:'/account/user-verification'
     },
     post:{
         Register: '/account/register',

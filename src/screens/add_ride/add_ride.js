@@ -5,7 +5,6 @@ import {createStackNavigator} from "@react-navigation/stack";
 import MapAToBViewScreen from "../../components/mapAToBView";
 import A2BNextIcon from "../../components/next_icon";
 import RidePrice from "./ridePrice";
-import ChooseCar from "./chooseCar";
 import Description from "./description";
 import {useForm} from "react-hook-form";
 import CalendarListScreen from "../../components/calendarList";
@@ -16,14 +15,17 @@ import {getAccessToken, headersTextToken, OrderEndpoints, PostApi} from "../../s
 import AddBackRide from "./addBackRide";
 import {useState} from "react";
 
-export default function AddRide({navigation}) {
-   const fromTitle = 'Where are you leaving from?'
+export default function AddRide({navigation, route}) {
+    const {activeRidesNumber}= route.params;
+    const {car}= route.params;
+    const fromTitle = 'Where are you leaving from?'
     const toTitle = 'What is your destination?'
     const Stack = createStackNavigator();
     const { control, handleSubmit, watch,setValue} = useForm();
     const cf = control._formValues;
     const [reverseObj,setReverseObj]= useState(false)
     const [noBackNav,setNoBackNav]= useState(false)
+    const [loadingItem,setLoading]= useState(false)
     async function createRide(data) {
         const selectedDate = control._formValues.selectedDate;
         const time = control._formValues.time;
@@ -31,7 +33,6 @@ export default function AddRide({navigation}) {
         const [hours, minutes] = time.split(':').map(Number);
         const pickUpTime = new Date(year, month - 1, day, hours, minutes);
         const pickUpTimeISOString = pickUpTime.toISOString();
-
         const fromLocality = () => {
             return new Promise(resolve => {
                 const localityComponent = cf.LeavingFrom.address_components.find(component => component.types.includes("locality"));
@@ -70,7 +71,6 @@ export default function AddRide({navigation}) {
         };
 
 
-
         const leavingFromLocalityShortName = await fromLocality();
         const leavingFromLocalityShortNameKa = await fromLocalityKa();
         const leavingFromLocalityShortNameRu = await fromLocalityRu();
@@ -94,7 +94,7 @@ export default function AddRide({navigation}) {
                 MiddleSeat: true,
                 Price: cf.RidePrice,
                 MaxPassenger:  cf.passengerCount,
-                CarId: cf.carId,
+                CarId: car,
                 Description: cf.description,
                 InstantBooking: true,
                 RouteDetails: {
@@ -140,7 +140,7 @@ export default function AddRide({navigation}) {
                 MiddleSeat: true,
                 Price: cf.RidePrice,
                 MaxPassenger:  cf.passengerCount,
-                CarId: cf.carId,
+                CarId: car,
                 Description: cf.description,
                 InstantBooking: true,
                 RouteDetails: {
@@ -184,6 +184,7 @@ export default function AddRide({navigation}) {
 
 
         try {
+                 setLoading(true)
                 if (reverseObj === false){
                     const accessToken = await getAccessToken();
                     const responseData = await PostApi(OrderEndpoints.post.createOrder, reqObject, {
@@ -193,9 +194,15 @@ export default function AddRide({navigation}) {
                         },
                     });
                     setReverseObj(true)
-                    navigation.navigate("AreYouGoingBack");
+                    if (activeRidesNumber === 2){
+                        navigation.navigate("RideAddedSucsess");
+                    } else {
+                        navigation.navigate("AreYouGoingBack");
+                    }
+
                 }
                 else {
+
                     const accessToken = await getAccessToken();
                     const responseData = await PostApi(OrderEndpoints.post.createOrder, reversReqObject, {
                         headers: {
@@ -203,15 +210,14 @@ export default function AddRide({navigation}) {
                             Authorization: `Bearer ${accessToken}`,
                         },
                     });
-                    navigation.navigate("HomeScreen");
+                    navigation.navigate("RideAddedSucsess");
                 }
 
 
         } catch (error) {
             console.error('Error submitting data:', error);
         } finally {
-
-
+            setLoading(false)
         }
     }
 
@@ -291,19 +297,8 @@ export default function AddRide({navigation}) {
                 {({ navigation }) => (
                     <View style={{width:'100%', flex:1}}>
                    <RidePrice distance={control._formValues.distance}  navigation={navigation} control={control} setValue={setValue}/>
-                        <A2BNextIcon onPress={() =>  navigation.navigate("ChooseCar")}/>
+                        <A2BNextIcon onPress={() =>  navigation.navigate("Description")}/>
                     </View>
-                )}
-            </Stack.Screen>
-            <Stack.Screen name="ChooseCar" options={{ headerShown: false }}>
-                {({ navigation }) => (
-                    <ChooseCar
-                        navigation={navigation}
-                        handleCarChoose={(carId) => {
-                            console.log('Selected Car ID:', carId);
-                            setValue('carId',carId);
-                        }}
-                    />
                 )}
             </Stack.Screen>
             <Stack.Screen name="Description" options={{ headerShown: false }}>
@@ -316,12 +311,12 @@ export default function AddRide({navigation}) {
             </Stack.Screen>
             <Stack.Screen name="Options" options={{ headerShown: false }}>
                 {({ navigation }) => (
-                    <Options setValue={setValue} navigation={navigation} onSubmit={()=>createRide(control)}/>
+                    <Options setValue={setValue} navigation={navigation} onSubmit={()=>createRide(control)} isLoading={loadingItem}/>
                 )}
             </Stack.Screen>
             <Stack.Screen name="AreYouGoingBack" options={{ headerShown: false }}>
                 {({ navigation }) => (
-                    <AddBackRide navigation={navigation} handleYesPress={() => {navigation.navigate("Calendar"); setNoBackNav(true)}} handleNoPress={()=>navigation.navigate('HomeScreen')}/>
+                    <AddBackRide navigation={navigation} handleYesPress={() => {navigation.navigate("Calendar"); setNoBackNav(true)}} handleNoPress={()=>navigation.navigate("RideAddedSucsess")}/>
                 )}
             </Stack.Screen>
         </Stack.Navigator>

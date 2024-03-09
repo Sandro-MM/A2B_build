@@ -29,6 +29,7 @@ const VerifyPhoneNumber = (props) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const phoneNumber = props.route.params.phoneNumber;
+    const nav = props.route.params.nav;
     useEffect(() => {
         fetchData();
     }, []);
@@ -62,7 +63,7 @@ const VerifyPhoneNumber = (props) => {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
-                    props.navigation.navigate('HomeScreen')
+                    props.navigation.navigate(nav)
         } catch (error) {
             const errorTitle = error.response.data.detail;
             setError(errorTitle);

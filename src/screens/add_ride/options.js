@@ -4,12 +4,17 @@ import {ContainerMid, VehicleName} from "../../styles/styles";
 import {View} from "react-native";
 import CheckboxForm from "../../components/checkboxForm";
 import A2BNextIcon from "../../components/next_icon";
+import Loading from "../../components/loading";
 
-const Description = ({setValue, navigation, onSubmit}) => {
+const Description = ({setValue, navigation, onSubmit, isLoading}) => {
 
 
     return (
         <ContainerMid>
+        {
+            isLoading ? <Loading/> :
+
+                <ContainerMid>
             <IconButton
                 style={{position:'absolute', top:60, left:0, zIndex:3}}
                 icon="arrow-left"
@@ -69,7 +74,8 @@ const Description = ({setValue, navigation, onSubmit}) => {
             <CheckboxForm options={['Yes','No']} setValue={setValue} param={'Package'}/>
 
             <A2BNextIcon onPress={onSubmit}/>
-
+        </ContainerMid>
+        }
         </ContainerMid>
     );
 };

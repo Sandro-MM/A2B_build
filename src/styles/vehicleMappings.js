@@ -23,6 +23,24 @@ export const colorMapping = {
     "15": "#FF007F",
     "16": "#800080"
 };
+export const colorMappingByName = {
+    "Black": "#000000",
+    "White": "#FEFEFE",
+    "Beige": "#C2B280",
+    "SkyBlue": "#6495ED",
+    "Yellow": "#ffd700",
+    "Green": "#4CBB17",
+    "Golden": "#FFD700",
+    "Brown": "#7B3F00",
+    "Red": "#FF0000",
+    "Orange": "#FF5F1F",
+    "CarnelianRed": "#E34234",
+    "Silver": "#E5E4E2",
+    "Grey": "#63656b",
+    "Blue": "#00008B",
+    "Pink": "#FF007F",
+    "Purple": "#800080"
+};
 export const vehicleTypeMapping = {
     "1": "car-side",
     "2": "bus-school",

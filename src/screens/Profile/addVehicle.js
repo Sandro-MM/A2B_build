@@ -11,7 +11,7 @@ import {
 } from "../../services/api";
 import {createStackNavigator} from '@react-navigation/stack';
 import {
-    ContainerMid, ProfilePic,
+    ContainerMid,
     TitleLeft,
 } from "../../styles/styles";
 import A2bInput from "../../components/formInput";
@@ -24,9 +24,10 @@ import {IconButton} from "react-native-paper";
 
 
 const Stack = createStackNavigator();
-export default function AddVehicle({navigation, route }) {
+export default function AddVehicle({ route }) {
    const { mode } = route.params || {};
    console.log(mode)
+    const { navigation } = route.params || {};
 
     console.log('navigation',navigation, 'navigation')
     const { control,handleSubmit ,formState: { errors }  } = useForm();
@@ -165,7 +166,7 @@ export default function AddVehicle({navigation, route }) {
                                 icon='close'
                                 iconColor='#7a7a7a'
                                 size={28}
-                                onPress={() => props.navigation.goBack()}
+                                onPress={() => navigation.goBack()}
                             />
                             <TitleLeft>What's your licence plate number?</TitleLeft>
                             <Controller

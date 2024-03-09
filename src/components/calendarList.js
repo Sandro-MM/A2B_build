@@ -8,7 +8,7 @@ import {
 import { CalendarList } from 'react-native-calendars';
 import { TitleMap } from "../styles/styles";
 import {calculateDates} from "../services/TodayAndThreeMonthRange";
-function CalendarListScreen({ control, navigation, setValue, noBackNav }) {
+function CalendarListScreen({ control, navigation, setValue, noBackNav, RideDate }) {
     const [formattedDate, setFormattedDate] = useState('');
     const [maxDate, setMaxDate] = useState('');
     const [startDay, setStartDay] = useState('');
@@ -28,10 +28,7 @@ function CalendarListScreen({ control, navigation, setValue, noBackNav }) {
     }, [noBackNav, navigation]);
 
     const handleDayPress = (day) => {
-        if (!startDay) {
-            console.log(0)
-            setStartDay(day.dateString);
-        }
+        setStartDay(day.dateString);
         setValue('selectedDate', day.dateString);
         navigation.navigate("ChooseTime")
     };
@@ -66,7 +63,13 @@ function CalendarListScreen({ control, navigation, setValue, noBackNav }) {
 
 
     useEffect(() => {
-        calculateDates(setFormattedDate, setMaxDate);
+        if (RideDate){
+            calculateDates(setFormattedDate, setMaxDate);
+            setFormattedDate(RideDate)
+        }else {
+            calculateDates(setFormattedDate, setMaxDate);
+        }
+
     }, []);
 
     return (
