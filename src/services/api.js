@@ -49,9 +49,10 @@ export const accEndpoints = {
         ComProfPhoneNum:'/account/profile-phonenumber',
         UserReview:'/account/user-reviews',
         UserSendReview:'/account/user-send-reviews',
-        ChangeLang:'/account/change-language',
+        ChangeLang:'/account/change-language/?language=',
         ActiveRidesNumber:'/account/ride-number',
-        IsUserVerified:'/account/user-verification'
+        IsUserVerified:'/account/user-verification',
+        NotificationStatus:'/usersettings/notification'
     },
     post:{
         Register: '/account/register',
@@ -71,8 +72,9 @@ export const accEndpoints = {
 
     },
     put:{
-        EditProfile:'/account/edit-profile',
+        EditProfile:'/account/edit-profile-mobile',
         ChangePassword:'/account/change-password',
+
     },
     patch:{
         ResetPass:'/account/reset-password',
@@ -80,6 +82,7 @@ export const accEndpoints = {
         ValidateEmail:'/account/validate-email',
         ConfirmEmail:'/account/confirm-email',
         ConfirmPhone:'/account/confirm-phone-number',
+        EditImage:'/file/change-user-profile-file'
     },
     delete:{
         UserDel:'/account/user-deactivation'
@@ -111,7 +114,10 @@ export const OrderEndpoints = {
     get:{
         maxPrice:'/order/orders_maxprice',
         orders:'/order/orders',
-        order:'/order/orders-by-id'
+        order:'/order/orders-by-id',
+        userOrders:'/order/user-orders',
+        startOrder:'/order/start-order?orderId=',
+        getPassengerRequests:'/order/order-passangers?orderId='
     },
     post:{
         createOrder:'/order/create-order',
@@ -121,8 +127,11 @@ export const OrderEndpoints = {
 
 
     },
+    patch:{
+        bind:'/order/bind',
+    },
     delete:{
-
+        cancelOrder:'/order/',
     }
 };
 
@@ -139,6 +148,20 @@ export async function PostApi(urlRoute, data, optParam) {
         throw  error;
     }
 }
+
+export async function PutApi(urlRoute, data, optParam) {
+    const route = BASE_URL + urlRoute;
+    console.log(data);
+    console.log(route);
+    try {
+        const response = await axios.put(route, data, optParam);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+        throw  error;
+    }
+}
+
 export async function PatchApi(urlRoute, data, optParam) {
     const route = BASE_URL + urlRoute;
     console.log(data);

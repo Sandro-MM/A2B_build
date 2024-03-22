@@ -17,14 +17,18 @@ import {
 import A2bInput from "../../components/formInput";
 
 export default function LoginForm(props) {
-    const { control, handleSubmit, setValue, watch,reset } = useForm();
+    const { control, handleSubmit, setValue, watch, reset } = useForm({
+        // defaultValues: {
+        //     LoginByMobile: true
+        // }
+    });
     const isButtonDisabled = !(watch('UserName') && watch('Password'));
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
 
+
     const onSubmit = async (data) => {
-        setValue(  "LoginByMobile", true)
         Keyboard.dismiss();
         reset();
         setIsLoading(true);

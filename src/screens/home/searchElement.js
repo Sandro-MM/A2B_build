@@ -24,7 +24,11 @@ export default function SearchElement({navigation, date , leaving, going, contro
         const utcTimeEndDay = new Date(EndDate.getTime() - (EndDate.getTimezoneOffset() * 60000));
         const formattedEnd = utcTimeEndDay.toISOString();
         try {
+            const accessToken = await getAccessToken();
             const responseData = await GetApi(`${OrderEndpoints.get.orders}?departureLatitude=${v.departureLatitude}&departureLongitude=${v.departureLongitude}&destinationLatitude=${v.destinationLatitude}&destinationLongitude=${v.destinationLongitude}&date=${formattedStart}&date=${formattedEnd}&luggageAllowed=false&musicAllowed=false&petsAllowed=false&smokingAllowed=false&packageDelivery=false&priceFrom=0&priceTo=500&Page=1&Offset=50&`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken || null}`,
+                },
             });
             console.log(responseData)
             setValue('results', responseData)

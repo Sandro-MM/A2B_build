@@ -25,6 +25,15 @@ import MapPointViewScreen from "./src/components/mapPointView";
 import {ListFilter} from "./src/components/listFilter";
 import {StatusBar} from "react-native";
 import {RideAddedSucsess} from "./src/screens/add_ride/rideAddedSucsess";
+import {Passengers} from "./src/screens/rideHistory/passengers";
+import SettingsPage from "./src/screens/Profile/settings";
+import LanguageSetting from "./src/screens/Profile/languageSetting";
+import PasswordSettingInput from "./src/screens/Profile/passwordSettingInput";
+import NotificationEmailSms from "./src/screens/Profile/notificationEmailSms";
+import DescriptionSetting from "./src/screens/Profile/descriptionSetting";
+import GenderSetting from "./src/screens/Profile/genderSetting";
+import PrefrenceSettings from "./src/screens/Profile/prefrenceSettings";
+import RatingsSetting from "./src/screens/Profile/ratingsSetting";
 
 
 
@@ -57,6 +66,7 @@ export default function App() {
                     <Stack.Screen name="AddVehicle"  options={{ headerShown: false }} component={AddVehicle} />
                     <Stack.Screen name="Reviews"  options={{ headerShown: false }} component={Reviews} />
                     <Stack.Screen name="ProfileSettings"  options={{ headerShown: false }} component={ProfileSettings} />
+                    <Stack.Screen name="SettingsPage"  options={{ headerShown: false }} component={SettingsPage} />
                     <Stack.Screen name="SettingInput"  options={{ headerShown: false }} component={SettingInput} />
                     <Stack.Screen name="VerifyPhoneNumber"  options={{ headerShown: false }} component={VerifyPhoneNumber} />
                     <Stack.Screen name="AddRide"  options={{ headerShown: false }} component={AddRide} />
@@ -67,6 +77,14 @@ export default function App() {
                     <Stack.Screen name="ListFilter"  options={{ headerShown: false , animationEnabled: false }} component={ListFilter} />
                     <Stack.Screen name="AddRideCheck"  options={{ headerShown: false , animationEnabled: false}} component={AddRideCheck} />
                     <Stack.Screen name="RideAddedSucsess"  options={{ headerShown: false , animationEnabled: false}} component={RideAddedSucsess} />
+                    <Stack.Screen name="Passengers"  options={{ headerShown: false , animationEnabled: false}} component={Passengers} />
+                    <Stack.Screen name="LanguageSetting"  options={{ headerShown: false , animationEnabled: false}} component={LanguageSetting} />
+                    <Stack.Screen name="PasswordSettingInput"  options={{ headerShown: false , animationEnabled: false}} component={PasswordSettingInput} />
+                    <Stack.Screen name="NotificationEmailSms"  options={{ headerShown: false , animationEnabled: false}} component={NotificationEmailSms} />
+                    <Stack.Screen name="DescriptionSetting"  options={{ headerShown: false , animationEnabled: false}} component={DescriptionSetting} />
+                    <Stack.Screen name="GenderSetting"  options={{ headerShown: false , animationEnabled: false}} component={GenderSetting} />
+                    <Stack.Screen name="PrefrenceSettings"  options={{ headerShown: false , animationEnabled: false}} component={PrefrenceSettings} />
+                    <Stack.Screen name="RatingsSetting"  options={{ headerShown: false , animationEnabled: false}} component={RatingsSetting} />
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>

@@ -80,23 +80,23 @@ export default function AddRide({navigation, route}) {
         const destinationLocalityShortNameRu = await DestionationLocaliRu();
 
 
-        const Smoking = cf.Smoking === "No" ? 1 : cf.Smoking === "Yes" ? 2 : cf.Smoking === "On Stops" ? 3 : 2;
-        const Pets = cf.Pets === "No" ? 5 : cf.Pets === "Yes" ? 4 : cf.Pets === "Depends on pet" ? 6 : 4;
-        const Music = cf.Music === "No" ? 8 : cf.Music === "Yes"?7 : 7;
-        const Luggage = cf.Luggage === "No" ? 9 : cf.Luggage === "Yes"?10 : 10;
-        const Package = cf.Package === "No" ? 12 : cf.Package === "Yes"?11 : 11;
+        const Smoking = cf.Smoking === "No" ? 1 : cf.Smoking === "Yes" ? 2 : cf.Smoking === "On Stops" ? 3 : 1;
+        const Pets = cf.Pets === "No" ? 5 : cf.Pets === "Yes" ? 4 : cf.Pets === "Depends on pet" ? 6 : 5;
+        const Music = cf.Music === "No" ? 8 : cf.Music === "Yes"?7 : 8;
+        const Luggage = cf.Luggage === "No" ? 9 : cf.Luggage === "Yes"?10 : 9;
+        const Package = cf.Package === "No" ? 12 : cf.Package === "Yes"?11 : 12;
 
 
 
         const  reqObject =[
             {
                 PickUpTime: pickUpTimeISOString,
-                MiddleSeat: true,
+                MiddleSeat: false,
                 Price: cf.RidePrice,
                 MaxPassenger:  cf.passengerCount,
                 CarId: car,
                 Description: cf.description,
-                InstantBooking: true,
+                InstantBooking: false,
                 RouteDetails: {
                     Origin: {
                         Name: {
@@ -137,12 +137,12 @@ export default function AddRide({navigation, route}) {
         const  reversReqObject =[
             {
                 PickUpTime: pickUpTimeISOString,
-                MiddleSeat: true,
+                MiddleSeat: false,
                 Price: cf.RidePrice,
                 MaxPassenger:  cf.passengerCount,
                 CarId: car,
                 Description: cf.description,
-                InstantBooking: true,
+                InstantBooking: false,
                 RouteDetails: {
                     Origin: {
                         Name: {

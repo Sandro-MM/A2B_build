@@ -21,6 +21,7 @@ import DeleteConfirmationModal from "../../components/modal";
 import {iconMapping, socialMediaMapping} from "../../styles/vehicleMappings";
 import Navigation from "../../components/navigation";
 import UserNoIMage from "../../../assets/img/default_user.png";
+import SettingsPage from "./settings";
 
 
 export default function Profile(props) {
@@ -83,7 +84,7 @@ export default function Profile(props) {
                     icon='cog'
                     iconColor='#1B1B1B'
                     size={26}
-                    onPress={() =>  props.navigation.navigate('ProfileSettings',{userData:responseData})}
+                    onPress={() =>  props.navigation.navigate('SettingsPage',{userData:responseData, setUserData:setResponseData})}
                 />}
                 <ProfileTop>
                     {  responseData.ProfilePictureUrl !== null &&

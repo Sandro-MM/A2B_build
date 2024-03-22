@@ -129,6 +129,14 @@ export default function AddRideCheck({navigation}) {
         }
     };
 
+    const navigationStatus = () => {
+        if ( userContactInfo?.IsConfirmedEmail && userContactInfo?.IsConfirmedPhone){
+            navigation.navigate('AddRide', { activeRidesNumber: activeRidesNumber.RideNumber, car:Car })
+        }else {
+            navigation.navigate('ContactInfo', { activeRidesNumber: activeRidesNumber.RideNumber })
+        }
+
+    }
 
     const RenderCars = ({ userCars }) => (
 
@@ -201,7 +209,7 @@ export default function AddRideCheck({navigation}) {
                         Car ? (
                                 <View style={{position:'absolute', bottom:60, right:0}}>
                                 <Next_icon
-                                    onPress={() => navigation.navigate('ContactInfo', { activeRidesNumber: activeRidesNumber.RideNumber })}
+                                    onPress={() => navigationStatus()}
                                 >
                                 </Next_icon>
                                 </View>

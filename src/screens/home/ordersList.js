@@ -95,7 +95,7 @@ export const  OrdersList = ({ navigation, data, setValue }) => {
     });
 
     const renderOrderItem = ({ item }) => (
-        <TouchableHighlight onPress={()=>navigation.navigate('Order',{item:item.Order.Id, navigation:navigation})}
+        <TouchableHighlight onPress={()=>navigation.navigate('Order',{item:item.Order.Id, navigation:navigation, destination:'List'})}
                             underlayColor="rgba(128, 128, 128, 0.5)">
         <SurfaceListItem style={styles.shadow}>
             <ImageBackground

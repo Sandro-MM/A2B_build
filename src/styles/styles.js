@@ -457,7 +457,6 @@ export const SettingsTitle = styled.Text`
   font-weight: 400;
 `;
 export const SettingsVal = styled.Text`
-  padding-left: 30px;
   line-height:23px;
   color: #1B1B1B;
   font-size: 20px;

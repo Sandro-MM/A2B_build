@@ -45,7 +45,11 @@ export const ListFilter = ({navigation, control, setValue}) => {
             '&';
 
         try {
+            const accessToken = await getAccessToken();
             const responseData = await GetApi(`${OrderEndpoints.get.orders}?departureLatitude=${v.departureLatitude}&departureLongitude=${v.departureLongitude}&destinationLatitude=${v.destinationLatitude}&destinationLongitude=${v.destinationLongitude}&date=${formattedStart}&date=${formattedEnd}&luggageAllowed=${luggage}&musicAllowed=${music}&petsAllowed=${pets}&smokingAllowed=${smoke}&packageDelivery=${packageItem}&priceFrom=${sliderVal[0]}&priceTo=${sliderVal[1]}&Page=1&Offset=50&${TimeDiapazon}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken || null}`,
+                },
             });
             console.log(responseData)
             setValue('results', responseData)
@@ -70,7 +74,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
             <View style={{ width:'100%', height:'100%', marginTop:200, alignItems:'center'}}>
                 <View style={{width:'80%'}} >
                     <Slider
-
+                        thumbStyle={{backgroundColor:'white', borderWidth:2, borderStyle:'solid', borderColor:'#FF5A5F'}}
                         animateTransitions
                         maximumTrackTintColor="#d3d3d3"
                         maximumValue={30}
@@ -86,7 +90,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                 <Subtitle>
                     Departure Time
                 </Subtitle>
-                <View >
+                <View style={{justifyContent:'flex-start', width:'70%'}} >
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                     <Checkbox
 
@@ -95,7 +99,10 @@ export const ListFilter = ({navigation, control, setValue}) => {
                         onPress={() => {
                             setChecked0_6(!checked0_6);
                         }} />
-                    <Text style={{fontSize:16}}> 00:00-06:00   {control._formValues.results.DepartureValueCountModel?.NightOrdersCount}</Text>
+                    <Text style={{fontSize:16}}> 00:00-06:00
+                    </Text>
+                        <Text style={{fontSize:16, position:'absolute', right:0}}>
+                        {control._formValues.results.DepartureValueCountModel?.NightOrdersCount}</Text>
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
@@ -105,7 +112,10 @@ export const ListFilter = ({navigation, control, setValue}) => {
                             onPress={() => {
                                 setChecked6_12(!checked6_12);
                             }} />
-                        <Text style={{fontSize:16}}> 06:00-12:00   {control._formValues.results.DepartureValueCountModel?.MorningOrdersCount}</Text>
+                        <Text style={{fontSize:16}}> 06:00-12:00
+                        </Text>
+                        <Text style={{fontSize:16, position:'absolute', right:0}}>
+                            {control._formValues.results.DepartureValueCountModel?.MorningOrdersCount}</Text>
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
@@ -115,7 +125,11 @@ export const ListFilter = ({navigation, control, setValue}) => {
                             onPress={() => {
                                 setChecked12_18(!checked12_18);
                             }} />
-                        <Text style={{fontSize:16}}> 12:00-18:00   {control._formValues.results.DepartureValueCountModel?.AfternoonOrdersCount}</Text>
+                        <Text style={{fontSize:16}}> 12:00-18:00
+                        </Text>
+                        <Text style={{fontSize:16, position:'absolute', right:0}}>
+                            {control._formValues.results.DepartureValueCountModel?.AfternoonOrdersCount}
+                        </Text>
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
@@ -125,13 +139,16 @@ export const ListFilter = ({navigation, control, setValue}) => {
                             onPress={() => {
                                 setChecked18_0(!checked18_0);
                             }} />
-                        <Text style={{fontSize:16}}> 18:00-00:00   {control._formValues.results.DepartureValueCountModel?.EveningOrdersCount}</Text>
+                        <Text style={{fontSize:16}}> 18:00-00:00
+                        </Text>
+                        <Text style={{fontSize:16, position:'absolute', right:0}}>
+                            {control._formValues.results.DepartureValueCountModel?.EveningOrdersCount}</Text>
                     </View>
                 </View>
                 <Subtitle>
                     Comfort
                 </Subtitle>
-                <View >
+                <View style={{justifyContent:'flex-start', width:'70%'}} >
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
 

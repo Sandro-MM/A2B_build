@@ -23,6 +23,7 @@ export default function Order({route}) {
 
 
     const { item } = route.params;
+    const { destination } = route.params;
     const { navigation } = route.params;
     const [data, setResponseData] = useState(null);
     const [error, setError] = useState(null);
@@ -120,7 +121,7 @@ export default function Order({route}) {
                     icon="arrow-left"
                     iconColor='#7a7a7a'
                     size={32}
-                    onPress={() => navigation.navigate('List')}
+                    onPress={() => navigation.navigate(destination)}
                 />
                 <Text  style={{textAlign:'center', fontSize:22, fontWeight:'500', marginVertical:'2%'}}>{formatDate(data.PickUpTime)}</Text>
                 <View style={{backgroundColor:'#FFF', paddingTop:25, paddingBottom:16, paddingHorizontal:20, borderRadius:13}}>
@@ -134,7 +135,7 @@ export default function Order({route}) {
                             <View>
                                 <Text style={{fontSize:18, fontWeight:'600'}}>{data.DepartureParent}</Text>
                                 <Button
-                                    style={{position:'absolute', right:0, top:-5}}
+                                    style={{position:'absolute', right:-40, top:-7}}
                                     onPress={()=> navigation.navigate('MapPointViewScreen',{title:'Departure', startPoint:{latitude: data.DepartureLatitude, longitude: data.DepartureLongitude}, startAddress:data.Departure})}>
                                     <Text> View</Text>
                                 </Button>
@@ -145,7 +146,7 @@ export default function Order({route}) {
                             <View style={{ justifyContent:'space-between', marginLeft:0, marginTop:-10, marginBottom:10}}>
                             <Text style={{fontSize:18, fontWeight:'600'}}>{data.DestinationParent}</Text>
                                 <Button
-                                    style={{position:'absolute', right:0, top:-5}}
+                                    style={{position:'absolute', right:-40, top:-7}}
                                     onPress={()=> navigation.navigate('MapPointViewScreen',{title:'Destination', startPoint:{latitude: data.DestinationLatitude, longitude: data.DestinationLongitude}, startAddress:data.Destination})}>
                                 <Text> View</Text>
                             </Button>
@@ -176,7 +177,7 @@ export default function Order({route}) {
                 </Text>
                 <TouchableHighlight
                     style={{ marginVertical:'1%'}}
-                    onPress={()=>navigation.navigate('Profile',{IsUserOrder: data.IsUserOrder, userName:data.User.UserName})}
+                    onPress={()=>navigation.navigate('Profile',{IsUserOrder: data.UserStatus, userName:data.User.UserName})}
                     underlayColor="rgba(128, 128, 128, 0.5)"
                 >
                 <View style={{flexDirection:'row',  marginLeft:16, height:60, alignItems:'center'}}>
