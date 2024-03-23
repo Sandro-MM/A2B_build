@@ -2,7 +2,7 @@ import React from 'react';
 import {Controller} from 'react-hook-form';
 import {IconButton} from "react-native-paper";
 import A2btextarea from "../../components/a2btextarea";
-import {ContainerMid, SmallBtnText, SmallRedBtn, Title} from "../../styles/styles";
+import {ContainerMid, ContainerTop, SmallBtnText, SmallRedBtn, Title} from "../../styles/styles";
 import {accEndpoints, getAccessToken, PutApi} from "../../services/api";
 
 const DescriptionSetting = (props) => {
@@ -36,7 +36,7 @@ const DescriptionSetting = (props) => {
     };
 
     return (
-        <ContainerMid>
+        <ContainerTop style={{paddingTopTop:100}}>
             <IconButton
                 style={{position:'absolute', top:60, left:0, zIndex:3}}
                 icon="arrow-left"
@@ -58,10 +58,10 @@ const DescriptionSetting = (props) => {
                 name={'Description'}
                 defaultValue={defaultValue}
             />
-            <SmallRedBtn buttonColor='#FF5A5F' mode='contained' onPress={Save}>
+            <SmallRedBtn style={{position:'absolute', bottom:40}} buttonColor='#FF5A5F' mode='contained' onPress={Save}>
                 <SmallBtnText>Save</SmallBtnText>
             </SmallRedBtn>
-        </ContainerMid>
+        </ContainerTop>
     );
 };
 

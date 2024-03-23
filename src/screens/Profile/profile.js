@@ -14,7 +14,7 @@ import {
 } from "../../styles/styles";
 import {Divider, Icon, IconButton} from "react-native-paper";
 import * as React from "react";
-import {Linking} from "react-native";
+import {AppState, Linking} from "react-native";
 import {useEffect, useState} from "react";
 import {accEndpoints, getAccessToken, GetApi, headersTextToken} from "../../services/api";
 import DeleteConfirmationModal from "../../components/modal";
@@ -39,33 +39,53 @@ export default function Profile(props) {
     const userName = props.route.params?.userName;
     const navigation = props.navigation
     const [responseData, setResponseData] = useState(null);
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (profileType) {
-                    const accessToken = await getAccessToken();
-                    const responseData = await GetApi(accEndpoints.get.Profile, {
-                        headers: {
-                            ...headersTextToken.headers,
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    });
-                    setResponseData(responseData);
-                    console.log(responseData.UserDetail.UserContacts)
-                } else {
-                    const responseData = await GetApi(`${accEndpoints.get.CommonProfile}?userName=${userName}&`, {
-                        headers: {
-                            ...headersTextToken.headers,
-                        },
-                    });
-                    setResponseData(responseData);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
+        const handleAppStateChange = (nextAppState) => {
+            if (nextAppState === 'active') {
+                fetchData();
             }
         };
+        const focusListener = navigation.addListener('focus', fetchData);
+        const appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
         fetchData();
-    }, [profileType]);
+        return () => {
+            if (focusListener && typeof focusListener.remove === 'function') {
+                focusListener.remove();
+            }
+            if (appStateSubscription) {
+                appStateSubscription.remove();
+            }
+        };
+    }, [navigation, profileType]);
+
+
+    const fetchData = async () => {
+        try {
+            if (!userName) {
+                const accessToken = await getAccessToken();
+                const responseData = await GetApi(accEndpoints.get.Profile, {
+                    headers: {
+                        ...headersTextToken.headers,
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                setResponseData(responseData);
+                console.log(responseData.UserDetail.UserContacts)
+            } else {
+                const responseData = await GetApi(`${accEndpoints.get.CommonProfile}?userName=${userName}&`, {
+                    headers: {
+                        ...headersTextToken.headers,
+                    },
+                });
+                setResponseData(responseData);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+
     const createDate = new Date(responseData?.CreateDate);
     const year = createDate.getFullYear();
 

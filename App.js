@@ -34,6 +34,7 @@ import DescriptionSetting from "./src/screens/Profile/descriptionSetting";
 import GenderSetting from "./src/screens/Profile/genderSetting";
 import PrefrenceSettings from "./src/screens/Profile/prefrenceSettings";
 import RatingsSetting from "./src/screens/Profile/ratingsSetting";
+import DateSettingInput from "./src/screens/Profile/dateSettingInput";
 
 
 
@@ -85,6 +86,7 @@ export default function App() {
                     <Stack.Screen name="GenderSetting"  options={{ headerShown: false , animationEnabled: false}} component={GenderSetting} />
                     <Stack.Screen name="PrefrenceSettings"  options={{ headerShown: false , animationEnabled: false}} component={PrefrenceSettings} />
                     <Stack.Screen name="RatingsSetting"  options={{ headerShown: false , animationEnabled: false}} component={RatingsSetting} />
+                    <Stack.Screen name="DateSettingInput"  options={{ headerShown: false , animationEnabled: false}} component={DateSettingInput} />
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>

@@ -1,11 +1,18 @@
 import React, {useState} from 'react';
-import {ContainerMid, GenderBntText, SimpleBtnPadded, TitleLeft} from "../../styles/styles";
-import {Divider} from "react-native-paper";
+import {
+    Container,
+    SettingsVal,
+    Title
+} from "../../styles/styles";
+import {Divider, Icon} from "react-native-paper";
 import {accEndpoints, getAccessToken, PutApi} from "../../services/api";
+import {TouchableHighlight, View} from "react-native";
 
 
 const GenderSetting = (props) => {
     const setGenders = props.route.params.setGenders
+    const viewStyle = { height: 45, marginTop: 10, marginBottom: 10 , flexDirection:'row', justifyContent:'space-between', marginHorizontal:20, alignItems:'center'};
+
 
 
     const  changeGender = async (id) => {
@@ -23,51 +30,46 @@ const GenderSetting = (props) => {
             });
 
             setGenders(id)
-
+            props.navigation.navigate('ProfileSettings')
         } catch (error) {
             console.error('Error submitting data:', error);
         }
     };
 
     return (
-        <ContainerMid>
-            <TitleLeft>Change gender</TitleLeft>
-                    <SimpleBtnPadded
-                        contentStyle={{ height: 55, justifyContent: 'flex-start' }}
-                        rippleColor='gray'
-                        mode="text"
-                        onPress={() => {
-                            changeGender(1);
+        <Container style={{marginTop:-300}}>
+            <Title>Change gender</Title>
+            <TouchableHighlight
+                onPress={() =>  changeGender(1)}
+                underlayColor='rgba(128, 128, 128, 0.5)'
+            >
+                <View style={viewStyle}>
+                    <SettingsVal>Male</SettingsVal>
+                    <Icon size={35} color={'#FF5A5F'} source={'chevron-right'}/>
+                </View>
+            </TouchableHighlight>
 
-                        }}
-                    >
-                        <GenderBntText>Male</GenderBntText>
-                    </SimpleBtnPadded>
             <Divider style={{ width: '90%' }} horizontalInset={true} bold={true} />
-                    <SimpleBtnPadded
-                        contentStyle={{ height: 55, justifyContent: 'flex-start' }}
-                        rippleColor='gray'
-                        mode="text"
-                        onPress={() => {
-                            changeGender(2);
-
-                        }}
-                    >
-                        <GenderBntText>Female</GenderBntText>
-                    </SimpleBtnPadded>
+            <TouchableHighlight
+                onPress={() =>  changeGender(2)}
+                underlayColor='rgba(128, 128, 128, 0.5)'
+            >
+                <View style={viewStyle}>
+                    <SettingsVal>Female</SettingsVal>
+                    <Icon size={35} color={'#FF5A5F'} source={'chevron-right'}/>
+                </View>
+            </TouchableHighlight>
             <Divider style={{ width: '90%' }} horizontalInset={true} bold={true} />
-                    <SimpleBtnPadded
-                        contentStyle={{ height: 55, justifyContent: 'flex-start' }}
-                        rippleColor='gray'
-                        mode="text"
-                        onPress={() => {
-                            changeGender(3)
-
-                        }}
-                    >
-                        <GenderBntText>Other</GenderBntText>
-                    </SimpleBtnPadded>
-        </ContainerMid>
+            <TouchableHighlight
+                onPress={() =>  changeGender(3)}
+                underlayColor='rgba(128, 128, 128, 0.5)'
+            >
+                <View style={viewStyle}>
+                    <SettingsVal>Other</SettingsVal>
+                    <Icon size={35} color={'#FF5A5F'} source={'chevron-right'}/>
+                </View>
+            </TouchableHighlight>
+        </Container>
     );
 };
 

@@ -1,7 +1,16 @@
 import React, {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import A2bInput from "../../components/formInput";
-import {ContainerMid, ErrorText, ErrorView, SmallBtnText, SmallRedBtn, Title, XIcon} from "../../styles/styles";
+import {
+    ContainerMid,
+    ContainerTop,
+    ErrorText,
+    ErrorView,
+    SmallBtnText,
+    SmallRedBtn,
+    Title,
+    XIcon
+} from "../../styles/styles";
 import {IconButton} from "react-native-paper";
 import {Keyboard} from "react-native";
 import {accEndpoints, getAccessToken, headers, PutApi} from "../../services/api";
@@ -38,7 +47,7 @@ const PasswordSettingInput = (props) => {
 
 
     return (
-        <ContainerMid>
+        <ContainerTop style={{paddingTop:20}}>
             <IconButton
                 style={{position:'absolute', top:60, left:0, zIndex:3}}
                 icon="arrow-left"
@@ -46,7 +55,7 @@ const PasswordSettingInput = (props) => {
                 size={32}
                 onPress={() => props.navigation.goBack()}
             />
-            <Title>Change Password</Title>
+            <Title style={{marginBottom:-20}}>Change Password</Title>
             <Controller
                 control={control}
                 render={({ field }) => (
@@ -90,7 +99,7 @@ const PasswordSettingInput = (props) => {
                 name={'NewPasswordConfirm'}
                 defaultValue={null}
             />
-            <SmallRedBtn buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit(onSubmit)}>
+            <SmallRedBtn style={{position:'absolute', bottom:40}} buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit(onSubmit)}>
                 <SmallBtnText>Save</SmallBtnText>
             </SmallRedBtn>
             {error && <ErrorView>
@@ -102,7 +111,7 @@ const PasswordSettingInput = (props) => {
                     onPress={() => setError(null)}
                 />
             </ErrorView>}
-        </ContainerMid>
+        </ContainerTop>
     );
 };
 

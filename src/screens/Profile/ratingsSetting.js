@@ -12,7 +12,6 @@ import Loading from "../../components/loading";
 import {Icon} from "react-native-paper";
 import LoadingSmall from "../../components/loading-small";
 import DeleteConfirmationModal from "../../components/modal";
-import {formatDate} from "date-fns";
 
 export default function RatingsSetting(props) {
     const [responseData, setResponseData] = useState(null);
@@ -45,6 +44,10 @@ export default function RatingsSetting(props) {
 
 
 
+    const formatDate = (dateString) => {
+        const options = { month: 'short', year: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-GB', options);
+    };
 
     useEffect(() => {
         fetchData(1, 15,1);
@@ -113,19 +116,21 @@ export default function RatingsSetting(props) {
                 },
             });
 
+            console.log(fetchedData.Rating.Data[0],'setResponseData')
+
+
             setResponseData(prevData => {
                 if (page > 1) {
-                    console.log(responseData?.RatingReceived[Data],'setResponseData')
                     return {
                         ...prevData,
-                        Data: [...prevData.Data, ...fetchedData.Data],
+                        Data: [...prevData?.Data, ...fetchedData.Rating.Data],
                         Page: fetchedData.Page
                     };
                 } else {
-                    const newData = fetchedData;
+                    console.log(1)
+                    const newData = fetchedData.Rating.Data;
                     const isLastPage = newData.PageCount === 1;
                     setIsEndOfItems(isLastPage);
-                    console.log(responseData?.RatingReceived[Data],'setResponseData')
                     return newData;
                 }
             });
@@ -164,7 +169,7 @@ export default function RatingsSetting(props) {
                     </View>
                     <FlatList
                         style={{width:'100%', marginBottom:50}}
-                        data={responseData.RatingReceived}
+                        data={responseData}
                         renderItem={renderItem}
                         ListFooterComponent={() => (
                             <View style={{width:'100%', height:60, justifyContent:'center', alignItems:'center', marginTop:30}}>
@@ -181,7 +186,7 @@ export default function RatingsSetting(props) {
                                 )}
                             </View>
                         )}
-                        keyExtractor={(item) => item.Id.toString()}
+                        keyExtractor={(item) => item.CreateDate.toString()}
                     />
                 </ContainerTop> : <Loading/>
             }

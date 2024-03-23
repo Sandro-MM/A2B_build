@@ -13,7 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 
 const ProfileSettings = (props) => {
     const viewStyle = { height: 45, marginTop: 10, marginBottom: 10 };
-    const userData = props.route.params.userData;
+    const userData = props.route.params?.userData;
     const birthdate = new Date(userData.BirthDate).toLocaleDateString('en-GB', {
         day: 'numeric',
         month: 'numeric',
@@ -73,8 +73,10 @@ const ProfileSettings = (props) => {
 
 
     const openSettingInput = (key) => {
-        if (key == 'Gender'){
+        if (key === 'Gender'){
             props.navigation.navigate('GenderSetting',{ setGenders: setGenders})
+        }else if(key ==='BirthDate'){
+            props.navigation.navigate('DateSettingInput',{ setBirthDate: setBirthDate})
         }else{
             props.navigation.navigate('SettingInput', {
                 title: settings[key].title,
@@ -112,6 +114,7 @@ const ProfileSettings = (props) => {
                                 break;
                         }
 
+                        props.navigation.goBack()
                     } catch (error) {
                         console.error('Error submitting data:', error);
                     }
@@ -230,7 +233,7 @@ const ProfileSettings = (props) => {
                 </TouchableHighlight>
                 <TouchableHighlight
                     style={{width:'100%'}}
-                    onPress={() => props.navigation.navigate('PrefrenceSettings')}
+                    onPress={() => props.navigation.navigate('PrefrenceSettings', {defaultValue: userData.UserDetail.UserDescriptionResponseModel,})}
                     underlayColor='rgba(128, 128, 128, 0.5)'
                 >
                     <View style={[viewStyle,{justifyContent:'center'}]}>

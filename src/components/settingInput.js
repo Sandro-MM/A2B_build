@@ -1,7 +1,7 @@
 import React from 'react';
 import {Controller} from 'react-hook-form';
 import A2bInput from "./formInput";
-import {ContainerMid, SmallBtnText, SmallRedBtn, Title} from "../styles/styles";
+import {ContainerMid, ContainerTop, SmallBtnText, SmallRedBtn, Title} from "../styles/styles";
 import {IconButton} from "react-native-paper";
 
 const SettingInput = (props) => {
@@ -15,7 +15,7 @@ const SettingInput = (props) => {
 
 
     return (
-        <ContainerMid>
+        <ContainerTop style={{paddingTop:100}}>
             <IconButton
                 style={{position:'absolute', top:60, left:0, zIndex:3}}
                 icon="arrow-left"
@@ -28,6 +28,7 @@ const SettingInput = (props) => {
                 control={control}
                 render={({ field }) => (
                     <A2bInput
+                        autoFocus={true}
                         placeholder={`Enter ${title}`}
                         value={field.value}
                         onChangeText={(value) => field.onChange(value)}
@@ -37,10 +38,10 @@ const SettingInput = (props) => {
                 name={name}
                 defaultValue={defaultValue}
             />
-            <SmallRedBtn buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit}>
+            <SmallRedBtn style={{position:'absolute', bottom:50}} buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit}>
                 <SmallBtnText>Save</SmallBtnText>
             </SmallRedBtn>
-        </ContainerMid>
+        </ContainerTop>
     );
 };
 
