@@ -9,8 +9,10 @@ import { Linking } from 'react-native';
 import DeleteConfirmationModal from "../../components/modal";
 import {accEndpoints, DelApi, getAccessToken, headersText, PatchApi, PostApi} from "../../services/api";
 import * as SecureStore from "expo-secure-store";
+import {useTranslation} from "react-i18next";
 
 const SettingsPage = (props) => {
+    const { t } = useTranslation();
     const viewStyle = { height: 45, marginTop: 10, marginBottom: 10 , flexDirection:'row', justifyContent:'space-between', marginHorizontal:20, alignItems:'center'};
     const userData = props.route.params.userData;
     const [isDelModalVisible, setDelModalVisible] = useState(false);
@@ -62,36 +64,36 @@ const SettingsPage = (props) => {
 
     const settings = {
         Notification:{
-            title: 'Notification, email & SMS',
+            title: 'notification_email_sms',
             nav: 'NotificationEmailSms'
         },
         Password:{
-            title: 'Change password',
+            title: 'change_password',
             nav: 'PasswordSettingInput'
         },
         Language:{
-            title: 'Change language',
+            title: 'change_language',
             nav: 'LanguageSetting'
         },
     };
     const info = {
         Help:{
-            title: 'Help',
+            title: 'help',
             url:'https://www.a2b.ge/en/help'
         }
            ,
         Terms:{
-            title: 'Terms & Conditions',
+            title: 'terms_and_conditions',
             url:'https://www.a2b.ge/en/terms-and-conditions'
         },
         Data:
             {
-                title:'Data protection',
+                title:'data_protection',
                  url:'https://www.a2b.ge/en/privacy-policy'
             },
         licenses: {
             title:
-            'Licenses',
+            'licenses',
             url:'https://www.a2b.ge/en/licenses'
         },
     };
@@ -113,13 +115,13 @@ const SettingsPage = (props) => {
                 size={28}
                 onPress={() => props.navigation.goBack()}
             />
-            <Title style={{marginBottom:-40, marginTop:-70}}>Settings</Title>
+            <Title style={{marginBottom:-40, marginTop:-70}}>{t('settings')}</Title>
                 <TouchableHighlight
                     onPress={() => openSettingInput()}
                     underlayColor='rgba(128, 128, 128, 0.5)'
                 >
                     <View style={viewStyle}>
-                        <SettingsVal>Edit Profile</SettingsVal>
+                        <SettingsVal>{t('edit_profile')}</SettingsVal>
                         <Icon size={30} color={'#FF5A5F'} source={'chevron-right'}/>
                     </View>
                 </TouchableHighlight>
@@ -130,7 +132,7 @@ const SettingsPage = (props) => {
                 underlayColor='rgba(128, 128, 128, 0.5)'
             >
                 <View style={viewStyle}>
-                    <SettingsVal>Ratings</SettingsVal>
+                    <SettingsVal>{t('ratings')}</SettingsVal>
                     <Icon size={30} color={'#FF5A5F'} source={'chevron-right'}/>
                 </View>
             </TouchableHighlight>
@@ -142,7 +144,7 @@ const SettingsPage = (props) => {
                     underlayColor='rgba(128, 128, 128, 0.5)'
                 >
                     <View style={viewStyle}>
-                        <SettingsVal>{settings[key].title}</SettingsVal>
+                        <SettingsVal>{t(settings[key].title)}</SettingsVal>
                         <Icon size={30} color={'#FF5A5F'} source={'chevron-right'}/>
                     </View>
                 </TouchableHighlight>
@@ -155,14 +157,14 @@ const SettingsPage = (props) => {
                     underlayColor='rgba(128, 128, 128, 0.5)'
                 >
                     <View style={viewStyle}>
-                        <SettingsVal>{info[key].title}</SettingsVal>
+                        <SettingsVal>{t(info[key].title)}</SettingsVal>
                         <Icon size={30} color={'#FF5A5F'} source={'chevron-right'}/>
                     </View>
                 </TouchableHighlight>
             ))}
             <Divider style={{ width: '90%' }} horizontalInset={true} bold={true} />
             <TouchableHighlight
-                onPress={() => showDelModal('Are you sure you want to Log out', () => logOut())}
+                onPress={() => showDelModal('are_you_sure_you_want_to_log_out', () => logOut())}
                 underlayColor='rgba(128, 128, 128, 0.5)'
             >
                 <View style={viewStyle}>
@@ -172,7 +174,7 @@ const SettingsPage = (props) => {
             </TouchableHighlight>
             <Divider style={{ width: '90%' }} horizontalInset={true} bold={true} />
             <TouchableHighlight
-                onPress={() => showDelModal('Are you sure you want to Deactivate your account', () => deleteAcc())}
+                onPress={() => showDelModal('are_you_sure_you_want_to_deactivate_your_account', () => deleteAcc())}
                 underlayColor='rgba(128, 128, 128, 0.5)'
             >
                 <View style={viewStyle}>
@@ -198,7 +200,7 @@ const SettingsPage = (props) => {
                     color: 'blue',
                 }}
             >
-                <Subtitle>{modalMessage}</Subtitle>
+                <Subtitle>{t(modalMessage)}</Subtitle>
             </DeleteConfirmationModal>
 </ScrollView>
     );

@@ -15,9 +15,11 @@ import A2bInput from "../../components/formInput";
 import A2BNextIcon from "../../components/next_icon";
 import {createStackNavigator} from "@react-navigation/stack";
 import {TextInputMask} from "react-native-masked-text";
+import {useTranslation} from "react-i18next";
 
 const Stack = createStackNavigator();
 export default function Forget_password_form({navigation}) {
+    const { t } = useTranslation();
     const { control, handleSubmit, watch,reset,formState ,formState: { errors }  } = useForm();
     const [isLoading, setIsLoading] = useState(false);
     const [token, setToken] = useState(null);
@@ -93,13 +95,13 @@ export default function Forget_password_form({navigation}) {
             <Stack.Screen name="Email" options={{ headerShown: false }}>
                 {({ navigation }) => (
                     <ContainerMid>
-                        <TitleLeft>What's your email</TitleLeft>
+                        <TitleLeft>{t("what's_your_email")}</TitleLeft>
                         <Controller
                             control={control}
                             render={({ field }) => (
                                 <React.Fragment>
                                     <A2bInput
-                                        placeholder="Email"
+                                        placeholder={t('email')}
                                         value={field.value}
                                         onChangeText={(value) => field.onChange(value)}
                                         variant ='default'
@@ -136,13 +138,13 @@ export default function Forget_password_form({navigation}) {
             <Stack.Screen name="ResetPassword" options={{ headerShown: false }}>
                 {({ navigation }) => (
                     <ContainerMid>
-                        <TitleLeft>Please enter Code</TitleLeft>
+                        <TitleLeft>{t('please_enter_code')}</TitleLeft>
                         <Controller
                             control={control}
                             render={({ field }) => (
                                 <React.Fragment>
                                     <A2bInput
-                                        placeholder="Code"
+                                        placeholder={t('code')}
                                         value={field.value}
                                         onChangeText={(value) => field.onChange(value)}
                                         variant ='default'
@@ -180,13 +182,13 @@ export default function Forget_password_form({navigation}) {
             <Stack.Screen name="ChangePassword" options={{ headerShown: false }}>
                 {({ navigation }) => (
                     <ContainerMid>
-                        <TitleLeft>Type New Password</TitleLeft>
+                        <TitleLeft>{t('type_new_password')}</TitleLeft>
                         <Controller
                             control={control}
                             render={({ field }) => (
                                 <React.Fragment>
                                     <A2bInput
-                                        placeholder="Password"
+                                        placeholder={t('password')}
                                         value={field.value}
                                         onChangeText={(value) => field.onChange(value)}
                                         variant ='eye'

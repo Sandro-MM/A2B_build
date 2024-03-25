@@ -21,11 +21,14 @@ import Loading from "../../components/loading";
 import ImageUploadComponent from "./imageUpload";
 import {Keyboard, View} from "react-native";
 import {IconButton} from "react-native-paper";
+import {useTranslation} from "react-i18next";
 
 
 const Stack = createStackNavigator();
 export default function AddVehicle({ route }) {
-   const { mode } = route.params || {};
+    const { t } = useTranslation();
+
+    const { mode } = route.params || {};
    console.log(mode)
     const { navigation } = route.params || {};
 

@@ -14,8 +14,10 @@ import {
 import {IconButton} from "react-native-paper";
 import {Keyboard} from "react-native";
 import {accEndpoints, getAccessToken, headers, PutApi} from "../../services/api";
+import {useTranslation} from "react-i18next";
 
 const PasswordSettingInput = (props) => {
+    const { t } = useTranslation();
     const { control, handleSubmit} = useForm();
     const [error, setError] = useState(null);
 
@@ -55,13 +57,13 @@ const PasswordSettingInput = (props) => {
                 size={32}
                 onPress={() => props.navigation.goBack()}
             />
-            <Title style={{marginBottom:-20}}>Change Password</Title>
+            <Title style={{marginBottom:-20}}>{t('change_password')}</Title>
             <Controller
                 control={control}
                 render={({ field }) => (
                     <A2bInput
 
-                        placeholder={`Old Password`}
+                        placeholder={t('old_password')}
                         value={field.value}
                         onChangeText={(value) => field.onChange(value)}
                         variant ='eye'
@@ -75,7 +77,7 @@ const PasswordSettingInput = (props) => {
                 control={control}
                 render={({ field }) => (
                     <A2bInput
-                        placeholder={`Enter new password`}
+                        placeholder={t('enter_new_password')}
                         value={field.value}
                         onChangeText={(value) => field.onChange(value)}
                         variant ='eye'
@@ -89,7 +91,7 @@ const PasswordSettingInput = (props) => {
                 control={control}
                 render={({ field }) => (
                     <A2bInput
-                        placeholder={`Confirm Password`}
+                        placeholder={t('confirm_password')}
                         value={field.value}
                         onChangeText={(value) => field.onChange(value)}
                         variant ='eye'
@@ -100,7 +102,7 @@ const PasswordSettingInput = (props) => {
                 defaultValue={null}
             />
             <SmallRedBtn style={{position:'absolute', bottom:40}} buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit(onSubmit)}>
-                <SmallBtnText>Save</SmallBtnText>
+                <SmallBtnText>{t('save')}</SmallBtnText>
             </SmallRedBtn>
             {error && <ErrorView>
                 <ErrorText>{error}</ErrorText>

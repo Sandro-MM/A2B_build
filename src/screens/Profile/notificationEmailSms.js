@@ -8,8 +8,11 @@ import {Button, Icon, IconButton} from "react-native-paper";
 import {AppState, Keyboard, Linking, Platform, Text, View} from "react-native";
 import {accEndpoints, getAccessToken, GetApi, headersTextToken, PutApi} from "../../services/api";
 import {Switch} from "react-native-switch";
+import {useTranslation} from "react-i18next";
 
 const NotificationEmailSms = (props) => {
+    const { t } = useTranslation();
+
     const viewStyle = { height: 45, marginTop: 10, marginBottom: 10 , flexDirection:'row', justifyContent:'space-between', marginHorizontal:20, alignItems:'center'};
     const [sms, setSms] = useState(false);
     const [email, setEmail] = useState(false);
@@ -68,15 +71,15 @@ const NotificationEmailSms = (props) => {
                 size={32}
                 onPress={() => props.navigation.goBack()}
             />
-            <Title>Notification Settings</Title>
+            <Title>{t('notification_settings')}</Title>
                     <View style={viewStyle}>
-                        <SettingsVal>Push Notifications</SettingsVal>
+                        <SettingsVal>{t('push_notifications')}</SettingsVal>
                         <Button
                             onPress={() =>  Linking.openSettings()}
-                        ><Text>Open Settings</Text></Button>
+                        ><Text>{t('open_settings')}</Text></Button>
                     </View>
             <View style={viewStyle}>
-                <SettingsVal>Email Notification</SettingsVal>
+                <SettingsVal>{t('email_notification')}</SettingsVal>
                 <Switch
                     value={email}
                     onValueChange={()=>setEmail(!email)}
@@ -99,7 +102,7 @@ const NotificationEmailSms = (props) => {
                 />
             </View>
             <View style={viewStyle}>
-                <SettingsVal>Sms notification</SettingsVal>
+                <SettingsVal>{t('sms_notification')}</SettingsVal>
                 <Switch
                     value={sms}
                     onValueChange={()=>setSms(!sms)}
@@ -122,7 +125,7 @@ const NotificationEmailSms = (props) => {
                 />
             </View>
             <SmallRedBtn style={{position:'absolute', bottom:50, left:'25%'}} buttonColor='#FF5A5F' mode='contained' onPress={onSubmit}>
-                <SmallBtnText>Save</SmallBtnText>
+                <SmallBtnText>{t('save')}</SmallBtnText>
             </SmallRedBtn>
         </Container>
     );

@@ -19,10 +19,11 @@ import {
 import A2bInput from "../../components/formInput";
 import A2BNextIcon from "../../components/next_icon";
 import * as SecureStore from "expo-secure-store";
+import {useTranslation} from "react-i18next";
 
 const Stack = createStackNavigator();
 export default function Register_form({navigation}) {
-
+    const { t } = useTranslation();
     const { control, handleSubmit, watch,reset,formState ,formState: { errors }  } = useForm();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -115,6 +116,7 @@ export default function Register_form({navigation}) {
             setError(errorTitle);
         } finally {
             setIsLoading(false);
+            navigation.navigation.navigate('HomeScreen');
         }
     };
 
@@ -123,13 +125,13 @@ export default function Register_form({navigation}) {
                 <Stack.Screen name="Email" options={{ headerShown: false }}>
                     {({ navigation }) => (
                         <ContainerMid>
-                            <TitleLeft>What's your email</TitleLeft>
+                            <TitleLeft>{t("what's_your_email")}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
                                     <React.Fragment>
                                         <A2bInput
-                                            placeholder="Email"
+                                            placeholder={t("email")}
                                             value={field.value}
                                             onChangeText={(value) => field.onChange(value)}
                                             variant ='default'
@@ -166,12 +168,12 @@ export default function Register_form({navigation}) {
                 <Stack.Screen name="Name" options={{ headerShown: false }}>
                     {({ navigation }) => (
                         <ContainerMid>
-                            <TitleLeft>Tell us your name</TitleLeft>
+                            <TitleLeft>{t( "tell_us_your_name")}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
                                     <A2bInput
-                                        placeholder="First name"
+                                        placeholder={t(  "first_name")}
                                         value={field.value}
                                         onChangeText={(value) => field.onChange(value)}
                                         variant ='default'
@@ -184,7 +186,7 @@ export default function Register_form({navigation}) {
                                 control={control}
                                 render={({ field }) => (
                                     <A2bInput
-                                        placeholder="Last name"
+                                        placeholder={t("last_name")}
                                         value={field.value}
                                         onChangeText={(value) => field.onChange(value)}
                                         variant ='default'
@@ -202,7 +204,7 @@ export default function Register_form({navigation}) {
                 <Stack.Screen name="DateOfBirth" options={{ headerShown: false }}>
                     {({ navigation }) => (
                         <ContainerMid>
-                            <TitleLeft>What's your date of birth</TitleLeft>
+                            <TitleLeft>{t("what's_your_date_of_birth")}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
@@ -236,7 +238,7 @@ export default function Register_form({navigation}) {
                 <Stack.Screen name="Gender" options={{ headerShown: false }}>
                     {({ navigation }) => (
                         <ContainerMid>
-                            <TitleLeft>How would you like to be addressed</TitleLeft>
+                            <TitleLeft>{t('how_would_you_like_to_be_addressed')}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
@@ -249,7 +251,7 @@ export default function Register_form({navigation}) {
                                             navigation.navigate('Password');
                                         }}
                                     >
-                                        <GenderBntText>Male</GenderBntText>
+                                        <GenderBntText>{t('male')}</GenderBntText>
                                     </SimpleBtnPadded>
                                 )}
                                 name="gender"
@@ -268,7 +270,7 @@ export default function Register_form({navigation}) {
                                             navigation.navigate('Password');
                                         }}
                                     >
-                                        <GenderBntText>Female</GenderBntText>
+                                        <GenderBntText>{t('female')}</GenderBntText>
                                     </SimpleBtnPadded>
                                 )}
                                 name="gender"
@@ -287,7 +289,7 @@ export default function Register_form({navigation}) {
                                             navigation.navigate('Password');
                                         }}
                                     >
-                                        <GenderBntText>Other</GenderBntText>
+                                        <GenderBntText>{t('other')}</GenderBntText>
                                     </SimpleBtnPadded>
                                 )}
                                 name="gender"
@@ -299,13 +301,13 @@ export default function Register_form({navigation}) {
                 <Stack.Screen name="Password" options={{ headerShown: false }}>
                     {({ navigation }) => (
                         <ContainerMid>
-                            <TitleLeft>Define your Password</TitleLeft>
+                            <TitleLeft>{t('define_your_password')}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
                                     <React.Fragment>
                                         <A2bInput
-                                            placeholder="Password"
+                                            placeholder={t("password")}
                                             value={field.value}
                                             onChangeText={(value) => field.onChange(value)}
                                             variant ='eye'
@@ -342,7 +344,7 @@ export default function Register_form({navigation}) {
                 <Stack.Screen name="ActivateEmail" options={{ headerShown: false }}>
                     {({ navigation }) => (
                         <ContainerMid>
-                            <TitleLeft>Please Confirm your Email</TitleLeft>
+                            <TitleLeft>{t('please_confirm_your_email')}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
@@ -379,7 +381,7 @@ export default function Register_form({navigation}) {
                                     />
                                 </ErrorView>
                             )}
-                            <LinkLogin onPress={handleSubmit(checkEmail)}>Resend code</LinkLogin>
+                            <LinkLogin onPress={handleSubmit(checkEmail)}>{t('resend_code')}</LinkLogin>
                         </ContainerMid>
                     )}
                 </Stack.Screen>

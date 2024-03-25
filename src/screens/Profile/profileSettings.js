@@ -10,8 +10,10 @@ import {TouchableHighlight, View} from "react-native";
 import {useForm} from "react-hook-form";
 import {accEndpoints, getAccessToken, GetApi, headers, headersTextToken, PatchApi, PutApi} from "../../services/api";
 import * as ImagePicker from "expo-image-picker";
+import {useTranslation} from "react-i18next";
 
 const ProfileSettings = (props) => {
+    const { t } = useTranslation();
     const viewStyle = { height: 45, marginTop: 10, marginBottom: 10 };
     const userData = props.route.params?.userData;
     const birthdate = new Date(userData.BirthDate).toLocaleDateString('en-GB', {
@@ -29,43 +31,43 @@ const ProfileSettings = (props) => {
     const getGenderString = (gender) => {
         switch (gender) {
             case 1 :
-                return 'Male';
+                return 'male';
             case 2:
-                return 'Female';
+                return 'female';
             default:
-                return 'Other';
+                return 'other';
         }
     };
 
     const settings = {
         FirstName: {
-            title: 'First name',
+            title: 'first_name',
             value: name || userData.FirstName,
         },
         LastName: {
-            title: 'Last name',
+            title: 'last_name',
             value: LastName|| userData.LastName,
         },
         Email: {
-            title: 'Email',
+            title: 'email',
             value: Email || userData.Email,
         },
         BirthDate: {
-            title: 'Birth Date',
+            title: 'birth_date',
             value: BirthDate || birthdate,
         },
         Gender: {
-            title: 'Gender',
+            title: 'gender',
             value: gender? getGenderString(gender) :  getGenderString(userData.Gender),
         },
         PhoneNumber: {
-            title: 'Phone number',
+            title: 'phone_number',
             value: PhoneNumber || userData.PhoneNumber || ' ',
         },
     };
 
     const Description = {
-        title: 'Description',
+        title: 'description',
         value: userData.UserDetail.Description || ' ',
     };
 
@@ -192,7 +194,7 @@ const ProfileSettings = (props) => {
                     size={28}
                     onPress={() => props.navigation.goBack()}
                 />
-                <Title style={{textAlign:'center', width:'100%', marginBottom:-40}}>Settings</Title>
+                <Title style={{textAlign:'center', width:'100%', marginBottom:-40}}>{t('settings')}</Title>
 
                 {Object.keys(settings).map((key, index) => (
                     <TouchableHighlight
@@ -202,8 +204,8 @@ const ProfileSettings = (props) => {
                         underlayColor='rgba(128, 128, 128, 0.5)'
                     >
                             <View style={viewStyle}>
-                                <SettingsTitle>{settings[key].title}</SettingsTitle>
-                                <SettingsVal style={{paddingLeft:30}}>{settings[key].value}</SettingsVal>
+                                <SettingsTitle>{t(settings[key].title)}</SettingsTitle>
+                                <SettingsVal style={{paddingLeft:30}}>{t(settings[key].value)}</SettingsVal>
                                 <IconButton style={{position:'absolute', right:0, top:-10}} iconColor={'#FF5A5F'} size={30} icon={'chevron-right'}/>
                             </View>
 
@@ -217,7 +219,7 @@ const ProfileSettings = (props) => {
                     underlayColor='rgba(128, 128, 128, 0.5)'
                 >
                     <View style={[viewStyle,{justifyContent:'center'}]}>
-                        <SettingsVal style={{paddingLeft:30}}>About Me</SettingsVal>
+                        <SettingsVal style={{paddingLeft:30}}>{t('about_me')}</SettingsVal>
                         <IconButton style={{position:'absolute', right:0, top:-10}} iconColor={'#FF5A5F'} size={30} icon={'chevron-right'}/>
                     </View>
                 </TouchableHighlight>
@@ -227,7 +229,7 @@ const ProfileSettings = (props) => {
                     underlayColor='rgba(128, 128, 128, 0.5)'
                 >
                     <View style={[viewStyle,{justifyContent:'center'}]}>
-                        <SettingsVal style={{paddingLeft:30}}>Change Picture</SettingsVal>
+                        <SettingsVal style={{paddingLeft:30}}>{t('change_picture')}</SettingsVal>
                         <IconButton style={{position:'absolute', right:0, top:-10}} iconColor={'#FF5A5F'} size={30} icon={'chevron-right'}/>
                     </View>
                 </TouchableHighlight>
@@ -237,7 +239,7 @@ const ProfileSettings = (props) => {
                     underlayColor='rgba(128, 128, 128, 0.5)'
                 >
                     <View style={[viewStyle,{justifyContent:'center'}]}>
-                        <SettingsVal style={{paddingLeft:30}}>Change Prefrences</SettingsVal>
+                        <SettingsVal style={{paddingLeft:30}}>{t('change_preferences')}</SettingsVal>
                         <IconButton style={{position:'absolute', right:0, top:-10}} iconColor={'#FF5A5F'} size={30} icon={'chevron-right'}/>
                     </View>
                 </TouchableHighlight>

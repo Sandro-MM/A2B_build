@@ -3,8 +3,11 @@ import * as ImagePicker from 'expo-image-picker';
 import {BtnTextAuth, ContainerMid, RedBtn, TitleLeft} from "../../styles/styles";
 import styled from "styled-components/native";
 import {IconButton, Surface} from "react-native-paper";
+import {useTranslation} from "react-i18next";
 
 const ImageUploadComponent = ({ setImages, images }) => {
+    const { t } = useTranslation();
+
     const pickImage = async () => {
         try {
             const result = await ImagePicker.launchImageLibraryAsync({
@@ -50,7 +53,7 @@ const ImageUploadComponent = ({ setImages, images }) => {
 
     return (
         <ContainerMid>
-            <TitleLeft>Upload Photos of your vehicle</TitleLeft>
+            <TitleLeft>{t('upload_photos_of_your_vehicle')}</TitleLeft>
 
                  {memoizedImages}
 

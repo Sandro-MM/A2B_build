@@ -2,8 +2,10 @@ import { View } from 'react-native';
 import * as React from 'react';
 import { Divider, Icon} from 'react-native-paper';
 import {Agreement, BtnText, Container, Link, SimpleBtn, Subtitle, SubtitleLink, Title} from "../../styles/styles";
+import {useTranslation} from "react-i18next";
 
 export default function Register_login(props) {
+    const { t } = useTranslation();
     const screenMode = props.route.params.screenMode;
     const handleSwitchMode = () => {
         const newScreenMode = screenMode === 'Register' ? 'Login' : 'Register';
@@ -16,7 +18,7 @@ export default function Register_login(props) {
     };
     return (
         <Container>
-            <Title>{screenMode === 'Register' ? 'Create a New Account' : 'Welcome Back!'}</Title>
+            <Title>{t(screenMode === 'Register' ? 'create_new_acc' : 'welcome_back')}</Title>
             <SimpleBtn contentStyle={{ height: 55, justifyContent: 'flex-start'}} rippleColor='gray' mode="text" onPress={() => handleButtonPress()}>
                 <Icon
                     source="email-outline"
@@ -27,7 +29,7 @@ export default function Register_login(props) {
                     source="email-outline"
                     color='#1B1B1B'
                     size={24}
-                /> <BtnText>Continue with Email</BtnText>
+                /> <BtnText>{t('c_with_email')}</BtnText>
                 <Icon
                     source="chevron-right"
                     color='#1B1B1B'
@@ -46,17 +48,17 @@ export default function Register_login(props) {
                     color='#1B1B1B'
                     size={24}
                 />
-                <BtnText>Continue with Facebook</BtnText>
+                <BtnText>{t('c_with_fb')}</BtnText>
                 <Icon
                     source="chevron-right"
                     color='#1B1B1B'
                     size={24}
                 />
             </SimpleBtn>
-            <Subtitle>{screenMode === 'Register' ? 'Already a member?' : 'Not a member yet?'}</Subtitle>
-            <SubtitleLink  onPress={() => handleSwitchMode()}>{screenMode === 'Register' ? 'Login' : 'Register'}</SubtitleLink>
+            <Subtitle>{t(screenMode === 'Register' ? 'alr_member' : 'n_member_yet')}</Subtitle>
+            <SubtitleLink  onPress={() => handleSwitchMode()}>{t(screenMode === 'Register' ? 'login' : 'register')}</SubtitleLink>
             <View>{screenMode === 'Register' ?
-                <Agreement>By signing up you agree to our <Link>policy</Link> text will be updated for referance text will be updated for referance text will be updated for referance text will be updated for referance text will be updated for referance!!!</Agreement>
+                <Agreement>{t("agree")} <Link>{t('agree_link')}</Link> {t('agree_text')}</Agreement>
                 : null}</View>
         </Container>
     );

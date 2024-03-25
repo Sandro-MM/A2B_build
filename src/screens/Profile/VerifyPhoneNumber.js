@@ -23,8 +23,10 @@ import {
 } from "../../services/api";
 import {Keyboard} from "react-native";
 import Loading from "../../components/loading";
+import {useTranslation} from "react-i18next";
 
 const VerifyPhoneNumber = (props) => {
+    const { t } = useTranslation();
     const { control, handleSubmit, watch,reset } = useForm();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -88,8 +90,8 @@ const VerifyPhoneNumber = (props) => {
                 size={28}
                 onPress={() => props.navigation.goBack()}
             />
-            <TitleLeft>Verify your phone number</TitleLeft>
-            <Agreement>we send code to {phoneNumber}</Agreement>
+            <TitleLeft>{t('verify_your_phone_number')}</TitleLeft>
+            <Agreement>{t('we_send_code_to')}{phoneNumber}</Agreement>
             <Controller
                 control={control}
                 render={({ field }) => (
@@ -103,9 +105,9 @@ const VerifyPhoneNumber = (props) => {
                 name='confirmationCode'
                 defaultValue=''
             />
-            <LinkLogin  onPress={()=>fetchData()}>Resend Code</LinkLogin>
+            <LinkLogin  onPress={()=>fetchData()}>{t('resend_code')}</LinkLogin>
             <SmallRedBtn buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit(onSubmit)}>
-                <SmallBtnText>Save</SmallBtnText>
+                <SmallBtnText>{t('save')}</SmallBtnText>
             </SmallRedBtn>
         </ContainerMid>
     )}

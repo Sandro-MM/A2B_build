@@ -3,22 +3,22 @@ import * as React from "react";
 import {DelApi, getAccessToken, GetApi, headersTextToken, OrderEndpoints} from "../../services/api";
 import {useEffect, useState} from "react";
 import {
-    Agreement,
     BtnTextAuth,
     ContainerTop,
     ErrorText,
     ErrorView,
     RedBtn, Subtitle,
-    VehicleBntText,
     XIcon
 } from "../../styles/styles";
 import Loading from "../../components/loading";
-import {Button, Divider, Icon, IconButton} from "react-native-paper";
+import {IconButton} from "react-native-paper";
 import LoadingSmall from "../../components/loading-small";
 import Navigation from "../../components/navigation";
 import DeleteConfirmationModal from "../../components/modal";
+import {useTranslation} from "react-i18next";
 
 export default function RideHistory({navigation}) {
+    const { t } = useTranslation();
     const [responseData, setResponseData] = useState(null);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [isEndOfItems, setIsEndOfItems] = useState(false);
@@ -223,20 +223,20 @@ export default function RideHistory({navigation}) {
                                             onPress={()=> console.log(1)}>
                             <View style={{flexDirection:'row', height:50, alignItems:'center', borderRadius:30}}>
                                 <IconButton style={{marginLeft:17}} size={30} icon={'pencil'}/>
-                                <Text style={{fontSize:20, marginLeft:-10}}> Edit</Text>
+                                <Text style={{fontSize:20, marginLeft:-10}}> {t('edit')}</Text>
                             </View>
                         </TouchableHighlight>
                         <TouchableHighlight style={{width:'100%'}}
                                             underlayColor="rgba(128, 128, 128, 0.5)"
-                                            onPress={()=> showDelModal('Are you sure you want to start your Ride?', () => startOrder(ModalStatus.id))}>
+                                            onPress={()=> showDelModal('are_you_sure_you_want_to_start_your_ride', () => startOrder(ModalStatus.id))}>
                             <View style={{flexDirection:'row', height:50, alignItems:'center', borderRadius:30}}>
                                 <IconButton size={40} icon={'play'}/>
-                                <Text style={{fontSize:20, marginLeft:-10}}> Start</Text>
+                                <Text style={{fontSize:20, marginLeft:-10}}> {t('start')}</Text>
                             </View>
                         </TouchableHighlight>
                         <TouchableHighlight style={{width:'100%'}}
                                             underlayColor="rgba(128, 128, 128, 0.5)"
-                                            onPress={() => showDelModal('Are you sure you want to delete your Ride?', () => deleteOrder(ModalStatus.id))}>
+                                            onPress={() => showDelModal('are_you_sure_you_want_to_delete_your_ride', () => deleteOrder(ModalStatus.id))}>
                         <View style={{flexDirection:'row', height:50, alignItems:'center', borderRadius:30}}>
                                 <IconButton style={{marginLeft:15}} size={30} icon={'trash-can'}/>
                                 <Text style={{fontSize:20, marginLeft:-10}}> Delete</Text>
@@ -247,15 +247,15 @@ export default function RideHistory({navigation}) {
                                             onPress={()=> console.log(4)}>
                             <View style={{flexDirection:'row', height:50, alignItems:'center', borderRadius:30}}>
                                 <IconButton style={{marginLeft:15}} size={30} icon={'package-variant-closed'}/>
-                                <Text style={{fontSize:20, marginLeft:-10}}> Manage Packages</Text>
+                                <Text style={{fontSize:20, marginLeft:-10}}> {t('manage_packages')}</Text>
                             </View>
                         </TouchableHighlight>
                         <TouchableHighlight style={{width:'100%'}}
                                             underlayColor="rgba(128, 128, 128, 0.5)"
-                                            onPress={()=> {   hideModal(); navigation.navigate('Passengers', {routeId:ModalStatus.id, routeStatus:'manage', navigation:navigation});}}>
+                                            onPress={()=> {   hideModal(); navigation.navigate('Passengers', {routeId:ModalStatus.id, routeStatus:'Manage', navigation:navigation});}}>
                             <View style={{flexDirection:'row', height:50, alignItems:'center', borderRadius:30}}>
                                 <IconButton style={{marginLeft:15}} size={30} icon={'account-group'}/>
-                                <Text style={{fontSize:20, marginLeft:-10}}> Manage Passengers</Text>
+                                <Text style={{fontSize:20, marginLeft:-10}}> {t('manage_passengers')}</Text>
                             </View>
                         </TouchableHighlight>
                     </View> :  <View style={{marginTop:10,marginBottom:-10}}>
@@ -264,7 +264,7 @@ export default function RideHistory({navigation}) {
                                                 onPress={()=> console.log(4)}>
                                 <View style={{flexDirection:'row', height:50, alignItems:'center', borderRadius:30}}>
                                     <IconButton style={{marginLeft:15}} size={30} icon={'package-variant-closed'}/>
-                                    <Text style={{fontSize:20, marginLeft:-10}}> View Packages</Text>
+                                    <Text style={{fontSize:20, marginLeft:-10}}> {t('view_packages')}</Text>
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight style={{width:'100%'}}
@@ -272,7 +272,7 @@ export default function RideHistory({navigation}) {
                                                 onPress={()=> {   hideModal(); navigation.navigate('Passengers', {routeId:ModalStatus.id, routeStatus:'view', navigation:navigation});}}>
                                 <View style={{flexDirection:'row', height:50, alignItems:'center', borderRadius:30}}>
                                     <IconButton style={{marginLeft:15}} size={30} icon={'account-group'}/>
-                                    <Text style={{fontSize:20, marginLeft:-10}}> View Passengers</Text>
+                                    <Text style={{fontSize:20, marginLeft:-10}}> {t('view_passengers')}</Text>
                                 </View>
                             </TouchableHighlight>
                         </View>
@@ -282,7 +282,7 @@ export default function RideHistory({navigation}) {
                 isVisible={isDelModalVisible}
                 onCancel={hideDelModal}
                 confirmButton={{
-                    title: 'Confirm',
+                    title: t('confirm'),
                     onPress: async () => {
                         hideDelModal();
                         await confirmAction(ModalStatus.id);
@@ -290,12 +290,12 @@ export default function RideHistory({navigation}) {
                     color: 'red',
                 }}
                 cancelButton={{
-                    title: 'Cancel',
+                    title: t('cancel'),
                     onPress: hideDelModal,
                     color: 'blue',
                 }}
             >
-                <Subtitle>{modalMessage}</Subtitle>
+                <Subtitle>{t(modalMessage)}</Subtitle>
             </DeleteConfirmationModal>
         { responseData ?
             <ContainerTop>
@@ -307,7 +307,7 @@ export default function RideHistory({navigation}) {
 
                         <View
                             style={{flex:1, width:'100%', height:60, justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{color:'black',fontSize:18, fontWeight:'500', marginTop:8}}>My rides</Text>
+                            <Text style={{color:'black',fontSize:18, fontWeight:'500', marginTop:8}}>{t('my_rides')}</Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -317,7 +317,7 @@ export default function RideHistory({navigation}) {
 
                         <View
                             style={{flex:1, width:'100%', height:60, justifyContent:'center',alignItems:'center', marginTop:8}}>
-                            <Text style={{color:'black', fontSize:18, fontWeight:'500'}}>Rides taken</Text>
+                            <Text style={{color:'black', fontSize:18, fontWeight:'500'}}>{t('rides_taken')}</Text>
                         </View>
                     </TouchableHighlight>
                 </View>
@@ -335,7 +335,7 @@ export default function RideHistory({navigation}) {
                                 mode="contained"
                                 onPress={handleLoadMore}
                             >
-                                <BtnTextAuth>Load More</BtnTextAuth>
+                                <BtnTextAuth>{t('load_more')}</BtnTextAuth>
                             </RedBtn>
                         )}
                     </View>

@@ -12,8 +12,11 @@ import Loading from "../../components/loading";
 import {Icon} from "react-native-paper";
 import LoadingSmall from "../../components/loading-small";
 import DeleteConfirmationModal from "../../components/modal";
+import {useTranslation} from "react-i18next";
 
 export default function RatingsSetting(props) {
+    const { t } = useTranslation();
+
     const [responseData, setResponseData] = useState(null);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [isEndOfItems, setIsEndOfItems] = useState(false);
@@ -153,7 +156,7 @@ export default function RatingsSetting(props) {
 
                             <View
                                 style={{flex:1, width:'100%', height:60, justifyContent:'center', alignItems:'center'}}>
-                                <Text style={{color:'black',fontSize:18, fontWeight:'500', marginTop:8}}>My rating</Text>
+                                <Text style={{color:'black',fontSize:18, fontWeight:'500', marginTop:8}}>{t('my_rating')}</Text>
                             </View>
                         </TouchableHighlight>
                         <TouchableHighlight
@@ -163,7 +166,7 @@ export default function RatingsSetting(props) {
 
                             <View
                                 style={{flex:1, width:'100%', height:60, justifyContent:'center',alignItems:'center'}}>
-                                <Text style={{color:'black', fontSize:18, fontWeight:'500', marginTop:8}}>Rating given</Text>
+                                <Text style={{color:'black', fontSize:18, fontWeight:'500', marginTop:8}}>{t('rating_given')}</Text>
                             </View>
                         </TouchableHighlight>
                     </View>

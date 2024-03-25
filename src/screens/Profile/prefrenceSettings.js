@@ -4,9 +4,11 @@ import {Text, View} from "react-native";
 import {Checkbox, IconButton} from "react-native-paper";
 import {OrderIconColorMapping, OrderIconMapping} from "../../styles/vehicleMappings";
 import {accEndpoints, getAccessToken, PutApi} from "../../services/api";
+import {useTranslation} from "react-i18next";
 
 
 const PrefrenceSettings = (props) => {
+    const { t } = useTranslation();
     const setTypes = props.route.params.defaultValue
 
     console.log(setTypes)
@@ -49,7 +51,7 @@ const PrefrenceSettings = (props) => {
 
     return (
        <View style={{ width:'100%', height:'100%',  alignItems:'center'}}>
-           <Title>Change prefrence</Title>
+           <Title>{t('change_preferences')}</Title>
            <View style={{justifyContent:'flex-start', width:'50%'}} >
            <View  style={{flexDirection:'row', alignItems:'center'}}>
                <Checkbox
@@ -65,7 +67,7 @@ const PrefrenceSettings = (props) => {
                    size={20}
                    icon={OrderIconMapping[1]}
                />
-               <Text style={{fontSize:16, marginLeft:-5}}> Smoker</Text>
+               <Text style={{fontSize:16, marginLeft:-5}}>  {t('smoker')}</Text>
            </View>
            <View  style={{flexDirection:'row', alignItems:'center'}}>
                <Checkbox
@@ -81,7 +83,7 @@ const PrefrenceSettings = (props) => {
                    size={20}
                    icon={OrderIconMapping[7]}
                />
-               <Text style={{fontSize:16, marginLeft:-5}}> Music</Text>
+               <Text style={{fontSize:16, marginLeft:-5}}>  {t('music')}</Text>
            </View>
            <View  style={{flexDirection:'row', alignItems:'center'}}>
                <Checkbox
@@ -97,7 +99,7 @@ const PrefrenceSettings = (props) => {
                    size={20}
                    icon={OrderIconMapping[4]}
                />
-               <Text style={{fontSize:16, marginLeft:-5}}> Pets</Text>
+               <Text style={{fontSize:16, marginLeft:-5}}>  {t('pets')}</Text>
 
            </View>
            <View  style={{flexDirection:'row', alignItems:'center'}}>
@@ -114,7 +116,7 @@ const PrefrenceSettings = (props) => {
                    size={20}
                    icon={OrderIconMapping[9]}
                />
-               <Text style={{fontSize:16, marginLeft:-5}}> Travel</Text>
+               <Text style={{fontSize:16, marginLeft:-5}}> {t('travel')}</Text>
            </View>
            <View  style={{flexDirection:'row', alignItems:'center', width:250}}>
                <Checkbox
@@ -130,7 +132,7 @@ const PrefrenceSettings = (props) => {
                    size={20}
                    icon={'chat-outline'}
                />
-               <Text style={{fontSize:16, marginLeft:-5}}>Chatter</Text>
+               <Text style={{fontSize:16, marginLeft:-5}}>{t('chatter')}</Text>
            </View>
                </View>
            <SmallRedBtn style={{position:'absolute', bottom:50}} buttonColor='#FF5A5F' mode='contained' onPress={()=>changePrefrence()}>

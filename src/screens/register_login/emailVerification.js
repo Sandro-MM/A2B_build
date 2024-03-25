@@ -5,8 +5,10 @@ import A2bInput from "../../components/formInput";
 import {TextInputMask} from "react-native-masked-text";
 import A2BNextIcon from "../../components/next_icon";
 import {ActivityIndicator} from "react-native";
+import {useTranslation} from "react-i18next";
 
 export const EmailVerification = ({ control ,onSubmitCode, checkEmail, isLoading, errors,error, setError, navigation}) => {
+    const { t } = useTranslation();
 
     useEffect(() => {
         checkEmail();
@@ -14,13 +16,13 @@ export const EmailVerification = ({ control ,onSubmitCode, checkEmail, isLoading
 
     return (
         <ContainerMid>
-            <TitleLeft>Please Confirm your Email</TitleLeft>
+            <TitleLeft>{t('please_confirm_your_email')}</TitleLeft>
             <Controller
                 control={control}
                 render={({ field }) => (
                     <React.Fragment>
                         <A2bInput
-                            placeholder="Code"
+                            placeholder={t("code")}
                             value={field.value}
                             onChangeText={(value) => field.onChange(value)}
                             variant ='default'
@@ -51,7 +53,7 @@ export const EmailVerification = ({ control ,onSubmitCode, checkEmail, isLoading
                     />
                 </ErrorView>
             )}
-            <LinkLogin onPress={checkEmail}>Resend code</LinkLogin>
+            <LinkLogin onPress={checkEmail}>{t("resend_code")}</LinkLogin>
         </ContainerMid>
     );
 };

@@ -5,10 +5,12 @@ import {DelApi, getAccessToken, GetApi, headersText, OrderEndpoints, PatchApi} f
 import UserNoIMage from "../../../assets/img/default_user.png";
 import {Divider, IconButton} from "react-native-paper";
 import DeleteConfirmationModal from "../../components/modal";
+import {useTranslation} from "react-i18next";
 
 
 
 export  const Passengers = ({route}) => {
+    const { t } = useTranslation();
     const [responseData, setResponseData] = useState(null);
     const [isDelModalVisible, setDelModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
@@ -129,42 +131,41 @@ export  const Passengers = ({route}) => {
                                     size={25}
                                     icon='star'
                                 />
-                                {/* Passenger Phone Number */}
                                 <Text style={{ fontSize: 18 }}>
                                     {passenger.PhoneNumber}  </Text>
                             </View>
                         </View>
-                        {routeStatus === 'manage' && data === responseData.PendingPassangers &&
+                        {routeStatus === 'Manage' && data === responseData.PendingPassangers &&
                             <IconButton
-                                onPress={() => showDelModal('Are you sure you want to bind this passenger?', () => bindPassenger(passenger.Id))}
+                                onPress={() => showDelModal(  'are_you_sure_you_want_to_bind_this_passenger', () => bindPassenger(passenger.Id))}
                                 style={{ width: 35, height: 35, position: 'absolute', top: 6, right: 65 }}
                                 color='#1B1B1B'
                                 size={30}
                                 icon={'check'}
                             />}
-                        {routeStatus === 'manage' && data === responseData.PendingPassangers &&
+                        {routeStatus === 'Manage' && data === responseData.PendingPassangers &&
                             <IconButton
-                                onPress={() => showDelModal('Are you sure you want to reject this passenger?', () => rejectPassenger(passenger.Id))}
+                                onPress={() => showDelModal('are_you_sure_you_want_to_reject_this_passenger', () => rejectPassenger(passenger.Id))}
                                 style={{ width: 35, height: 35, position: 'absolute', top: 6, right: 30 }}
                                 color='#1B1B1B'
                                 size={30}
                                 icon={'close'}
                             />}
-                        {routeStatus === 'manage' && data === responseData.ApprovePassangers &&
+                        {routeStatus === 'Manage' && data === responseData.ApprovePassangers &&
                             <IconButton
                                 style={{ width: 35, height: 35, position: 'absolute', top: 6, right: 30 }}
                                 color='#1B1B1B'
                                 size={30}
                                 icon={'account-check'}
                             />}
-                        {routeStatus === 'manage' && data === responseData.CancelledPassangers &&
+                        {routeStatus === 'Manage' && data === responseData.CancelledPassangers &&
                             <IconButton
                                 style={{ width: 35, height: 35, position: 'absolute', top: 6, right: 30 }}
                                 color='#1B1B1B'
                                 size={30}
                                 icon={'account-arrow-left'}
                             />}
-                        {routeStatus === 'manage' && data === responseData.RejectedPassangers &&
+                        {routeStatus === 'Manage' && data === responseData.RejectedPassangers &&
                             <IconButton
                                 style={{ width: 35, height: 35, position: 'absolute', top: 6, right: 30 }}
                                 color='#1B1B1B'
@@ -183,26 +184,26 @@ export  const Passengers = ({route}) => {
 
     return (
         <Container style={{ justifyContent:'flex-start'}}>
-            <Title style={{marginBottom:-40, marginTop:-40}}>{routeStatus === 'manage'? 'Manage':'View'} passengers </Title>
+            <Title style={{marginBottom:-40, marginTop:-40}}>{t(routeStatus === 'Manage'? 'manage':'view')} {t('passengers')} </Title>
             <ScrollView>
             {responseData && responseData.PendingPassangers && (
-                <PassengerList data={responseData.PendingPassangers} title={'Pending'} />
+                <PassengerList data={responseData.PendingPassangers} title={t('pending')} />
             ) }
             {responseData && responseData.ApprovePassangers && (
-                <PassengerList data={responseData.ApprovePassangers} title={'Approved'} />
+                <PassengerList data={responseData.ApprovePassangers} title={t('approved')} />
             )}
             {responseData && responseData.CancelledPassangers && (
-                <PassengerList data={responseData.CancelledPassangers} title={'Cancelled'} />
+                <PassengerList data={responseData.CancelledPassangers} title={t('cancelled')} />
             )}
             {responseData && responseData.RejectedPassangers && (
-                <PassengerList data={responseData.RejectedPassangers} title={'Rejected'} />
+                <PassengerList data={responseData.RejectedPassangers} title={t('rejected')} />
             )}
             </ScrollView>
             <DeleteConfirmationModal
                 isVisible={isDelModalVisible}
                 onCancel={hideDelModal}
                 confirmButton={{
-                    title: 'Confirm',
+                    title: t('confirm'),
                     onPress: async () => {
                         hideDelModal();
                         await confirmAction(passenger.Id);
@@ -210,12 +211,12 @@ export  const Passengers = ({route}) => {
                     color: 'red',
                 }}
                 cancelButton={{
-                    title: 'Cancel',
+                    title: t('cancel'),
                     onPress: hideDelModal,
                     color: 'blue',
                 }}
             >
-                <Subtitle>{modalMessage}</Subtitle>
+                <Subtitle>{t(modalMessage)}</Subtitle>
             </DeleteConfirmationModal>
         </Container>
     );

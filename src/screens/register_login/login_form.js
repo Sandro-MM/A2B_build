@@ -15,8 +15,10 @@ import {
     SmallBtnText,
 } from "../../styles/styles";
 import A2bInput from "../../components/formInput";
+import {useTranslation} from "react-i18next";
 
 export default function LoginForm(props) {
+    const { t } = useTranslation();
     const { control, handleSubmit, setValue, watch, reset } = useForm({
         // defaultValues: {
         //     LoginByMobile: true
@@ -56,12 +58,12 @@ export default function LoginForm(props) {
     };
     return (
         <ContainerMid>
-            <TitleLeft>What's your email and password</TitleLeft>
+            <TitleLeft>{t('login_title')}</TitleLeft>
             <Controller
                 control={control}
                 render={({ field }) => (
                     <A2bInput
-                        placeholder="Email"
+                        placeholder={t('email')}
                         value={field.value}
                         onChangeText={(value) => field.onChange(value)}
                         variant ='default'
@@ -75,7 +77,7 @@ export default function LoginForm(props) {
                 render={({ field }) => (
                     <A2bInput
                         secureTextEntry
-                        placeholder="Password"
+                        placeholder={t('password')}
                         value={field.value}
                         onChangeText={(value) => field.onChange(value)}
                         variant ='eye'
@@ -84,14 +86,14 @@ export default function LoginForm(props) {
                 name="Password"
                 defaultValue=""
             />
-            <LinkLogin onPress={() => props.navigation.navigate('Forget_password_form')}>Forget Password?</LinkLogin>
+            <LinkLogin onPress={() => props.navigation.navigate('Forget_password_form')}>{t('forget_password')}</LinkLogin>
             {!isButtonDisabled && (
                 <SmallRedBtn
                     buttonColor='#FF5A5F'
                     mode="contained"
                     onPress={handleSubmit(onSubmit)}
                 >
-                    <SmallBtnText>Login</SmallBtnText>
+                    <SmallBtnText>{t('login')}</SmallBtnText>
                 </SmallRedBtn>
             )}
             {isLoading && <ActivityIndicator size="large"  color="#FF5A5F" />}

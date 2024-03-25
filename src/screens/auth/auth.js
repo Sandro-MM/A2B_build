@@ -1,16 +1,20 @@
 import * as React from 'react';
 import { Button } from 'react-native-paper';
 import {BtnTextAuth, ContainerMid, LgnText, Logo, RedBtn, Title} from "../../styles/styles";
+import { useTranslation } from 'react-i18next';
 export default function AuthScreen({ navigation }) {
+    const { t } = useTranslation();
+
+
     return (
         <ContainerMid>
             <Logo source={require("../../../assets/img/logos.png")}/>
-            <Title>Sample Text Here For Display Will Be Replaced!</Title>
+            <Title>{t('sample_text')}</Title>
             <RedBtn buttonColor='#FF5A5F' mode="contained" onPress={() => navigation.navigate('Register_login', { screenMode: 'Register' })}>
-                <BtnTextAuth>Register</BtnTextAuth>
+                <BtnTextAuth>{t('register')}</BtnTextAuth>
             </RedBtn>
                 <Button  mode="text" rippleColor='transparent'  textColor='#FF5A5F' onPress={() => navigation.navigate('Register_login',{ screenMode : 'Login' })}>
-                    <LgnText>Login</LgnText>
+                    <LgnText>{t('login')}</LgnText>
                 </Button>
         </ContainerMid>
     );

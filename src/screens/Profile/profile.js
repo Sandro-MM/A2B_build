@@ -22,9 +22,11 @@ import {iconMapping, socialMediaMapping} from "../../styles/vehicleMappings";
 import Navigation from "../../components/navigation";
 import UserNoIMage from "../../../assets/img/default_user.png";
 import SettingsPage from "./settings";
+import {useTranslation} from "react-i18next";
 
 
 export default function Profile(props) {
+    const { t } = useTranslation();
     const [isModalVisible, setModalVisible] = useState(false);
     const showModal = () => setModalVisible(true);
     const hideModal = () => setModalVisible(false);
@@ -120,10 +122,10 @@ export default function Profile(props) {
                             {responseData.FirstName} {responseData.LastName}
                         </ProfileName>
                         <ProfileAge>
-                            {responseData.Age} Years
+                            {responseData.Age} {t('years')}
                         </ProfileAge>
                         <ProfileAge>
-                             Since {year}
+                            {t('since')} {year}
                         </ProfileAge>
                         <IconView style={{ flexDirection: 'row' }}>
                             {responseData.UserDetail.UserDescriptionResponseModel.map(contact => (
@@ -149,7 +151,7 @@ export default function Profile(props) {
                                 color='#FF5A5F'
                                 size={20}
                             />
-                            <ProfileAge>  {responseData.StarRatingAmount} ({responseData.UserRatingCount}) Reviews</ProfileAge>
+                            <ProfileAge>  {responseData.StarRatingAmount} ({responseData.UserRatingCount}) {t('reviews')}</ProfileAge>
                             <Icon
                                 source="chevron-right"
                                 color='#1B1B1B'
@@ -162,7 +164,7 @@ export default function Profile(props) {
                                 color='#FF5A5F'
                                 size={18}
                             />
-                            <ProfileAge>  {responseData?.PerformedRides || 0} Rides </ProfileAge>
+                            <ProfileAge>  {responseData?.PerformedRides || 0}  {t('rides')} </ProfileAge>
                         </ReviewBtn>
                     </SurfaceArea>
                     <Divider style={{ width: '90%', marginBottom:10}} horizontalInset={true} bold={true} />
@@ -172,7 +174,7 @@ export default function Profile(props) {
                             color='#FF5A5F'
                             size={24}
                         />
-                        <ProfileAge> { profileType? 'About Me':`About ${responseData.FirstName}`} </ProfileAge>
+                        <ProfileAge> { profileType? t('about_me'):`${t('about')} ${responseData.FirstName}`} </ProfileAge>
                         <Icon
                             source="chevron-right"
                             color='#1B1B1B'
@@ -181,7 +183,7 @@ export default function Profile(props) {
                     </ReviewBtn>
                         <SurfaceArea  elevation={1}>
                     <AboutMe numberOfLines={3} ellipsizeMode="tail">
-                  {responseData?.UserDetail.Description || 'Empty'}
+                  {responseData?.UserDetail.Description || t('empty')}
                     </AboutMe>
                             <DeleteConfirmationModal
                                 isVisible={isModalVisible}
@@ -206,7 +208,7 @@ export default function Profile(props) {
                             color='#FF5A5F'
                             size={18}
                         />
-                        <AboutMe>  {responseData.Email || (responseData?.IsEmailVerified ? "Verified email":'Email not verified')} </AboutMe>
+                        <AboutMe>  {responseData.Email || (responseData?.IsEmailVerified ? t("verified_email"):t('email_not_verified'))} </AboutMe>
                         {responseData?.IsEmailVerified ? (
                         <Icon
                             source="check-decagram"
@@ -221,7 +223,7 @@ export default function Profile(props) {
                             color='#FF5A5F'
                             size={18}
                         />
-                        <AboutMe>  {responseData?.PhoneNumber || 'No Phone Number'} </AboutMe>
+                        <AboutMe>  {responseData?.PhoneNumber || t('no_phone_number')} </AboutMe>
                         {responseData?.IsPhoneNumberVerified ? (
                             <Icon
                                 source="check-decagram"
@@ -246,14 +248,14 @@ export default function Profile(props) {
                     <Divider style={{ width: '90%', marginBottom:10}} horizontalInset={true} bold={true} />
                     <SurfaceArea  elevation={1}>
                         <ReviewBtn contentStyle={{ height: 38, marginBottom: 5, justifyContent: 'flex-start'}} rippleColor='gray' mode="text"   onPress={() => {
-                            props.navigation.navigate('Vehicles', { carData: responseData.UserCarReponseModels, profileType:profileType, firstName:responseData.FirstName});
+                            props.navigation.navigate('Vehicles', { carData: responseData.UserCarReponseModels, profileType:profileType, firstName:responseData.FirstName, navigation:navigation});
                         }}>
                             <Icon
                                 source="car-hatchback"
                                 color='#FF5A5F'
                                 size={20}
                             />
-                            <ProfileAge> { profileType? 'My vehicles':`${responseData.FirstName}'s vehicles`}</ProfileAge>
+                            <ProfileAge> { t(profileType? 'my_vehicles':null)} {!profileType? responseData.FirstName: null } {t(!profileType? 'user_s_vehicles': null )}</ProfileAge>
                             <Icon
                                 source="chevron-right"
                                 color='#1B1B1B'

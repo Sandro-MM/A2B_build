@@ -12,6 +12,7 @@ import {
 import {Icon} from "react-native-paper";
 import DeleteConfirmationModal from "../../components/modal";
 import {BackButton} from "../../components/backbutton";
+import {useTranslation} from "react-i18next";
 const Reviews = (props) => {
     const profileType = props.route.params.profileType;
     const profileName = props.route.params.profileName;

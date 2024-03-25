@@ -12,11 +12,14 @@ import {Icon, IconButton, Surface} from "react-native-paper";
 import { CarEndpoints, DelApi, getAccessToken, headersTextToken} from "../../services/api";
 import DeleteConfirmationModal from "../../components/modal";
 import {colorMapping, fuelTypeMapping, vehicleTypeMapping} from "../../styles/vehicleMappings";
+import {useTranslation} from "react-i18next";
 
 export default function Vehicles(props) {
+    const { t } = useTranslation();
     const { carData } = props.route.params;
     const { profileType } = props.route.params;
     const { firstName } = props.route.params;
+    const { navigation } = props.route.params;
 
     const [isModalVisible, setModalVisible] = useState(false);
     const showModal = () => setModalVisible(true);
@@ -72,7 +75,7 @@ export default function Vehicles(props) {
             {
                 !carData || carData.length === 0 ? (
                     <Surface style={{alignItems:'center', paddingBottom:30,borderRadius:13, backgroundColor:'#F2F3F4'}}>
-                        <Title>No cars available</Title>
+                        <Title>{t('no_cars_available')}</Title>
                         <Icon
                             source="car"
                             color='#7a7a7a'
@@ -84,7 +87,7 @@ export default function Vehicles(props) {
                             buttonColor='#FF5A5F'
                             mode="contained"
                             onPress={()=>props.navigation.navigate('AddVehicle',{mode:'addVehicle'})}>
-                            <SmallConfirmText>Add Car</SmallConfirmText>
+                            <SmallConfirmText>{t('add_car')}</SmallConfirmText>
                         </ConfirmRedBtn>
                     }
                     </Surface>
@@ -95,21 +98,21 @@ export default function Vehicles(props) {
                         key={item.Id}
                         style={{ width: '100%', height:'100%', display: index === currentIndex ? 'flex' : 'none' }}>
                         <VehicleSubtitleContainer>
-                            <VehicleSubtitle>{ profileType? 'My vehicles':`${firstName}'s vehicles`}</VehicleSubtitle>
+                            <VehicleSubtitle style={{width:'100%', marginTop:-30}}>{ t(profileType? 'my_vehicles':null)} {!profileType? firstName: null } {t(!profileType? 'user_s_vehicles': null )}</VehicleSubtitle>
                             { profileType &&
-                            <View style={{ flexDirection:'row'}}>
+                            <View style={{ flexDirection:'row', position:'absolute', right:0}}>
                                 {  carData.length<3?
                                 <IconButton
                                     icon="plus-circle"
                                     iconColor='#7a7a7a'
                                     size={22}
-                                    onPress={()=>props.navigation.navigate('AddVehicle',{mode:'addVehicle'})}
+                                    onPress={()=>props.navigation.navigate('AddVehicle',{mode:'addVehicle', navigation:navigation})}
                                 />:null}
                                 <IconButton
                                     icon="pencil"
                                     iconColor='#7a7a7a'
                                     size={22}
-                                    onPress={()=>props.navigation.navigate('AddVehicle',{mode:'editVehicle',data:item})}
+                                    onPress={()=>props.navigation.navigate('AddVehicle',{mode:'editVehicle',data:item,  navigation:navigation})}
                                 />
                                 <IconButton
                                     icon="trash-can-outline"
@@ -135,7 +138,7 @@ export default function Vehicles(props) {
                                         color: 'blue',
                                     }}
                                 >
-                                    <Subtitle>Are you sure you want to remove your Vehicle?</Subtitle>
+                                    <Subtitle>{t('are_you_sure_you_want_to_remove_your_vehicle')}</Subtitle>
                                 </DeleteConfirmationModal>
                             </View>}
                         </VehicleSubtitleContainer>

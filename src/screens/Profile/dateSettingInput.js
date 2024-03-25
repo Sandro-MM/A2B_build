@@ -1,15 +1,16 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import {IconButton} from "react-native-paper";
-import {ContainerMid, ContainerTop, SmallBtnText, SmallRedBtn, Title} from "../../styles/styles";
+import { ContainerTop, SmallBtnText, SmallRedBtn, Title} from "../../styles/styles";
 import MaskInput from "react-native-mask-input/src/MaskInput";
 import {Masks} from "react-native-mask-input";
 import {accEndpoints, getAccessToken, PutApi} from "../../services/api";
+import {useTranslation} from "react-i18next";
 
 
 
 const DateSettingInput = (props) => {
+    const { t } = useTranslation();
     const [birthdate, setBirthdate] = React.useState('');
-    const [setDissabled, dissabled] = React.useState(false);
     const setBirthDate = props.route.params.setBirthDate;
 
 
@@ -47,7 +48,7 @@ const DateSettingInput = (props) => {
                 size={32}
                 onPress={() => props.navigation.goBack()}
             />
-            <Title>Change Birthdate</Title>
+            <Title>{t('change_birthdate')}</Title>
             <MaskInput
                 autoFocus={true}
                 style={{height:45, backgroundColor:'#D8D9DA', width:'85%', borderRadius:14, paddingVertical:5, paddingHorizontal:15, fontSize:18}}

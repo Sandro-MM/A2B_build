@@ -7,9 +7,11 @@ import {
 import {Divider, Icon} from "react-native-paper";
 import {accEndpoints, getAccessToken, PutApi} from "../../services/api";
 import {TouchableHighlight, View} from "react-native";
+import {useTranslation} from "react-i18next";
 
 
 const GenderSetting = (props) => {
+    const { t } = useTranslation();
     const setGenders = props.route.params.setGenders
     const viewStyle = { height: 45, marginTop: 10, marginBottom: 10 , flexDirection:'row', justifyContent:'space-between', marginHorizontal:20, alignItems:'center'};
 
@@ -38,13 +40,13 @@ const GenderSetting = (props) => {
 
     return (
         <Container style={{marginTop:-300}}>
-            <Title>Change gender</Title>
+            <Title>{t('change_gender')}</Title>
             <TouchableHighlight
                 onPress={() =>  changeGender(1)}
                 underlayColor='rgba(128, 128, 128, 0.5)'
             >
                 <View style={viewStyle}>
-                    <SettingsVal>Male</SettingsVal>
+                    <SettingsVal>{t('male')}</SettingsVal>
                     <Icon size={35} color={'#FF5A5F'} source={'chevron-right'}/>
                 </View>
             </TouchableHighlight>
@@ -55,7 +57,7 @@ const GenderSetting = (props) => {
                 underlayColor='rgba(128, 128, 128, 0.5)'
             >
                 <View style={viewStyle}>
-                    <SettingsVal>Female</SettingsVal>
+                    <SettingsVal>{t('female')}</SettingsVal>
                     <Icon size={35} color={'#FF5A5F'} source={'chevron-right'}/>
                 </View>
             </TouchableHighlight>
@@ -65,7 +67,7 @@ const GenderSetting = (props) => {
                 underlayColor='rgba(128, 128, 128, 0.5)'
             >
                 <View style={viewStyle}>
-                    <SettingsVal>Other</SettingsVal>
+                    <SettingsVal>{t('other')}</SettingsVal>
                     <Icon size={35} color={'#FF5A5F'} source={'chevron-right'}/>
                 </View>
             </TouchableHighlight>
