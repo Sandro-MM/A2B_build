@@ -171,7 +171,7 @@ export default function AddVehicle({ route }) {
                                 size={28}
                                 onPress={() => navigation.goBack()}
                             />
-                            <TitleLeft>What's your licence plate number?</TitleLeft>
+                            <TitleLeft>{t('whats_your_licence_plate_number')}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
@@ -212,7 +212,7 @@ export default function AddVehicle({ route }) {
                                 navigation={navigation}
                                 data={carData.manufact}
                                 filterFunction={filterData}
-                                title={"What's your vehicle's brand?"}
+                                title={'whats_your_vehicles_brand'}
                                 placeholder={'Make'}
                                 variant={'default'}
                                 onSelectItem={(selectedItem) => {
@@ -236,7 +236,7 @@ export default function AddVehicle({ route }) {
                             size={32}
                             onPress={() => navigation.navigate('Make')}
                         />
-                        <CarList navigation={navigation} data={modelsData} filterFunction={filterData} title={"What's your vehicle's model?"} placeholder={'Model'} variant={'default'} onSelectItem={(selectedItem) => {setSelectedModel(selectedItem); navigation.navigate("Type");}}
+                        <CarList navigation={navigation} data={modelsData} filterFunction={filterData} title={'whats_your_vehicles_model'} placeholder={'Model'} variant={'default'} onSelectItem={(selectedItem) => {setSelectedModel(selectedItem); navigation.navigate("Type");}}
                         />
                     </View>
                     )}
@@ -251,7 +251,7 @@ export default function AddVehicle({ route }) {
                             size={32}
                             onPress={() => navigation.navigate('Model')}
                         />
-                    <CarList navigation={navigation} IconMode='VehicleType' data={carData.carType} filterFunction={filterData} title={"What kind of vehicle it is?"} placeholder={'Type'} variant={'default'} onSelectItem={(selectedItem) => {setSelectedType(selectedItem); navigation.navigate("Color");}}
+                    <CarList navigation={navigation} IconMode='VehicleType' data={carData.carType} filterFunction={filterData} title={"what_kind_of_vehicle_it_is"} placeholder={'Type'} variant={'default'} onSelectItem={(selectedItem) => {setSelectedType(selectedItem); navigation.navigate("Color");}}
                     />
                     </View>
                 )}
@@ -266,7 +266,7 @@ export default function AddVehicle({ route }) {
                             size={32}
                             onPress={() => navigation.navigate('Type')}
                         />
-                    <CarList navigation={navigation} IconMode='Color' data={carData.color} filterFunction={filterData} title={"What color is your vehicle?"} placeholder={'Color'} variant={'default'} onSelectItem={(selectedItem) => {setSelectedColor(selectedItem); navigation.navigate("Fuel");}}
+                    <CarList navigation={navigation} IconMode='Color' data={carData.color} filterFunction={filterData} title={"what_color_is_your_vehicle"} placeholder={'Color'} variant={'default'} onSelectItem={(selectedItem) => {setSelectedColor(selectedItem); navigation.navigate("Fuel");}}
                     />
                     </View>
                 )}
@@ -281,7 +281,7 @@ export default function AddVehicle({ route }) {
                             size={32}
                             onPress={() => navigation.navigate('Color')}
                         />
-                    <CarList navigation={navigation}  IconMode='FuelType' data={carData.carFul} filterFunction={filterData} title={"What fuel your vehicle uses?"} placeholder={'Fuel'} variant={'default'} onSelectItem={(selectedItem) => {setSelectedFuel(selectedItem); navigation.navigate("Image");}}
+                    <CarList navigation={navigation}  IconMode='FuelType' data={carData.carFul} filterFunction={filterData} title={"what_fuel_does_your_vehicle_use"} placeholder={'Fuel'} variant={'default'} onSelectItem={(selectedItem) => {setSelectedFuel(selectedItem); navigation.navigate("Image");}}
                     />
                     </View>
                 )}
@@ -317,7 +317,7 @@ export default function AddVehicle({ route }) {
                                     size={32}
                                     onPress={() => navigation.navigate('Image')}
                                 />
-                                <TitleLeft>When was your vehicle registered?</TitleLeft>
+                                <TitleLeft>{t('when_was_your_vehicle_registered')}</TitleLeft>
                                 <Controller
                                     control={control}
                                     render={({ field }) => (

@@ -102,7 +102,7 @@ export default function Register_form({navigation}) {
                         await SecureStore.setItemAsync('accessToken', login.AccessToken);
                         await SecureStore.setItemAsync('accessTokenExpiration', expirationTime.toString());
                         await SecureStore.setItemAsync('refreshToken', login.RefreshToken);
-                        navigation.navigation.navigate('HomeScreen');
+                        navigation.navigate('HomeScreen');
                     } catch (error) {
                         console.error('Error saving tokens:', error);
                     }
@@ -116,7 +116,6 @@ export default function Register_form({navigation}) {
             setError(errorTitle);
         } finally {
             setIsLoading(false);
-            navigation.navigation.navigate('HomeScreen');
         }
     };
 

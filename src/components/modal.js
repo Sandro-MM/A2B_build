@@ -2,8 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import {Modal, Portal } from 'react-native-paper';
 import {ConfirmRedBtn, SmallConfirmText} from "../styles/styles";
+import {useTranslation} from "react-i18next";
 
 const DeleteConfirmationModal = ({ isVisible, onCancel, children, confirmButton, cancelButton }) => {
+    const { t } = useTranslation();
     return (
         <Portal>
             <Modal visible={isVisible} onDismiss={onCancel} contentContainerStyle={{ backgroundColor: 'white', width:'85%', margin:'7.5%', borderRadius: 15, padding:5}}>
@@ -14,14 +16,14 @@ const DeleteConfirmationModal = ({ isVisible, onCancel, children, confirmButton,
                         mode="contained"
                         {...confirmButton}
                     >
-                        <SmallConfirmText>{confirmButton.title}</SmallConfirmText>
+                        <SmallConfirmText>{t(confirmButton.title)}</SmallConfirmText>
                     </ConfirmRedBtn>}
                     {cancelButton && <ConfirmRedBtn
                         buttonColor='#555353'
                         mode="contained"
                         {...cancelButton}
                     >
-                        <SmallConfirmText>{cancelButton.title}</SmallConfirmText>
+                        <SmallConfirmText>{t(cancelButton.title)}</SmallConfirmText>
                     </ConfirmRedBtn>}
                 </View>
 

@@ -1,11 +1,14 @@
 import React from 'react';
 import {BtnTextAuth, ContainerTop, RedBtn, Title} from "../../styles/styles";
 import {Icon} from "react-native-paper";
+import {useTranslation} from "react-i18next";
 
 export const RideAddedSucsess = ({ navigation }) => {
+    const { t } = useTranslation();
+
     return (
         <ContainerTop>
-            <Title> Your ride is created!</Title>
+            <Title> {t('your_ride_is_created')}</Title>
             <Icon
                 source="checkbox-marked-circle-outline"
                 color='#7a7a7a'
@@ -17,7 +20,7 @@ export const RideAddedSucsess = ({ navigation }) => {
                 mode="contained"
                 onPress={() => navigation.navigate('RideHistory')}
             >
-                <BtnTextAuth>Ok</BtnTextAuth>
+                <BtnTextAuth>{t('ok')}</BtnTextAuth>
             </RedBtn>
         </ContainerTop>
     );

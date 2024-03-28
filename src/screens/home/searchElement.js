@@ -7,12 +7,12 @@ import * as React from "react";
 import {Divider, IconButton} from "react-native-paper";
 import {format} from "date-fns";
 import {getAccessToken, GetApi, OrderEndpoints} from "../../services/api";
+import {useTranslation} from "react-i18next";
 
 
 
 export default function SearchElement({navigation, date , leaving, going, control , setValue, close}) {
-
-
+    const { t } = useTranslation();
      async function onSubmit() {
         const v = control._formValues
         const formattedStartDay = format(new Date(v.startDay), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
@@ -53,7 +53,7 @@ export default function SearchElement({navigation, date , leaving, going, contro
                     size={22}
                     icon='circle-double'/>
                 <ReviewBtn contentStyle={{ height: 44, justifyContent: 'flex-start'}} style={{paddingVertical:8, paddingHorizontal:'10%'}} rippleColor='gray' mode="text" onPress={()=>navigation.navigate('Places',{type:'departure'})} >
-                    <SearchText>   {leaving || 'Leaving from...'} </SearchText>
+                    <SearchText>   {leaving || t('leaving_from')} </SearchText>
                 </ReviewBtn>
             </View>
             <Divider style={{ width: '80%' }} horizontalInset={true} bold={true} />
@@ -64,7 +64,7 @@ export default function SearchElement({navigation, date , leaving, going, contro
                     size={22}
                     icon='circle-double'/>
                 <ReviewBtn contentStyle={{ height: 44, justifyContent: 'flex-start'}} style={{paddingVertical:8, paddingHorizontal:'10%'}} rippleColor='gray' mode="text" onPress={()=>navigation.navigate('Places',{type:'destination'})} >
-                    <SearchText>   {going || 'Going to...'} </SearchText>
+                    <SearchText>   {going || t('going_to')} </SearchText>
                 </ReviewBtn>
             </View>
             <Divider style={{ width: '80%' }} horizontalInset={true} bold={true} />
@@ -81,7 +81,7 @@ export default function SearchElement({navigation, date , leaving, going, contro
             <ReviewBtn contentStyle={{ height: 60, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:13, borderBottomRightRadius:13}} rippleColor='#ff373c' mode="text"
                 onPress={onSubmit}
             >
-                <SearchBtnText>Search</SearchBtnText>
+                <SearchBtnText>{t('search')}</SearchBtnText>
             </ReviewBtn>
         </SearchSurface>
     );

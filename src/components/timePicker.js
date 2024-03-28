@@ -5,6 +5,7 @@ import {ContainerMid, Title} from "../styles/styles";
 import styled from "styled-components/native";
 import {registerTranslation, TimePickerModal} from "react-native-paper-dates";
 import A2BNextIcon from "./next_icon";
+import {useTranslation} from "react-i18next";
 
 registerTranslation('en', {
     save: 'Save',
@@ -13,6 +14,7 @@ registerTranslation('en', {
     hour: 'Hour'
 })
 const TimePicker = ({ setValue, navigation }) => {
+    const { t } = useTranslation();
     const [time, setTime] = React.useState('11:00');
     const [visibleTime, setVisibleTime] = React.useState(false)
 
@@ -39,7 +41,7 @@ const TimePicker = ({ setValue, navigation }) => {
 
     return (
         <ContainerMid>
-           <Title>At what time will you pick passengers up? </Title>
+           <Title>{t('at_what_time_will_you_pick_passengers_up')}</Title>
             <View style={{width:'100%', alignItems:'center'}}>
             <TimeBtn
                 buttonColor='transparent'

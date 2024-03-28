@@ -5,8 +5,10 @@ import {View} from "react-native";
 import CheckboxForm from "../../components/checkboxForm";
 import A2BNextIcon from "../../components/next_icon";
 import Loading from "../../components/loading";
+import {useTranslation} from "react-i18next";
 
 const Description = ({setValue, navigation, onSubmit, isLoading}) => {
+    const { t } = useTranslation();
 
 
     return (
@@ -28,7 +30,7 @@ const Description = ({setValue, navigation, onSubmit, isLoading}) => {
                     color={'black'}
                     size={33}
                 />
-                <VehicleName>  Is smoking Allowed</VehicleName>
+                <VehicleName>  {t('is_smoking_allowed')}</VehicleName>
 
             </View>
             <CheckboxForm options={['Yes','On Stops','No']} setValue={setValue} param={'Smoking'}/>
@@ -38,7 +40,7 @@ const Description = ({setValue, navigation, onSubmit, isLoading}) => {
                     color={'black'}
                     size={33}
                 />
-                <VehicleName>   Are pets allowed</VehicleName>
+                <VehicleName>   {t('are_pets_allowed')}</VehicleName>
 
             </View>
             <CheckboxForm options={['Yes','Depends on pet','No']} setValue={setValue} param={'Pets'}/>
@@ -48,7 +50,7 @@ const Description = ({setValue, navigation, onSubmit, isLoading}) => {
                     color={'black'}
                     size={33}
                 />
-                <VehicleName>   Is music allowed</VehicleName>
+                <VehicleName>   {t('is_music_allowed')}</VehicleName>
 
             </View>
             <CheckboxForm options={['Yes','No']} setValue={setValue} param={'Music'}/>
@@ -58,7 +60,7 @@ const Description = ({setValue, navigation, onSubmit, isLoading}) => {
                     color={'black'}
                     size={33}
                 />
-                <VehicleName>   Is luggage allowed</VehicleName>
+                <VehicleName>   {t('is_luggage_allowed')}</VehicleName>
 
             </View>
             <CheckboxForm options={['Yes','No']} setValue={setValue} param={'Luggage'}/>
@@ -68,7 +70,7 @@ const Description = ({setValue, navigation, onSubmit, isLoading}) => {
                     color={'black'}
                     size={33}
                 />
-                <VehicleName>   Is package allowed</VehicleName>
+                <VehicleName>   {t('is_package_allowed')}</VehicleName>
 
             </View>
             <CheckboxForm options={['Yes','No']} setValue={setValue} param={'Package'}/>

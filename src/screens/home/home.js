@@ -9,11 +9,13 @@ import {useForm} from "react-hook-form";
 import PlacesSearch from "./placesSearch";
 import {OrdersList} from "./ordersList";
 import {ListFilter} from "../../components/listFilter";
+import {useTranslation} from "react-i18next";
 
 
 
 
 export default function HomeScreen({navigation}) {
+    const { t } = useTranslation();
     const Stack = createStackNavigator();
     const { control, handleSubmit, watch,setValue} = useForm();
     const startDay = control._formValues.startDay?.slice(2);
@@ -29,7 +31,7 @@ export default function HomeScreen({navigation}) {
             <Stack.Screen name="Home" options={{ headerShown: false }}>
                 {({ navigation }) => (
                 <ContainerMid>
-                    <Title>Your pick of rides at low prices</Title>
+                    <Title>{t('your_pick_of_rides_at_low_prices')}</Title>
                     <SearchElement
                         setValue={setValue}
                         control={control}
@@ -64,5 +66,4 @@ export default function HomeScreen({navigation}) {
             </Stack.Screen>
         </Stack.Navigator>
     );
-
 }

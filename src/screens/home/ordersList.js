@@ -20,7 +20,9 @@ import CarImage from "../../../assets/img/car-way.png"
 import BeltImage from "../../../assets/img/seat-belt.png"
 import {ListFilterModal} from "../../components/listFilterModal";
 import {OrderListHeader} from "./orderListHeader";
+import {useTranslation} from "react-i18next";
 export const  OrdersList = ({ navigation, data, setValue }) => {
+    const { t } = useTranslation();
     const [isModalVisible, setModalVisible] = useState(false);
 
 
@@ -113,7 +115,7 @@ export const  OrdersList = ({ navigation, data, setValue }) => {
                     </View>
                     <ListPlaces>{item.Order.DestionationParent}</ListPlaces>
                 </View>
-                <Text style={{marginTop:3, backgroundColor:'rgba(165, 190, 0, 0.1)', paddingHorizontal:6 , paddingVertical:2 , borderRadius:15, color:'rgba(165, 190, 0, 1)'}}>{formatDuration(item.Order.Duration)} estimated</Text>
+                <Text style={{marginTop:3, backgroundColor:'rgba(165, 190, 0, 0.1)', paddingHorizontal:6 , paddingVertical:2 , borderRadius:15, color:'rgba(165, 190, 0, 1)'}}>{formatDuration(item.Order.Duration)} {t('estimated')}</Text>
                 <View style={{flexDirection:'row', justifyContent:'space-between', width:'90%',marginTop:-6}}>
                     <ListTime>{formatTime(item.Order.PickUpTime)}</ListTime>
                     <ListTime>{formatTime(item.Order.ArrivalTime)}</ListTime>

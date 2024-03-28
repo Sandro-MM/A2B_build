@@ -3,16 +3,13 @@ import {IconButton} from "react-native-paper";
 import {ContainerMid, Title} from "../../styles/styles";
 import { getAccessToken, GetApi, headersTextToken, OrderEndpoints} from "../../services/api";
 import {Text, View} from "react-native";
+import {useTranslation} from "react-i18next";
 
 const RidePrice = ({ distance, navigation , setValue , control }) => {
-
+    const { t } = useTranslation();
     const greenPrice = 5;
     const greenCoef = 0.6;
     const redPrice = 0.9;
-
-
-
-
     const decrementCount = () => {
         if (val > 0) {
             setVal(count =>{
@@ -21,7 +18,6 @@ const RidePrice = ({ distance, navigation , setValue , control }) => {
         }
         setValue('RidePrice',val)
     };
-
     const incrementCount = () => {
         if (val < responseData.MaxPrice) {
             setVal(count =>{
@@ -30,9 +26,6 @@ const RidePrice = ({ distance, navigation , setValue , control }) => {
             setValue('RidePrice',val)
         }
     };
-
-
-
 
     const [responseData, setResponseData] = useState({"MaxPrice": 5} );
     const [val, setVal] = useState(0);
@@ -69,7 +62,7 @@ const RidePrice = ({ distance, navigation , setValue , control }) => {
                 size={32}
                 onPress={() => navigation.goBack()}
             />
-            <Title>Set your price per seat</Title>
+            <Title>{t('set_your_price_per_seat')}</Title>
 
             <View style={{flexDirection:'row', width:'100%', justifyContent:'space-around'}}>
                 <IconButton

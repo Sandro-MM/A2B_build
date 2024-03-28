@@ -4,6 +4,7 @@ import {View,StyleSheet,Text} from "react-native";
 import {SurfaceArea,TitleMap} from "../styles/styles";
 import MapViewDirections from "react-native-maps-directions";
 import Geocoding from 'react-native-geocoding';
+import {useTranslation} from "react-i18next";
 
 Geocoding.init('AIzaSyDqWRPH5ocus24BKGXLNnryvXbPTx7w9Bc');
 
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 const MapAToBViewScreen = ({title , startPoint, endPoint, setValue, startAddress, endAddress}) => {
-
+    const { t } = useTranslation();
     const [duration, setDuration] = useState(null);
     const [distance, setDistance] = useState(null);
     const [mapRegion, setMapRegion] = useState(null);
@@ -76,8 +77,8 @@ const MapAToBViewScreen = ({title , startPoint, endPoint, setValue, startAddress
                     <SurfaceArea>
                         <Text>{startAddress}</Text>
                         <Text>{endAddress}</Text>
-                        <Text>Duration: {duration}</Text>
-                        <Text>Distance: {distance}</Text>
+                        <Text>{t('duration')}: {duration}</Text>
+                        <Text>{t('distance')}: {distance}</Text>
                     </SurfaceArea>
 
                 </View>

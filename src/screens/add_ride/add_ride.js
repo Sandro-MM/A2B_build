@@ -18,8 +18,8 @@ import {useState} from "react";
 export default function AddRide({navigation, route}) {
     const {activeRidesNumber}= route.params;
     const {car}= route.params;
-    const fromTitle = 'Where are you leaving from?'
-    const toTitle = 'What is your destination?'
+    const fromTitle = 'where_are_you_leaving_from'
+    const toTitle = 'what_is_your_destination'
     const Stack = createStackNavigator();
     const { control, handleSubmit, watch,setValue} = useForm();
     const cf = control._formValues;
@@ -27,6 +27,7 @@ export default function AddRide({navigation, route}) {
     const [noBackNav,setNoBackNav]= useState(false)
     const [loadingItem,setLoading]= useState(false)
     async function createRide(data) {
+
         const selectedDate = control._formValues.selectedDate;
         const time = control._formValues.time;
         const [year, month, day] = selectedDate.split('-').map(Number);

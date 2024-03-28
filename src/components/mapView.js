@@ -7,6 +7,7 @@ import {Icon, } from "react-native-paper";
 import A2BNextIcon from "./next_icon";
 import {useDebouncedCallback} from "use-debounce";
 import MapMagnifyAnimation from "./mapMagnifyAnimation";
+import {useTranslation} from "react-i18next";
 
 
 
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
 });
 
 const MapViewScreen = ({title,handleMapChoose, setValue, valueName}) => {
+    const { t } = useTranslation();
     const [addressValue, setAddressValue] = useState('');
     const [visible, setVisible] = useState(false);
     const mapRef = useRef(null);
@@ -133,7 +135,7 @@ const MapViewScreen = ({title,handleMapChoose, setValue, valueName}) => {
 
             <View style={styles.container}>
                 <View style={{zIndex:2, flex:0.5, position:'absolute', backgroundColor: '#F2F3F4', top:0, left:0, width:'100%', paddingLeft:4, paddingTop:5}}>
-                    <TitleMap>{title}</TitleMap>
+                    <TitleMap>{t(title)}</TitleMap>
                     <SurfaceArea>
                         <GooglePlacesAutocomplete
                             ref={autoCompleteRef}

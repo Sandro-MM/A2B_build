@@ -1,16 +1,19 @@
 import { Text, View} from 'react-native';
 import {Divider, IconButton} from "react-native-paper";
 import * as SecureStore from "expo-secure-store";
+import {useTranslation} from "react-i18next";
 
 
 
 export default function Navigation({ navigation, activeButton }) {
+    const { t } = useTranslation();
+
     const buttonDetails = [
-        { icon: 'magnify', route: 'HomeScreen', label: 'Search' },
-        { icon: 'plus-circle-outline', route: 'AddRideCheck', label: 'Publish' },
-        { icon: 'magnify', route: 'RideHistory', label: 'Your Rides' },
-        { icon: 'chat-outline', route: 'Notifications', label: 'Inbox' },
-        { icon: 'account-circle-outline', route: 'Profile', label: 'Profile', params: { IsUserOrder: 1, navigation: navigation } }
+        { icon: 'magnify', route: 'HomeScreen', label: 'search' },
+        { icon: 'plus-circle-outline', route: 'AddRideCheck', label: 'publish' },
+        { icon: 'magnify', route: 'RideHistory', label: 'your_rides' },
+        { icon: 'chat-outline', route: 'Notifications', label: 'inbox' },
+        { icon: 'account-circle-outline', route: 'Profile', label: 'profile', params: { IsUserOrder: 1, navigation: navigation } }
     ];
 
     const buttonStyle = { marginTop: 0, marginHorizontal: '1.8%' };
@@ -42,7 +45,7 @@ export default function Navigation({ navigation, activeButton }) {
                             size={30}
                             onPress={() => checkAccessToken(button.route, button?.params)}
                         />
-                        <Text style={[textStyle, { color: activeButton === button.route ? '#FF5A5F' : '#7a7a7a' }]}>{button.label}</Text>
+                        <Text style={[textStyle, { color: activeButton === button.route ? '#FF5A5F' : '#7a7a7a' }]}>{t(button.label)}</Text>
                     </View>
                 ))}
             </View>

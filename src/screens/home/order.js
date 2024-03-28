@@ -18,10 +18,9 @@ import Loading from "../../components/loading";
 import CarImage from "../../../assets/img/car-vertical.png";
 import BlueImage from "../../../assets/img/blue-big.png";
 import GreenImage from "../../../assets/img/green-big.png";
+import {useTranslation} from "react-i18next";
 export default function Order({route}) {
-
-
-
+    const { t } = useTranslation();
     const { item } = route.params;
     const { destination } = route.params;
     const { navigation } = route.params;
@@ -137,12 +136,12 @@ export default function Order({route}) {
                                 <Button
                                     style={{position:'absolute', right:-40, top:-7}}
                                     onPress={()=> navigation.navigate('MapPointViewScreen',{title:'Departure', startPoint:{latitude: data.DepartureLatitude, longitude: data.DepartureLongitude}, startAddress:data.Departure})}>
-                                    <Text> View</Text>
+                                    <Text>{t('view')} </Text>
                                 </Button>
                             </View>
 
                             <Text style={{ position:'absolute' , top:40, fontSize:15, fontWeight:'500'}}>{formatTime(data.PickUpTime)}</Text>
-                            <Text style={{marginTop:0, backgroundColor:'rgba(165, 190, 0, 0.1)', paddingHorizontal:6 , paddingVertical:2 , borderRadius:15, color:'rgba(165, 190, 0, 1)', fontSize:15, width:135}}>{formatDuration(data.Duration)} estimated</Text>
+                            <Text style={{marginTop:0, backgroundColor:'rgba(165, 190, 0, 0.1)', paddingHorizontal:6 , paddingVertical:2 , borderRadius:15, color:'rgba(165, 190, 0, 1)', fontSize:15, width:135}}>{formatDuration(data.Duration)}{ t('estimated')}</Text>
                             <View style={{ justifyContent:'space-between', marginLeft:0, marginTop:-10, marginBottom:10}}>
                             <Text style={{fontSize:18, fontWeight:'600'}}>{data.DestinationParent}</Text>
                                 <Button
@@ -154,7 +153,7 @@ export default function Order({route}) {
                         </View>
                     </View>
 
-                    <Text style={{marginTop:20, backgroundColor:'rgba(147,147,147,0.1)', paddingHorizontal:6 , paddingVertical:2 , borderRadius:15, color:'#667085', fontSize:15, width:160, marginBottom:'2%'}}> Distance {data.Distnace} Km</Text>
+                    <Text style={{marginTop:20, backgroundColor:'rgba(147,147,147,0.1)', paddingHorizontal:6 , paddingVertical:2 , borderRadius:15, color:'#667085', fontSize:15, width:160, marginBottom:'2%'}}>{t('distance')}  {data.Distnace} Km</Text>
 
                     <View style={{ flexDirection:'row', justifyContent:'space-between'}}>
                         <View  style={{width:'101%', height:1, backgroundColor:'transparent', borderColor:'#667085', borderBottomWidth:1, borderStyle:'dashed', position:'absolute', top:'50%', marginLeft:2}}></View>
@@ -165,7 +164,7 @@ export default function Order({route}) {
 
                     <View style={{justifyContent:'space-between', flexDirection:'row', marginTop:'1%'}}>
                         <Text style={{fontSize:20, fontWeight:'500', color:'#667085'}}>
-                            Price per passenger
+                            {t('price_per_passenger')}
                         </Text>
                         <Text style={{fontWeight:'600', fontSize:22}}>
                             ₾ {data.Price}
@@ -173,7 +172,7 @@ export default function Order({route}) {
                     </View>
                 </View>
                 <Text style={{fontSize:20, fontWeight:'500', color:'#667085', marginTop: '3%', marginLeft:16}}>
-                    About Driver
+                    {t('about_driver')}
                 </Text>
                 <TouchableHighlight
                     style={{ marginVertical:'1%'}}
@@ -240,15 +239,15 @@ export default function Order({route}) {
                 </View>
                 { data.UserStatus === 0 &&
                 <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '40%', position:'absolute', bottom:'2%', left:'30%'}} buttonColor='#FF5A5F' mode='contained' onPress={onSubmit}>
-                    <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>Ride!</SmallBtnText>
+                    <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('ride')}</SmallBtnText>
                 </Button>}
                 { data.UserStatus === 1 &&
                     <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '50%', position:'absolute', bottom:'2%', left:'30%'}} buttonColor='#FF5A5F' mode='contained' onPress={()=>console.log(2)}>
-                        <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>Cancel Order</SmallBtnText>
+                        <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('cancel_order')}</SmallBtnText>
                     </Button>}
                 { data.UserStatus === 2 &&
                     <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '50%', position:'absolute', bottom:'2%', left:'30%'}} buttonColor='#FF5A5F' mode='contained' onPress={()=>console.log(3)}>
-                        <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>Cancel Ride</SmallBtnText>
+                        <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('cancel_ride')}</SmallBtnText>
                     </Button>}
             </View>
             }

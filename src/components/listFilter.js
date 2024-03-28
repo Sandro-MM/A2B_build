@@ -8,9 +8,10 @@ import {
 import {format} from "date-fns";
 import {getAccessToken, GetApi, OrderEndpoints} from "../services/api";
 import {Slider} from "@miblanchard/react-native-slider";
+import {useTranslation} from "react-i18next";
 
 export const ListFilter = ({navigation, control, setValue}) => {
-
+    const { t } = useTranslation();
 
     const [checked0_6, setChecked0_6] = React.useState(false);
     const [checked6_12, setChecked6_12] = React.useState(false);
@@ -84,11 +85,11 @@ export const ListFilter = ({navigation, control, setValue}) => {
                         value={sliderVal}
                         onValueChange={value => setSliderVal(value)}
                     />
-                    <Text>Price: {sliderVal[0]}-{sliderVal[1]}</Text>
+                    <Text> {t('price')}: {sliderVal[0]}-{sliderVal[1]}</Text>
                 </View>
 
                 <Subtitle>
-                    Departure Time
+                    {t('departure_time')}
                 </Subtitle>
                 <View style={{justifyContent:'flex-start', width:'70%'}} >
                     <View  style={{flexDirection:'row', alignItems:'center'}}>
@@ -163,7 +164,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                             size={20}
                             icon={OrderIconMapping[1]}
                         />
-                        <Text style={{fontSize:16, marginLeft:-5}}> Smoking Allowed</Text>
+                        <Text style={{fontSize:16, marginLeft:-5}}> {t('smoking_allowed')}</Text>
                         <Text style={{fontSize:16,position:'absolute', right:0}}>
                             {control._formValues.results.ComfortCountModel.SmokingAllowedCount}</Text>
                     </View>
@@ -181,7 +182,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                             size={20}
                             icon={OrderIconMapping[4]}
                         />
-                        <Text style={{fontSize:16, marginLeft:-5}}> Pets Allowed</Text>
+                        <Text style={{fontSize:16, marginLeft:-5}}> {t('pets_allowed')}</Text>
                         <Text style={{fontSize:16,position:'absolute', right:0}}>
                             {control._formValues.results.ComfortCountModel.PetsAllowedCount}</Text>
                     </View>
@@ -199,7 +200,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                             size={20}
                             icon={OrderIconMapping[7]}
                         />
-                        <Text style={{fontSize:16, marginLeft:-5}}> Music Allowed</Text>
+                        <Text style={{fontSize:16, marginLeft:-5}}> {t('music_allowed')}</Text>
                         <Text style={{fontSize:16,position:'absolute', right:0}}>
                             {control._formValues.results.ComfortCountModel.MusicAllowedCount}</Text>
                     </View>
@@ -217,7 +218,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                             size={20}
                             icon={OrderIconMapping[9]}
                         />
-                        <Text style={{fontSize:16, marginLeft:-5}}> Luggage Allowed</Text>
+                        <Text style={{fontSize:16, marginLeft:-5}}> {t('luggage_allowed')}</Text>
                         <Text style={{fontSize:16,position:'absolute', right:0}}>  {control._formValues.results.ComfortCountModel.LuggageAllowedCount}</Text>
                     </View>
                     <View  style={{flexDirection:'row', alignItems:'center', width:250}}>
@@ -234,12 +235,12 @@ export const ListFilter = ({navigation, control, setValue}) => {
                             size={20}
                             icon={OrderIconMapping[11]}
                         />
-                        <Text style={{fontSize:16, marginLeft:-5}}> Package Delivery</Text>
+                        <Text style={{fontSize:16, marginLeft:-5}}>{t('package_delivery')}</Text>
                         <Text style={{fontSize:16,position:'absolute', right:0}}> {control._formValues.results.ComfortCountModel.PackageDeliveryCount}</Text>
                     </View>
                 </View>
                 <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '40%', marginTop:'6%'}} buttonColor='#FF5A5F' mode='contained' onPress={onSubmit}>
-                    <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>Filter</SmallBtnText>
+                    <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('filter')}</SmallBtnText>
                 </Button>
             </View>
 

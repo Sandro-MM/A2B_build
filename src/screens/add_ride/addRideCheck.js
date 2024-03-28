@@ -19,10 +19,13 @@ import {createStackNavigator} from "@react-navigation/stack";
 import {EmailVerification} from "../register_login/emailVerification";
 import {useForm} from "react-hook-form";
 import Next_icon from "../../components/next_icon";
+import {useTranslation} from "react-i18next";
 
 
 const Stack = createStackNavigator();
 export default function AddRideCheck({navigation}) {
+    const { t } = useTranslation();
+
     const { control, handleSubmit,formState ,formState: { errors }  } = useForm();
     const  [activeRidesNumber, setActiveRidesNumber ] = useState(null)
     const  [userContactInfo, setUserContactInfo ] = useState(null)
@@ -188,7 +191,7 @@ export default function AddRideCheck({navigation}) {
         <View style={{flex:1}}>
             {activeRidesNumber && userContactInfo && userCars ? (
                 <ContainerMid>
-                    <Title>Vehicles</Title>
+                    <Title>{t('vehicles')}</Title>
                     {
                         userCars ? <RenderCars userCars={userCars}/> :
 
@@ -223,7 +226,7 @@ export default function AddRideCheck({navigation}) {
                                 color: '#FF5A5F'
                             }}
                         >
-                            You Have Maximum Active Rides!
+                            {t('you_have_maximum_active_rides')}
                         </Text>
                     )}
                 </ContainerMid>
@@ -239,8 +242,8 @@ export default function AddRideCheck({navigation}) {
             <View style={{flex:1}}>
                 {activeRidesNumber && userContactInfo && userCars ? (
                     <ContainerTop>
-                        <Title>Contact Information</Title>
-                        <ProfileAge style={{marginLeft:55, marginBottom:8}}>  Email </ProfileAge>
+                        <Title>{t('contact_information')}</Title>
+                        <ProfileAge style={{marginLeft:55, marginBottom:8}}>{t('email')}</ProfileAge>
                         <View style={{ height: 38,  flexDirection:'row', width:'80%'}} rippleColor='gray' mode="text" onPress={() => console.log('Pressed')}>
                             <Icon
                                 source="email"
@@ -257,17 +260,17 @@ export default function AddRideCheck({navigation}) {
                             ) : <Button
                                 style={{position:'absolute', right:0, top:-11}}
                                 onPress={()=> navigation.navigate('VerifyEmail')}>
-                                <Text> Verify</Text>
+                                <Text> {t('verify')}</Text>
                             </Button>}
                         </View>
-                        <ProfileAge style={{marginLeft:55, marginBottom:8}}>  Phone number </ProfileAge>
+                        <ProfileAge style={{marginLeft:55, marginBottom:8}}>  {t('phone_number')} </ProfileAge>
                         <View style={{ height: 38,  flexDirection:'row', width:'80%'}} rippleColor='gray' mode="text" onPress={() => console.log('Pressed')}>
                             <Icon
                                 source="cellphone"
                                 color='#FF5A5F'
                                 size={18}
                             />
-                            <Text style={{fontWeight:'500', color: '#2f2f2f', fontSize: 16, lineHeight: 18, marginBottom: 10}}>   {userContactInfo?.Phone || 'No Phone Number'} </Text>
+                            <Text style={{fontWeight:'500', color: '#2f2f2f', fontSize: 16, lineHeight: 18, marginBottom: 10}}>   {userContactInfo?.Phone || t('no_phone_number')} </Text>
                             {userContactInfo?.IsConfirmedPhone ? (
                                 <Icon
                                     source="check-decagram"
@@ -277,7 +280,7 @@ export default function AddRideCheck({navigation}) {
                             ) : <Button
                                 style={{position:'absolute', right:0, top:-11}}
                                 onPress={()=> navigation.navigate('VerifyPhoneNumber', { phoneNumber: userContactInfo?.Phone , nav:'Check'})}>
-                                <Text> Verify</Text>
+                                <Text> {t('verify')}</Text>
                             </Button>}
                         </View>
 
@@ -289,7 +292,7 @@ export default function AddRideCheck({navigation}) {
                                         mode="contained"
                                         onPress={() => navigation.navigate('AddRide', { activeRidesNumber: activeRidesNumber.RideNumber, car:Car })}
                                     >
-                                        <BtnTextAuth>Create Ride</BtnTextAuth>
+                                        <BtnTextAuth> {t('create_ride')}</BtnTextAuth>
                                     </RedBtn>
                             ) : (
                                 <Text
@@ -300,7 +303,7 @@ export default function AddRideCheck({navigation}) {
                                         color: '#FF5A5F'
                                     }}
                                 >
-                                    Confirm Contact Information
+                                    {t('confirm_contact_information')}
                                 </Text>
                         )}
                     </ContainerTop>

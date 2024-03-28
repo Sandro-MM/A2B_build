@@ -3,16 +3,15 @@ import {Controller} from 'react-hook-form';
 import A2bInput from "./formInput";
 import {ContainerMid, ContainerTop, SmallBtnText, SmallRedBtn, Title} from "../styles/styles";
 import {IconButton} from "react-native-paper";
+import {useTranslation} from "react-i18next";
 
 const SettingInput = (props) => {
-
+    const { t } = useTranslation();
     const title = props.route.params.title;
     const name = props.route.params.name;
     const defaultValue = props.route.params.defaultValue;
     const control = props.route.params.control
     const handleSubmit = props.route.params.handleSubmit
-
-
 
     return (
         <ContainerTop style={{paddingTop:100}}>
@@ -23,7 +22,7 @@ const SettingInput = (props) => {
                 size={32}
                 onPress={() => props.navigation.goBack()}
             />
-            <Title>{title}</Title>
+            <Title>{t(title)}</Title>
             <Controller
                 control={control}
                 render={({ field }) => (

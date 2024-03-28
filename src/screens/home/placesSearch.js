@@ -5,10 +5,12 @@ import {View, Text, Keyboard} from "react-native";
 import {useEffect, useRef, useState} from "react";
 import {IconButton} from "react-native-paper";
 import keyboard from "react-native-web/src/exports/Keyboard";
+import {useTranslation} from "react-i18next";
 
 
 
 export default function PlacesSearch({navigation, setValue , type ,handleNavigation}) {
+    const { t } = useTranslation();
     const [addressValue, setAddressValue] = useState('');
     const autoCompleteRef = useRef(null);
 
@@ -44,7 +46,7 @@ export default function PlacesSearch({navigation, setValue , type ,handleNavigat
                 }}
                 debounce={700}
                 minLengthAutocomplete={3}
-                placeholder={addressValue || 'search'}
+                placeholder={addressValue || t('search')}
                 styles={{
                     textInputContainer: {
                         width: '85%',

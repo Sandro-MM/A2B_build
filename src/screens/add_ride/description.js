@@ -4,8 +4,11 @@ import {IconButton} from "react-native-paper";
 import {ContainerMid, TitleDesc} from "../../styles/styles";
 import A2btextarea from "../../components/a2btextarea";
 import A2BNextIcon from "../../components/next_icon";
+import {useTranslation} from "react-i18next";
 
 const Description = ({name,control, navigation, handleSubmit}) => {
+    const { t } = useTranslation();
+
     return (
         <ContainerMid style={{paddingTop:25}}>
             <IconButton
@@ -15,7 +18,7 @@ const Description = ({name,control, navigation, handleSubmit}) => {
                 size={32}
                 onPress={() => navigation.goBack()}
             />
-            <TitleDesc>Add details about your ride!</TitleDesc>
+            <TitleDesc>t{('add_details_about_your_ride')}</TitleDesc>
             <Controller
                 control={control}
                 render={({ field }) => (

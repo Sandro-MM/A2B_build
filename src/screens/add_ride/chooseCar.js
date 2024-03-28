@@ -4,13 +4,14 @@ import {Container, Title} from "../../styles/styles";
 import { CarEndpoints, getAccessToken, GetApi, headersTextToken } from "../../services/api";
 import {Text, TouchableHighlight, View} from "react-native";
 import {vehicleTypeMappingByName} from "../../styles/vehicleMappings";
+import {useTranslation} from "react-i18next";
 
 const ChooseCar = ({ handleCarChoose, navigation }) => {
     const viewStyle = { height: 65};
     const iconStyle = { marginRight: -20, position: 'absolute', marginTop: 15 };
 
     const [responseData, setResponseData] = useState([]);
-
+    const { t } = useTranslation();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -52,7 +53,7 @@ const ChooseCar = ({ handleCarChoose, navigation }) => {
                 size={32}
                 onPress={() => navigation.goBack()}
             />
-            <Title>Choose your Car</Title>
+            <Title>{t('choose_your_car')}</Title>
 
             {responseData.map(car => (
                 <TouchableHighlight

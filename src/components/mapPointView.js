@@ -3,6 +3,7 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {View,StyleSheet,Text} from "react-native";
 import {SurfaceArea,TitleMap} from "../styles/styles";
 import Geocoding from 'react-native-geocoding';
+import {useTranslation} from "react-i18next";
 
 Geocoding.init('AIzaSyDqWRPH5ocus24BKGXLNnryvXbPTx7w9Bc');
 
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
 });
 
 const MapPointViewScreen = ({route}) => {
-
+    const { t } = useTranslation();
     const { title } = route.params;
     const { startPoint } = route.params;
     const { startAddress } = route.params;
@@ -70,7 +71,7 @@ const MapPointViewScreen = ({route}) => {
                 <View style={{zIndex:2, flex:0.5, position:'absolute', backgroundColor: '#F2F3F4', top:0, left:0, width:'100%', paddingLeft:4, paddingTop:5}}>
                     <TitleMap>{title}</TitleMap>
                     <SurfaceArea>
-                        <Text>{startAddress}</Text>
+                        <Text>{t(startAddress)}</Text>
                     </SurfaceArea>
 
                 </View>

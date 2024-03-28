@@ -9,11 +9,13 @@ import {
 import {Divider, IconButton} from "react-native-paper";
 import { TextInput } from 'react-native-paper';
 import {colorMapping, fuelTypeMapping, vehicleTypeMapping} from "../styles/vehicleMappings";
+import {useTranslation} from "react-i18next";
 
 
 const CarList = ({ data, title, placeholder, onSelectItem, IconMode, navigation }) => {
     const [search, setSearch] = useState('');
     const [filteredData, setFilteredData] = useState(data);
+    const { t } = useTranslation();
 
     const handleReset = () => {
         handleSearch('');
@@ -90,7 +92,7 @@ const CarList = ({ data, title, placeholder, onSelectItem, IconMode, navigation 
 
     return (
         <Container>
-            <TitleAddVehicle>{title}</TitleAddVehicle>
+            <TitleAddVehicle>{t(title)}</TitleAddVehicle>
             <FormInput
                 underlineColor='transparent'
                 activeUnderlineColor='transparent'
