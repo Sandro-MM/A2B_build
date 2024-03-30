@@ -4,7 +4,7 @@ import {Button, IconButton} from "react-native-paper";
 import {useTranslation} from "react-i18next";
 
 export const OrderListHeader = ({ setModalVisible, navigation, departure, destination, OrdersTotalCount ,scrollY}) => {
-
+    const { t } = useTranslation();
     const [expanded, setExpanded] = useState(false);
 
     const categoryContainerTranslateY = scrollY.interpolate({
@@ -37,14 +37,14 @@ export const OrderListHeader = ({ setModalVisible, navigation, departure, destin
                             {departure} → {destination}
                         </Text>
                         <Button style={{ position: 'absolute', right: 0, top: 1 }} onPress={() => navigation.navigate('ListFilterScreen')}>
-                            <Text> Filter</Text>
+                            <Text> {t('filter')}</Text>
                         </Button>
                     </View>
                 </TouchableHighlight>
             </View>
             <Animated.View style={[styles.categoryContainer, { height:categoryContainerTranslateY ,display: expanded ? 'none' : 'block' }]}>
                 <View style={{ width: '50%', alignItems: 'center' }}>
-                    <Text style={styles.categoryTitle}>Car Pool</Text>
+                    <Text style={styles.categoryTitle}>{t('car_pool')}</Text>
                     <View style={{ flexDirection: 'row', marginLeft:'-12%'}}>
                         <IconButton icon='car' size={25} iconColor={'#667085'} style={styles.categoryIcon} />
                         <Text style={styles.categoryText}>
@@ -54,7 +54,7 @@ export const OrderListHeader = ({ setModalVisible, navigation, departure, destin
 
                 </View>
                 <View style={{ width: '50%', alignItems: 'center' }}>
-                    <Text style={styles.categoryTitle}>Intercity</Text>
+                    <Text style={styles.categoryTitle}>{t('intercity')}</Text>
                     <View style={{ flexDirection: 'row', marginLeft:'-12%'}}>
                         <IconButton icon='bus' size={25} iconColor={'#667085'} style={styles.categoryIcon} />
                         <Text style={styles.categoryText}>

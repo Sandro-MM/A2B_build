@@ -6,6 +6,7 @@ import UserNoIMage from "../../../assets/img/default_user.png";
 import {Divider, IconButton} from "react-native-paper";
 import DeleteConfirmationModal from "../../components/modal";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 
 
 
@@ -31,9 +32,10 @@ export  const Passengers = ({route}) => {
     const fetchData = async (id) => {
         try {
             const accessToken = await getAccessToken();
-
+            const language = await SecureStore.getItemAsync('userLanguage');
             const fetchedData = await GetApi(`${OrderEndpoints.get.getPassengerRequests}${id}`, {
                 headers: {
+                     'Accept-Language': language,
                     Authorization: `Bearer ${accessToken}`,
                 },
             });

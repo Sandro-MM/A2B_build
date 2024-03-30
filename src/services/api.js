@@ -41,7 +41,7 @@ export const headers = {headers :{'accept': 'text/plain',
 export const headersText = {headers :{'accept': 'text/plain',
         'Content-Type': 'application/json'}};
 export const headersTextToken = {headers :{'accept': 'text/plain',
-        'Content-Type': 'application/json' ,'Accept-Language': 'ka-GE'}};
+        'Content-Type': 'application/json'}};
 export const accEndpoints = {
     get:{
         Profile: '/account/profile',

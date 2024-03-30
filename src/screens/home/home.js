@@ -22,7 +22,7 @@ export default function HomeScreen({navigation}) {
     const endDay = control._formValues.endDay?.slice(2);
     const leaving =  control._formValues.departure || null
     const going =  control._formValues.destination || null
-    const startDateFormatted = startDay ? startDay : "Today";
+    const startDateFormatted = startDay ? startDay : "today";
     const endDateFormatted = endDay ? `/${endDay}` : "";
 
 
@@ -36,7 +36,7 @@ export default function HomeScreen({navigation}) {
                         setValue={setValue}
                         control={control}
                         navigation={navigation}
-                        date={`${startDateFormatted}${endDateFormatted}`}
+                        date={t(`${startDateFormatted}${endDateFormatted}`)}
                         leaving={leaving}
                         going={going}
                     />

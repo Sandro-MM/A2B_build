@@ -4,6 +4,7 @@ import {ContainerMid, Title} from "../../styles/styles";
 import { getAccessToken, GetApi, headersTextToken, OrderEndpoints} from "../../services/api";
 import {Text, View} from "react-native";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 
 const RidePrice = ({ distance, navigation , setValue , control }) => {
     const { t } = useTranslation();
@@ -32,9 +33,11 @@ const RidePrice = ({ distance, navigation , setValue , control }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const language = await SecureStore.getItemAsync('userLanguage');
                 const accessToken = await getAccessToken();
                     const responseData = await GetApi(`${OrderEndpoints.get.maxPrice}?orderDistance=${distance}&`, {
                         headers: {
+                            'Accept-Language': language,
                             ...headersTextToken.headers,
                             Authorization: `Bearer ${accessToken}`,
                         },

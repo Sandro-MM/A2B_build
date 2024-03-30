@@ -1,21 +1,41 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import * as SecureStore from "expo-secure-store";
+
 
 const resources = {
     en: {
         translation: require('./src/assets/i18n/en.json'),
     },
-    // Add other languages rrhere, referencing their JSON files
+    ka: {
+        translation: require('./src/assets/i18n/ge.json'),
+    },
+    ru: {
+        translation: require('./src/assets/i18n/ru.json'),
+    },
 };
 
 i18n
-    .use(initReactI18next) // Initializes i18next for React
+    .use(initReactI18next)
     .init({
         resources,
-        lng: 'en', // Initial language
+        lng: 'en',
         interpolation: {
-            escapeValue: false, // Prevent escaping of special characters
+            escapeValue: false,
         },
     });
+
+const loadLanguageFromStorage = async () => {
+    try {
+        const storedLanguage = await SecureStore.getItemAsync('userLanguage');
+        if (storedLanguage) {
+            await i18n.changeLanguage(storedLanguage);
+        }
+    } catch (error) {
+        console.error('Error loading language from storage:', error);
+    }
+};
+
+loadLanguageFromStorage();
 
 export default i18n;

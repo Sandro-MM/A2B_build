@@ -13,6 +13,7 @@ import {Icon} from "react-native-paper";
 import DeleteConfirmationModal from "../../components/modal";
 import {BackButton} from "../../components/backbutton";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 const Reviews = (props) => {
     const profileType = props.route.params.profileType;
     const profileName = props.route.params.profileName;
@@ -25,10 +26,12 @@ const Reviews = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const language = await SecureStore.getItemAsync('userLanguage');
                 const accessToken = await getAccessToken();
                 if (profileType === true) {
                 const response = await GetApi(accEndpoints.get.UserReview, {
                     headers: {
+                         'Accept-Language': language,
                         ...headersTextToken.headers,
                         Authorization: `Bearer ${accessToken}`,
                     },

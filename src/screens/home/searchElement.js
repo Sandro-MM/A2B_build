@@ -8,6 +8,7 @@ import {Divider, IconButton} from "react-native-paper";
 import {format} from "date-fns";
 import {getAccessToken, GetApi, OrderEndpoints} from "../../services/api";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 
 
 
@@ -25,8 +26,10 @@ export default function SearchElement({navigation, date , leaving, going, contro
         const formattedEnd = utcTimeEndDay.toISOString();
         try {
             const accessToken = await getAccessToken();
+            const language = await SecureStore.getItemAsync('userLanguage');
             const responseData = await GetApi(`${OrderEndpoints.get.orders}?departureLatitude=${v.departureLatitude}&departureLongitude=${v.departureLongitude}&destinationLatitude=${v.destinationLatitude}&destinationLongitude=${v.destinationLongitude}&date=${formattedStart}&date=${formattedEnd}&luggageAllowed=false&musicAllowed=false&petsAllowed=false&smokingAllowed=false&packageDelivery=false&priceFrom=0&priceTo=500&Page=1&Offset=50&`, {
                 headers: {
+                     'Accept-Language': language,
                     Authorization: `Bearer ${accessToken || null}`,
                 },
             });

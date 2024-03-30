@@ -168,7 +168,7 @@ const SettingsPage = (props) => {
                 underlayColor='rgba(128, 128, 128, 0.5)'
             >
                 <View style={viewStyle}>
-                    <SettingsVal style={{color:'#FF5A5F'}}>Log out</SettingsVal>
+                    <SettingsVal style={{color:'#FF5A5F'}}>{t('log_out')}</SettingsVal>
                     <Icon size={30} color={'gray'} source={'chevron-right'}/>
                 </View>
             </TouchableHighlight>
@@ -178,7 +178,7 @@ const SettingsPage = (props) => {
                 underlayColor='rgba(128, 128, 128, 0.5)'
             >
                 <View style={viewStyle}>
-                    <SettingsVal style={{color:'#FF5A5F'}}>Deactivate account</SettingsVal>
+                    <SettingsVal style={{color:'#FF5A5F'}}>{t('deactivate_account')}</SettingsVal>
                     <Icon size={30} color={'gray'} source={'chevron-right'}/>
                 </View>
             </TouchableHighlight>

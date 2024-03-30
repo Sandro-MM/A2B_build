@@ -44,8 +44,9 @@ export default function App() {
     const Stack = createStackNavigator();
 
     return (
-        <I18nextProvider i18n={i18n}>
+
         <Provider theme={theme}>
+            <I18nextProvider i18n={i18n}>
             <NavigationContainer>
                 <StatusBar
                     backgroundColor="#FFF"
@@ -91,8 +92,9 @@ export default function App() {
                     <Stack.Screen name="DateSettingInput"  options={{ headerShown: false , animationEnabled: false}} component={DateSettingInput} />
                 </Stack.Navigator>
             </NavigationContainer>
+            </I18nextProvider>
         </Provider>
-        </I18nextProvider>
+
     );
 }
 

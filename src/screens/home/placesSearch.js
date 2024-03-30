@@ -39,7 +39,7 @@ export default function PlacesSearch({navigation, setValue , type ,handleNavigat
                 renderRow={rowData => {
                     return (
                         <View style={{minWidth:300,width:'77%', overflow:'hidden'}}>
-                            <Text style={{fontSize:18 , lineHeight:18, marginBottom:2, width:'100%'}}>{rowData.structured_formatting.main_text}</Text>
+                            <Text style={{fontSize:18 , lineHeight:22, marginBottom:2, width:'100%'}}>{rowData.structured_formatting.main_text}</Text>
                             <Text style={{fontSize:14, fontWeight:'400', marginLeft:4, color:'#808080'}} >{rowData.structured_formatting.secondary_text}</Text>
                         </View>
                     )

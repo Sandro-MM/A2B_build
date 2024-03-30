@@ -20,6 +20,7 @@ import {EmailVerification} from "../register_login/emailVerification";
 import {useForm} from "react-hook-form";
 import Next_icon from "../../components/next_icon";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 
 
 const Stack = createStackNavigator();
@@ -60,21 +61,25 @@ export default function AddRideCheck({navigation}) {
         try {
             setCar(null)
             const accessToken = await getAccessToken();
+            const language = await SecureStore.getItemAsync('userLanguage');
 
             // Make all API calls simultaneously
             const [ActiveRidesNumberGet, UserContactInfoGet, UserCarsGet] = await Promise.all([
                 GetApi(accEndpoints.get.ActiveRidesNumber, {
                     headers: {
+                        'Accept-Language': language,
                         Authorization: `Bearer ${accessToken}`,
                     },
                 }),
                 GetApi(accEndpoints.get.IsUserVerified, {
                     headers: {
+                        'Accept-Language': language,
                         Authorization: `Bearer ${accessToken}`,
                     },
                 }),
                 GetApi(CarEndpoints.get.Cars, {
                     headers: {
+                        'Accept-Language': language,
                         Authorization: `Bearer ${accessToken}`,
                     },
                 })
@@ -158,13 +163,16 @@ export default function AddRideCheck({navigation}) {
                             />
                             <View>
                                 <Text style={{ fontSize: 15 }}>{car.Manufacturer} {car.Model}</Text>
-                                <Text style={{ fontSize: 14, color: '#667085' }}>{car.Color}</Text>
-                                <IconButton
-                                    style={{ width: 16, height: 16, position: 'absolute', bottom: 3, right: 0 }}
-                                    iconColor={colorMappingByName[car.Color]}
-                                    size={16}
-                                    icon='circle'
-                                />
+                                <View style={{flexDirection:'row'}}>
+                                    <Text style={{ fontSize: 14, color: '#667085' }}>{car.Color}</Text>
+                                    <IconButton
+                                        style={{ width: 16, height: 16, marginTop:2}}
+                                        iconColor={colorMappingByName[car.Color]}
+                                        size={16}
+                                        icon='circle'
+                                    />
+                                </View>
+
                             </View>
                             <View style={{position:'absolute', right:0, top:3, zIndex:-1}}>
                                 <RadioButton

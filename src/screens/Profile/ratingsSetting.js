@@ -13,6 +13,7 @@ import {Icon} from "react-native-paper";
 import LoadingSmall from "../../components/loading-small";
 import DeleteConfirmationModal from "../../components/modal";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 
 export default function RatingsSetting(props) {
     const { t } = useTranslation();
@@ -110,11 +111,11 @@ export default function RatingsSetting(props) {
     const fetchData = async (page, offset, type) => {
         try {
             const accessToken = await getAccessToken();
-
+            const language = await SecureStore.getItemAsync('userLanguage');
             const ulr = type === 1?  accEndpoints.get.UserReview : accEndpoints.get.UserSendReview
-
             const fetchedData = await GetApi(`${ulr}?Page=${page}&Offset=${offset}&sortingField=PickUpTime&sortDirection=1&MyOrderTypes=${type}`, {
                 headers: {
+                    'Accept-Language': language,
                     Authorization: `Bearer ${accessToken}`,
                 },
             });

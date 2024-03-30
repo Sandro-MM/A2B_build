@@ -22,6 +22,7 @@ import ImageUploadComponent from "./imageUpload";
 import {Keyboard, View} from "react-native";
 import {IconButton} from "react-native-paper";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 
 
 const Stack = createStackNavigator();
@@ -65,10 +66,11 @@ export default function AddVehicle({ route }) {
         const fetchData = async () => {
             try {
                 setLoading(true); // Set loading to true when data fetching starts
-
+                const language = await SecureStore.getItemAsync('userLanguage');
                 const accessToken = await getAccessToken();
                 const commonHeaders = {
                     ...headersTextToken.headers,
+                    'Accept-Language': language,
                     Authorization: `Bearer ${accessToken}`,
                 };
                 const [manufactData, colorData, carTypeData, carFuelData] = await Promise.all([

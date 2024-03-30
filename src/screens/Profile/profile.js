@@ -23,6 +23,7 @@ import Navigation from "../../components/navigation";
 import UserNoIMage from "../../../assets/img/default_user.png";
 import SettingsPage from "./settings";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 
 
 export default function Profile(props) {
@@ -63,11 +64,13 @@ export default function Profile(props) {
 
 
     const fetchData = async () => {
+        const language = await SecureStore.getItemAsync('userLanguage');
         try {
             if (!userName) {
                 const accessToken = await getAccessToken();
                 const responseData = await GetApi(accEndpoints.get.Profile, {
                     headers: {
+                        'Accept-Language': language,
                         ...headersTextToken.headers,
                         Authorization: `Bearer ${accessToken}`,
                     },
@@ -77,6 +80,7 @@ export default function Profile(props) {
             } else {
                 const responseData = await GetApi(`${accEndpoints.get.CommonProfile}?userName=${userName}&`, {
                     headers: {
+                        'Accept-Language': language,
                         ...headersTextToken.headers,
                     },
                 });
@@ -199,7 +203,7 @@ export default function Profile(props) {
                             color='#FF5A5F'
                             size={20}
                         />
-                        <ProfileAge>  User info </ProfileAge>
+                        <ProfileAge>  {t('user_info')} </ProfileAge>
                     </ReviewBtn>
                     <SurfaceArea  elevation={1} style={{paddingBottom:10}}>
                     <ContactBtn contentStyle={{ height: 38, justifyContent: 'flex-start'}} rippleColor='gray' mode="text" onPress={() => console.log('Pressed')}>

@@ -5,21 +5,38 @@ import {Icon} from "react-native-paper";
 import {accEndpoints, getAccessToken, GetApi, headersText} from "../../services/api";
 import * as SecureStore from "expo-secure-store";
 import {useTranslation} from "react-i18next";
+import {changeLanguage} from "i18next";
 
 
 const LanguageSetting = (props) => {
     const { t } = useTranslation();
     const viewStyle = { height: 45, marginTop: 10, marginBottom: 10 , flexDirection:'row', justifyContent:'space-between', marginHorizontal:20, alignItems:'center'};
     const ChangeLang = async (id) => {
+
+        if (id == 1){
+            changeLanguage('en')
+            await SecureStore.setItemAsync('userLanguage', 'en');
+
+        } else if (id == 2){
+            changeLanguage('ka')
+            await SecureStore.setItemAsync('userLanguage', 'ka');
+        } else if (id == 3){
+            changeLanguage('ru')
+            await SecureStore.setItemAsync('userLanguage', 'ru');
+        }
+
+        props.navigation.navigate('HomeScreen')
+
         try {
+            const language = await SecureStore.getItemAsync('userLanguage');
             const accessToken = await getAccessToken();
             const fetchedData = await GetApi(`${accEndpoints.get.ChangeLang}${id}`,{
                 headers: {
                     ...headersText.headers,
+                    'Accept-Language': language,
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            props.navigation.navigate('HomeScreen')
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -43,7 +60,7 @@ const LanguageSetting = (props) => {
     ]
     return (
        <Container style={{marginTop:-400}}>
-           <Title style={{marginBottom:-30, marginTop:-80}}>Change languge</Title>
+           <Title style={{marginBottom:-30, marginTop:-80}}>{t('change_language')}</Title>
            {languges.map((language, index) => (
                <TouchableHighlight
                    key={index}

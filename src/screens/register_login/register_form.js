@@ -20,6 +20,8 @@ import A2bInput from "../../components/formInput";
 import A2BNextIcon from "../../components/next_icon";
 import * as SecureStore from "expo-secure-store";
 import {useTranslation} from "react-i18next";
+import MaskInput from "react-native-mask-input/src/MaskInput";
+import {Masks} from "react-native-mask-input";
 
 const Stack = createStackNavigator();
 export default function Register_form({navigation}) {
@@ -102,7 +104,7 @@ export default function Register_form({navigation}) {
                         await SecureStore.setItemAsync('accessToken', login.AccessToken);
                         await SecureStore.setItemAsync('accessTokenExpiration', expirationTime.toString());
                         await SecureStore.setItemAsync('refreshToken', login.RefreshToken);
-                        navigation.navigate('HomeScreen');
+                        navigation.navigate('Profile', { IsUserOrder: 1, navigation: navigation });
                     } catch (error) {
                         console.error('Error saving tokens:', error);
                     }
@@ -208,20 +210,14 @@ export default function Register_form({navigation}) {
                                 control={control}
                                 render={({ field }) => (
                                     <React.Fragment>
-                                        <A2bInput
-                                            placeholder="DD/MM/YYYY"
+                                        <MaskInput
+                                            autoFocus={true}
+                                            style={{height:45, backgroundColor:'#D8D9DA', width:'85%', borderRadius:14, paddingVertical:5, paddingHorizontal:15, fontSize:18}}
+                                            keyboardType = 'numeric'
+                                            placeholder={'DD/MM/YYYY'}
                                             value={field.value}
+                                            mask={Masks.DATE_DDMMYYYY}
                                             onChangeText={(value) => field.onChange(value)}
-                                            variant ='default'
-                                            render={props => (
-                                                <TextInputMask
-                                                    {...props}
-                                                    type={'datetime'}
-                                                    options={{
-                                                        format: 'DD/MM/YYYY',
-                                                    }}
-                                                />
-                                            )}
                                         />
                                         {field.value.length > 9 && (
                                             <A2BNextIcon onPress={() => navigation.navigate('Gender')} />

@@ -5,6 +5,7 @@ import { CarEndpoints, getAccessToken, GetApi, headersTextToken } from "../../se
 import {Text, TouchableHighlight, View} from "react-native";
 import {vehicleTypeMappingByName} from "../../styles/vehicleMappings";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 
 const ChooseCar = ({ handleCarChoose, navigation }) => {
     const viewStyle = { height: 65};
@@ -15,9 +16,11 @@ const ChooseCar = ({ handleCarChoose, navigation }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const language = await SecureStore.getItemAsync('userLanguage');
                 const accessToken = await getAccessToken();
                 const response = await GetApi(CarEndpoints.get.Cars, {
                     headers: {
+                        'Accept-Language': language,
                         ...headersTextToken.headers,
                         Authorization: `Bearer ${accessToken}`,
                     },

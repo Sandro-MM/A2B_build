@@ -19,6 +19,7 @@ import CarImage from "../../../assets/img/car-vertical.png";
 import BlueImage from "../../../assets/img/blue-big.png";
 import GreenImage from "../../../assets/img/green-big.png";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 export default function Order({route}) {
     const { t } = useTranslation();
     const { item } = route.params;
@@ -32,9 +33,10 @@ export default function Order({route}) {
         const fetchData = async () => {
             try {
                 const accessToken = await getAccessToken();
+                const language = await SecureStore.getItemAsync('userLanguage');
                     const responseData = await GetApi(`${OrderEndpoints.get.order}?orderId=${item}&`, {
                         headers: {
-
+                            'Accept-Language': language,
                             Authorization: `Bearer ${accessToken}`,
                         },
                     });

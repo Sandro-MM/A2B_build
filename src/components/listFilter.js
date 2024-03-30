@@ -9,6 +9,7 @@ import {format} from "date-fns";
 import {getAccessToken, GetApi, OrderEndpoints} from "../services/api";
 import {Slider} from "@miblanchard/react-native-slider";
 import {useTranslation} from "react-i18next";
+import * as SecureStore from "expo-secure-store";
 
 export const ListFilter = ({navigation, control, setValue}) => {
     const { t } = useTranslation();
@@ -46,9 +47,11 @@ export const ListFilter = ({navigation, control, setValue}) => {
             '&';
 
         try {
+            const language = await SecureStore.getItemAsync('userLanguage');
             const accessToken = await getAccessToken();
             const responseData = await GetApi(`${OrderEndpoints.get.orders}?departureLatitude=${v.departureLatitude}&departureLongitude=${v.departureLongitude}&destinationLatitude=${v.destinationLatitude}&destinationLongitude=${v.destinationLongitude}&date=${formattedStart}&date=${formattedEnd}&luggageAllowed=${luggage}&musicAllowed=${music}&petsAllowed=${pets}&smokingAllowed=${smoke}&packageDelivery=${packageItem}&priceFrom=${sliderVal[0]}&priceTo=${sliderVal[1]}&Page=1&Offset=50&${TimeDiapazon}`, {
                 headers: {
+                     'Accept-Language': language,
                     Authorization: `Bearer ${accessToken || null}`,
                 },
             });
