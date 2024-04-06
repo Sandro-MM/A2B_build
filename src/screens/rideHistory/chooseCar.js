@@ -7,7 +7,9 @@ import {vehicleTypeMappingByName} from "../../styles/vehicleMappings";
 import {useTranslation} from "react-i18next";
 import * as SecureStore from "expo-secure-store";
 
-const ChooseCar = ({ handleCarChoose, navigation }) => {
+const ChooseCar = ({ route }) => {
+    const { handleCarChoose } = route.params;
+    const { navigation } = route.params;
     const viewStyle = { height: 65};
     const iconStyle = { marginRight: -20, position: 'absolute', marginTop: 15 };
 
@@ -34,8 +36,8 @@ const ChooseCar = ({ handleCarChoose, navigation }) => {
     }, []);
 
     const onSelectItem = (carId) => {
-        handleCarChoose(carId);
-       navigation.navigate("Description")
+        handleCarChoose({CarId:carId});
+        navigation.goBack()
     };
 
     const TypeIcon = ({ id }) => (

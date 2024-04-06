@@ -176,5 +176,13 @@
   "car_pool": "Car Pool",
   "intercity": "Intercity",
   "log_out": "Log out",
-  "deactivate_account": "Deactivate account"
+  "deactivate_account": "Deactivate account",
+  "edit_departure": "Edit Departure",
+  "edit_price": "Edit Price",
+  "edit_description": "Edit Description",
+  "edit_prefrences": "Edit Prefrences",
+  "edit_destination": "Edit Destination",
+  "edit_passenger_count": "Edit Passenger Count",
+  "edit_time": "Edit Time",
+  "edit_date": "Edit Date"
 }

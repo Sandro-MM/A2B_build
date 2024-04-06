@@ -37,6 +37,16 @@ import RatingsSetting from "./src/screens/Profile/ratingsSetting";
 import DateSettingInput from "./src/screens/Profile/dateSettingInput";
 import {I18nextProvider} from "react-i18next";
 import i18n from './i18n';
+import {EditRide} from "./src/screens/rideHistory/editRide";
+import ChooseCar from "./src/screens/rideHistory/chooseCar";
+import EditPassengerCount from "./src/screens/rideHistory/editPassengerCount";
+import EditRideDescription from "./src/screens/rideHistory/editRideDescription";
+import EditDate from "./src/screens/rideHistory/editDate";
+import EditTime from "./src/screens/rideHistory/editTime";
+import EditDescription from "./src/screens/rideHistory/editOptions";
+import EditMapViewScreen from "./src/screens/rideHistory/editMapView";
+import MapAToBViewEditScreen from "./src/screens/rideHistory/mapAToBViewEdit";
+import RidePriceEdit from "./src/screens/rideHistory/ridePriceEdit";
 
 
 export default function App() {
@@ -90,6 +100,16 @@ export default function App() {
                     <Stack.Screen name="PrefrenceSettings"  options={{ headerShown: false , animationEnabled: false}} component={PrefrenceSettings} />
                     <Stack.Screen name="RatingsSetting"  options={{ headerShown: false , animationEnabled: false}} component={RatingsSetting} />
                     <Stack.Screen name="DateSettingInput"  options={{ headerShown: false , animationEnabled: false}} component={DateSettingInput} />
+                    <Stack.Screen name="EditRide"  options={{ headerShown: false , animationEnabled: false}} component={EditRide} />
+                    <Stack.Screen name="ChooseCar"  options={{ headerShown: false , animationEnabled: false}} component={ChooseCar} />
+                    <Stack.Screen name="EditPassengerCount"  options={{ headerShown: false , animationEnabled: false}} component={EditPassengerCount} />
+                    <Stack.Screen name="EditRideDescription"  options={{ headerShown: false , animationEnabled: false}} component={EditRideDescription} />
+                    <Stack.Screen name="EditDate"  options={{ headerShown: false , animationEnabled: false}} component={EditDate} />
+                    <Stack.Screen name="EditTime"  options={{ headerShown: false , animationEnabled: false}} component={EditTime} />
+                    <Stack.Screen name="EditDescription"  options={{ headerShown: false , animationEnabled: false}} component={EditDescription} />
+                    <Stack.Screen name="EditMapViewScreen"  options={{ headerShown: false , animationEnabled: false}} component={EditMapViewScreen} />
+                    <Stack.Screen name="MapAToBViewEditScreen"  options={{ headerShown: false , animationEnabled: false}} component={MapAToBViewEditScreen} />
+                    <Stack.Screen name="RidePriceEdit"  options={{ headerShown: false , animationEnabled: false}} component={RidePriceEdit} />
                 </Stack.Navigator>
             </NavigationContainer>
             </I18nextProvider>

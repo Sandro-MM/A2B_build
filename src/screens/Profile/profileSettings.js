@@ -205,7 +205,7 @@ const ProfileSettings = (props) => {
                     >
                             <View style={viewStyle}>
                                 <SettingsTitle>{t(settings[key].title)}</SettingsTitle>
-                                <SettingsVal style={{paddingLeft:30}}>{t(settings[key].value)}</SettingsVal>
+                                <SettingsVal style={{paddingLeft:30}}>{settings[key].value}</SettingsVal>
                                 <IconButton style={{position:'absolute', right:0, top:-10}} iconColor={'#FF5A5F'} size={30} icon={'chevron-right'}/>
                             </View>
 

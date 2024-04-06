@@ -124,8 +124,8 @@ export const OrderEndpoints = {
         order:'/order/'
     },
     put:{
-
-
+        updateDetails:'/order/update-order-details-mobile/?orderId=',
+        updateRoute:'/order/update-order-route-mobile?orderId='
     },
     patch:{
         bind:'/order/bind',

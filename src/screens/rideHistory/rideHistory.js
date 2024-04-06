@@ -224,7 +224,7 @@ export default function RideHistory({navigation}) {
                     <View style={{marginTop:10,marginBottom:-10}}>
                         <TouchableHighlight style={{width:'100%'}}
                                             underlayColor="rgba(128, 128, 128, 0.5)"
-                                            onPress={()=> console.log(1)}>
+                                            onPress={()=>{ navigation.navigate('EditRide',{id:ModalStatus.id, navigation:navigation}); hideModal()}}>
                             <View style={{flexDirection:'row', height:50, alignItems:'center', borderRadius:30}}>
                                 <IconButton style={{marginLeft:17}} size={30} icon={'pencil'}/>
                                 <Text style={{fontSize:20, marginLeft:-10}}> {t('edit')}</Text>

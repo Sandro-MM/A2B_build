@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {View,StyleSheet,Text} from "react-native";
-import {SurfaceArea,TitleMap} from "../styles/styles";
+
 import MapViewDirections from "react-native-maps-directions";
 import Geocoding from 'react-native-geocoding';
 import {useTranslation} from "react-i18next";
+import {SmallBtnText, SmallRedBtn, SurfaceArea, TitleMap} from "../../styles/styles";
 
 Geocoding.init('AIzaSyDqWRPH5ocus24BKGXLNnryvXbPTx7w9Bc');
 
@@ -34,19 +35,12 @@ const styles = StyleSheet.create({
     },
 });
 
-const MapAToBViewScreen = ({title , startPoint, endPoint, setValue, startAddress, endAddress}) => {
+const MapAToBViewEditScreen = ({route}) => {
+    const { title , startPoint, endPoint, setValue, startAddress, endAddress, handleSubmit } = route.params;
     const { t } = useTranslation();
     const [duration, setDuration] = useState(null);
     const [distance, setDistance] = useState(null);
     const [mapRegion, setMapRegion] = useState(null);
-
-    console.log(title,'  console.log(title)')
-    console.log(startPoint,'startPoint')
-    console.log(endPoint,'endPoint')
-    console.log(setValue,'setValue')
-    console.log(startAddress,'startAddress')
-    console.log(endAddress,'endAddress')
-
 
     useEffect(() => {
         const fetchAddressesAndDirections = async () => {
@@ -113,9 +107,11 @@ const MapAToBViewScreen = ({title , startPoint, endPoint, setValue, startAddress
                         }}
                     />
                 </MapView>
-
+                <SmallRedBtn style={{bottom:-230}} buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit}>
+                    <SmallBtnText>{t('save')}</SmallBtnText>
+                </SmallRedBtn>
             </View>
     );
 };
 
-export default MapAToBViewScreen;
+export default MapAToBViewEditScreen;

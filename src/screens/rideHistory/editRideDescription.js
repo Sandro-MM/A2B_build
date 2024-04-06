@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Controller} from 'react-hook-form';
 import {IconButton} from "react-native-paper";
 import {ContainerMid, TitleDesc} from "../../styles/styles";
@@ -6,7 +6,9 @@ import A2btextarea from "../../components/a2btextarea";
 import A2BNextIcon from "../../components/next_icon";
 import {useTranslation} from "react-i18next";
 
-const Description = ({name,control, navigation, handleSubmit}) => {
+const EditRideDescription = ({ navigation, route }) => {
+    const { submit, value } = route.params;
+    const [descValue, setValue] = useState(value);
     const { t } = useTranslation();
 
     return (
@@ -19,22 +21,16 @@ const Description = ({name,control, navigation, handleSubmit}) => {
                 onPress={() => navigation.goBack()}
             />
             <TitleDesc>{t('add_details_about_your_ride')}</TitleDesc>
-            <Controller
-                control={control}
-                render={({ field }) => (
                     <A2btextarea
                         placeholder={`Enter description`}
-                        value={field.value}
-                        onChangeText={(value) => field.onChange(value)}
+                        value={descValue}
+                        onChangeText={(newValue) => setValue(newValue)}
                         variant='default'
                     />
-                )}
-                name={name}
-                defaultValue=' '
-            />
-            <A2BNextIcon onPress={handleSubmit}/>
+
+            <A2BNextIcon onPress={()=>{submit({Description:descValue}); navigation.goBack()}}/>
         </ContainerMid>
     );
 };
 
-export default Description;
+export default EditRideDescription;

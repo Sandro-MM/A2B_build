@@ -14,6 +14,14 @@ import Options from "./options";
 import {getAccessToken, headersTextToken, OrderEndpoints, PostApi} from "../../services/api";
 import AddBackRide from "./addBackRide";
 import {useState} from "react";
+import {
+    DestionationLocaliRu,
+    DestionationLocality,
+    DestionationLocalityKa,
+    fromLocality,
+    fromLocalityKa,
+    fromLocalityRu
+} from "./locatity-functions";
 
 export default function AddRide({navigation, route}) {
     const {activeRidesNumber}= route.params;
@@ -34,51 +42,16 @@ export default function AddRide({navigation, route}) {
         const [hours, minutes] = time.split(':').map(Number);
         const pickUpTime = new Date(year, month - 1, day, hours, minutes);
         const pickUpTimeISOString = pickUpTime.toISOString();
-        const fromLocality = () => {
-            return new Promise(resolve => {
-                const localityComponent = cf.LeavingFrom.address_components.find(component => component.types.includes("locality"));
-                resolve(localityComponent ? localityComponent.short_name : "");
-            });
-        };
-        const fromLocalityKa = () => {
-            return new Promise(resolve => {
-                const localityComponent = cf.LeavingFromKa.address_components.find(component => component.types.includes("locality"));
-                resolve(localityComponent ? localityComponent.short_name : "");
-            });
-        };
-        const fromLocalityRu = () => {
-            return new Promise(resolve => {
-                const localityComponent = cf.LeavingFromRu.address_components.find(component => component.types.includes("locality"));
-                resolve(localityComponent ? localityComponent.short_name : "");
-            });
-        };
-        const DestionationLocality = () => {
-            return new Promise(resolve => {
-                const localityComponent = cf.Destination.address_components.find(component => component.types.includes("locality"));
-                resolve(localityComponent ? localityComponent.short_name : "");
-            });
-        };
-        const DestionationLocalityKa = () => {
-            return new Promise(resolve => {
-                const localityComponent = cf.DestinationKa.address_components.find(component => component.types.includes("locality"));
-                resolve(localityComponent ? localityComponent.short_name : "");
-            });
-        };
-        const DestionationLocaliRu = () => {
-            return new Promise(resolve => {
-                const localityComponent = cf.DestinationRu.address_components.find(component => component.types.includes("locality"));
-                resolve(localityComponent ? localityComponent.short_name : "");
-            });
-        };
 
 
-        const leavingFromLocalityShortName = await fromLocality();
-        const leavingFromLocalityShortNameKa = await fromLocalityKa();
-        const leavingFromLocalityShortNameRu = await fromLocalityRu();
 
-        const destinationLocalityShortName = await DestionationLocality();
-        const destinationLocalityShortNameKa = await DestionationLocalityKa();
-        const destinationLocalityShortNameRu = await DestionationLocaliRu();
+        const leavingFromLocalityShortName = await fromLocality(cf);
+        const leavingFromLocalityShortNameKa = await fromLocalityKa(cf);
+        const leavingFromLocalityShortNameRu = await fromLocalityRu(cf);
+
+        const destinationLocalityShortName = await DestionationLocality(cf);
+        const destinationLocalityShortNameKa = await DestionationLocalityKa(cf);
+        const destinationLocalityShortNameRu = await DestionationLocaliRu(cf);
 
 
         const Smoking = cf.Smoking === "No" ? 1 : cf.Smoking === "Yes" ? 2 : cf.Smoking === "On Stops" ? 3 : 1;
