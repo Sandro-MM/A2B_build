@@ -47,6 +47,7 @@ import EditDescription from "./src/screens/rideHistory/editOptions";
 import EditMapViewScreen from "./src/screens/rideHistory/editMapView";
 import MapAToBViewEditScreen from "./src/screens/rideHistory/mapAToBViewEdit";
 import RidePriceEdit from "./src/screens/rideHistory/ridePriceEdit";
+import Confirm_Price_change from "./src/screens/rideHistory/confirm_price_change";
 
 
 export default function App() {
@@ -110,6 +111,7 @@ export default function App() {
                     <Stack.Screen name="EditMapViewScreen"  options={{ headerShown: false , animationEnabled: false}} component={EditMapViewScreen} />
                     <Stack.Screen name="MapAToBViewEditScreen"  options={{ headerShown: false , animationEnabled: false}} component={MapAToBViewEditScreen} />
                     <Stack.Screen name="RidePriceEdit"  options={{ headerShown: false , animationEnabled: false}} component={RidePriceEdit} />
+                    <Stack.Screen name="Confirm_Price_change"  options={{ headerShown: false , animationEnabled: false}} component={Confirm_Price_change} />
                 </Stack.Navigator>
             </NavigationContainer>
             </I18nextProvider>

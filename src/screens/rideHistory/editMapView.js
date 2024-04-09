@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 });
 
 const EditMapViewScreen = ({route}) => {
-    const {title, handleMapChoose, setValue, valueName} = route.params;
+    const {title, handleMapChoose, setValue, valueName, initPrice} = route.params;
     const { t } = useTranslation();
     const [addressValue, setAddressValue] = useState('');
     const [visible, setVisible] = useState(false);

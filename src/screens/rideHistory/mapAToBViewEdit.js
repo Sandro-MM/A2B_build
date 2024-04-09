@@ -6,6 +6,8 @@ import MapViewDirections from "react-native-maps-directions";
 import Geocoding from 'react-native-geocoding';
 import {useTranslation} from "react-i18next";
 import {SmallBtnText, SmallRedBtn, SurfaceArea, TitleMap} from "../../styles/styles";
+import * as SecureStore from "expo-secure-store";
+import {getAccessToken, GetApi, headersTextToken, OrderEndpoints} from "../../services/api";
 
 Geocoding.init('AIzaSyDqWRPH5ocus24BKGXLNnryvXbPTx7w9Bc');
 
@@ -36,12 +38,12 @@ const styles = StyleSheet.create({
 });
 
 const MapAToBViewEditScreen = ({route}) => {
-    const { title , startPoint, endPoint, setValue, startAddress, endAddress, handleSubmit } = route.params;
+    const { title , startPoint, endPoint, setValue, startAddress, endAddress, handleSubmit, initPrice } = route.params;
     const { t } = useTranslation();
     const [duration, setDuration] = useState(null);
     const [distance, setDistance] = useState(null);
     const [mapRegion, setMapRegion] = useState(null);
-
+    const [newPrice, setNewPrice] = useState(null);
     useEffect(() => {
         const fetchAddressesAndDirections = async () => {
             try {
@@ -60,7 +62,33 @@ const MapAToBViewEditScreen = ({route}) => {
         };
 
         fetchAddressesAndDirections();
+
     }, [startPoint, endPoint]);
+
+    useEffect(() => {
+        const fetchPrice = async () => {
+            try {
+                const language = await SecureStore.getItemAsync('userLanguage');
+                const accessToken = await getAccessToken();
+                const responseData = await GetApi(`${OrderEndpoints.get.maxPrice}?orderDistance=${distance}&`, {
+                    headers: {
+                        'Accept-Language': language,
+                        ...headersTextToken.headers,
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                setNewPrice(responseData);
+                if (responseData.MaxPrice < initPrice){
+                    setValue('NewMaxPrice', responseData.MaxPrice)
+                }
+
+                console.log(responseData)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchPrice();
+    }, [distance]);
 
     const cordinatesFrom = {
         latitude: startPoint.latitude,

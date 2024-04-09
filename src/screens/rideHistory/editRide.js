@@ -10,7 +10,7 @@ import {
 import * as SecureStore from "expo-secure-store";
 import {useEffect, useState} from "react";
 import {Container, SettingsTitle, SettingsVal} from "../../styles/styles";
-import {Text, TouchableHighlight, View} from "react-native";
+import {ScrollView, Text, TouchableHighlight, View} from "react-native";
 import {Divider, Icon, IconButton, RadioButton} from "react-native-paper";
 import {useTranslation} from "react-i18next";
 import moment from "moment";
@@ -153,11 +153,11 @@ export const EditRide = ({route}) => {
         setValue('MapFrom', data);
         console.log(control._formValues);
         navigation.navigate('MapAToBViewEditScreen',{title:'title', setValue:setValue, startPoint:
-            cf.MapFrom
-                , endPoint: {
+            cf.MapFrom,
+            endPoint: {
                 latitude: responseData?.DestinationLatitude,
                 longitude: responseData?.DestinationLatitude,
-            } , startAddress:cf.LeavingFrom?.formatted_address,  endAddress:responseData?.Destination, handleSubmit:handleMapEditFrom })
+            } , startAddress:cf.LeavingFrom?.formatted_address,  endAddress:responseData?.Destination, handleSubmit:handleMapEditFrom , initPrice:responseData?.Price})
     }
 
     const handleMapChooseTo = (data) => {
@@ -165,7 +165,7 @@ export const EditRide = ({route}) => {
         navigation.navigate('MapAToBViewEditScreen',{title:'title', setValue:setValue, startPoint:{
                 latitude: responseData?.DepartureLatitude,
                 longitude: responseData?.DepartureLongitude,
-            } , endPoint:control._formValues.MapTo , startAddress:responseData?.Departure,  endAddress:cf.Destination?.formatted_address, handleSubmit:handleMapEditTo })
+            } , endPoint:control._formValues.MapTo , startAddress:responseData?.Departure,  endAddress:cf.Destination?.formatted_address, handleSubmit:handleMapEditTo, initPrice:responseData?.Price })
     }
 
     const handleMapEditTo = async () => {
@@ -193,7 +193,17 @@ export const EditRide = ({route}) => {
             Duration: parseFloat(cf?.duration)
         }
         }
-        await changeDataLocation(data)
+        if (cf.NewMaxPrice === null){
+            await changeDataLocation(data)
+        } else {
+          const newData ={
+              ...data,
+              Price:cf.NewMaxPrice
+          }
+            await changeDataLocation(newData)
+            navigation.navigate('Confirm_Price_change',{navigation:navigation})
+            setValue('NewMaxPrice', null)
+        }
     }
 
 
@@ -221,7 +231,18 @@ export const EditRide = ({route}) => {
             Duration: parseFloat(cf?.duration)
             }
         }
-        await changeDataLocation(data)
+        if (cf.NewMaxPrice === null){
+            await changeDataLocation(data)
+        } else {
+            const newData ={
+                ...data,
+                Price:cf.NewMaxPrice
+            }
+            console.log(newData)
+            await changeDataLocation(newData)
+            navigation.navigate('Confirm_Price_change',{navigation:navigation})
+            setValue('NewMaxPrice', null)
+        }
     }
 
 
@@ -251,10 +272,10 @@ export const EditRide = ({route}) => {
     return(
         <Container>
             { responseData &&
-        <Container>
+        <ScrollView style={{marginTop:60}}>
             <TouchableHighlight
                 style={{width:'100%'}}
-                onPress={() => navigation.navigate('EditMapViewScreen', { title:t('edit_departure'),  setValue: setValue, navigation: navigation, handleMapChoose:handleMapChoose, valueName:'LeavingFrom'})}
+                onPress={() => navigation.navigate('EditMapViewScreen', { title:t('edit_departure'),  setValue: setValue, navigation: navigation, handleMapChoose:handleMapChoose, valueName:'LeavingFrom', initPrice:responseData?.Price})}
                 underlayColor='rgba(128, 128, 128, 0.5)'
             >
                 <View style={{marginTop: 10, marginBottom: 10}}>
@@ -267,7 +288,7 @@ export const EditRide = ({route}) => {
             </TouchableHighlight>
             <TouchableHighlight
                 style={{width:'100%'}}
-                onPress={() => navigation.navigate('EditMapViewScreen', { title:t('edit_destination'),  setValue: setValue, navigation: navigation, handleMapChoose:handleMapChooseTo, valueName:'Destination'})}
+                onPress={() => navigation.navigate('EditMapViewScreen', { title:t('edit_destination'),  setValue: setValue, navigation: navigation, handleMapChoose:handleMapChooseTo, valueName:'Destination', initPrice:responseData?.Price})}
                 underlayColor='rgba(128, 128, 128, 0.5)'
             >
                 <View style={{marginTop: 10, marginBottom: 10}}>
@@ -354,7 +375,7 @@ export const EditRide = ({route}) => {
                     <Icon size={30} color={'#FF5A5F'} source={'chevron-right'}/>
                 </View>
             </TouchableHighlight>
-        </Container>}
+        </ScrollView>}
         </Container>
     )
 
