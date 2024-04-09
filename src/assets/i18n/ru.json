@@ -170,5 +170,19 @@
   "music_allowed": "Разрешена музыка",
   "luggage_allowed": "Разрешен багаж",
   "package_delivery": "Доставка посылок",
-  "filter": "Фильтр"
+  "filter": "Фильтр",
+  "user_info": "Информация о пользователе",
+  "today": "Сегодня",
+  "car_pool": "Совместное использование автомобиля",
+  "intercity": "Междугородние поездки",
+  "log_out": "Выйти",
+  "deactivate_account": "Деактивировать аккаунт",
+  "edit_departure": "Изменить место отправления",
+  "edit_price": "Изменить цену",
+  "edit_description": "Изменить описание",
+  "edit_preferences": "Изменить предпочтения",
+  "edit_destination": "Изменить пункт назначения",
+  "edit_passenger_count": "Изменить количество пассажиров",
+  "edit_time": "Изменить время",
+  "edit_date": "Изменить дату"
 }

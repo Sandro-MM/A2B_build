@@ -16,22 +16,6 @@ const EditDescription = ({route}) => {
     const { t } = useTranslation();
 
     console.log(items)
-
-
-
-
-
-
-
-    const cf = control._formValues;
-    const Smoking = cf.Smoking === "No" ? 1 : cf.Smoking === "Yes" ? 2 : cf.Smoking === "On Stops" ? 3 : 1;
-    const Pets = cf.Pets === "No" ? 5 : cf.Pets === "Yes" ? 4 : cf.Pets === "Depends on pet" ? 6 : 5;
-    const Music = cf.Music === "No" ? 8 : cf.Music === "Yes"?7 : 8;
-    const Luggage = cf.Luggage === "No" ? 9 : cf.Luggage === "Yes"?10 : 9;
-    const Package = cf.Package === "No" ? 12 : cf.Package === "Yes"?11 : 12;
-
-    console.log(cf,'cs')
-    console.log(Smoking,'Smoking')
     // const itemStatus  = (val) => {
     //     console.log(val)
     //     if ((val.Id) === 1 || (val.Id) === 5 || (val.Id) === 8 || (val.Id) === 9 || (val.Id) === 12){
@@ -42,7 +26,13 @@ const EditDescription = ({route}) => {
     // }
 
     const nav = () => {
-        console.log(cf)
+        const cf = control._formValues;
+        const Smoking = cf.Smoking === "No" ? 1 : cf.Smoking === "Yes" ? 2 : cf.Smoking === "On Stops" ? 3 : items[0];
+        const Pets = cf.Pets === "No" ? 5 : cf.Pets === "Yes" ? 4 : cf.Pets === "Depends on pet" ? 6 :  items[1];
+        const Music = cf.Music === "No" ? 8 : cf.Music === "Yes"?7 : items[2];
+        const Luggage = cf.Luggage === "No" ? 9 : cf.Luggage === "Yes"?10 : items[3];
+        const Package = cf.Package === "No" ? 12 : cf.Package === "Yes"?11 : items[4];
+        console.log(cf,'cfcfcfcfcfcfcfcfcfcfcfcf')
         onSubmit({ OrderDescriptionIds: [
                 Smoking,Pets,Music,Luggage,Package
             ]

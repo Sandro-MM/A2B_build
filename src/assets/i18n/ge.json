@@ -170,5 +170,19 @@
   "music_allowed": "მუსიკა დასაშვებია",
   "luggage_allowed": "ბარგი დასაშვებია",
   "package_delivery": "ამანათების მიწოდება",
-  "filter": "ფილტრი"
+  "filter": "ფილტრი",
+  "user_info": "მომხმარებლის ინფორმაცია",
+  "today": "დღეს",
+  "car_pool": "დამგზავრება",
+  "intercity": "საქალაქთაშორისო",
+  "log_out": "გასვლა",
+  "deactivate_account": "პროფილის დეაქტივაცია",
+  "edit_departure": "გასვლის ადგილის რედაქტირება",
+  "edit_price": "ფასის რედაქტირება",
+  "edit_description": "აღწერის რედაქტირება",
+  "edit_preferences": "დეტალების რედაქტირება",
+  "edit_destination": "მიმართულების რედაქტირება",
+  "edit_passenger_count": "მგზავრობის რაოდენობის რედაქტირება",
+  "edit_time": "დროის რედაქტირება",
+  "edit_date": "თარიღის რედაქტირება"
 }
