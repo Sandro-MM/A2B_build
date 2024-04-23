@@ -3,7 +3,7 @@ import {Button, IconButton, Surface, TextInput} from "react-native-paper";
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #F2F3F4;
+  background-color: #F9FAFB;
   justify-content: center;
 `;
 export const Title = styled.Text`
@@ -80,14 +80,14 @@ export const Agreement = styled.Text`
 `;
 export const ContainerMid = styled.View`
   flex: 1;
-  background-color: #F2F3F4;
+  background-color: #F9FAFB;
   align-items: center;
   justify-content: center;
   margin-top: -10%;
 `;
 export const ContainerTop = styled.View`
   flex: 1;
-  background-color: #F2F3F4;
+  background-color: #F9FAFB;
   align-items: center;
   margin-top: -10%;
 `;
@@ -216,8 +216,17 @@ export const ProfilePic = styled.Image`
   max-width: 110px;
   margin-left: 5%;
 `;
+
+export const HomeBg = styled.Image`
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  height: 45.5%;
+`;
+
+
 export const ProfileContainer = styled.View`
-  background-color: #F2F3F4;
+  background-color: #F9FAFB;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -275,6 +284,13 @@ export const ReviewBtn = styled(Button)`
   text-align: left;
   width: 100%;
 `;
+export const SearchBtn = styled(Button)`
+  margin-top: -2px;
+  justify-items: start;
+  border-radius: 0;
+  text-align: left;
+  width: 100%;
+`;
 export const AboutMe  = styled.Text`
   color: #2f2f2f;
   font-size: 16px;
@@ -326,15 +342,16 @@ export const SurfaceArea  = styled(Surface)`
 `;
 
 export const SearchSurface  = styled(Surface)`
-  border-radius: 13px;
-  height: 240px;
+  border-radius: 24px;
+  height: 238px;
   padding-top: 5px;
   background-color: #ffffff;
+  border: 1px solid #D0D5DD;
   
   align-items: center;
   color: #1B1B1B;
   font-size: 22px;
-  width: 85%;
+  width: 94%;
 `;
 export const SurfaceIcon  = styled(Surface)`
   border-radius: 15px;
@@ -378,7 +395,7 @@ export const VehicleInfo  = styled.View`
 export const VehicleContainer = styled.View`
   height: 100%;
   flex: 1;
-  background-color: #F2F3F4;
+  background-color: #F9FAFB;
   align-items: center;
   justify-content: center;
 `;
@@ -495,35 +512,32 @@ export const SearchBtnText  = styled.Text`
   line-height: 40px;
   color: #ffffff;
   text-align: center;
-  font-size: 22px;
+  font-size: 16px;
   width: 100%;
 `;
 export const SurfaceListItem  = styled.View`
-  height: 210px;
-  margin: 5px;
- 
+  height: 260px;
+  margin: 16px 4.5% 0;
   background-color: transparent ;
   justify-content: center;
   color: #1B1B1B;
   font-size: 22px;
-  width: 97%;
+  width: 91%;
 `;
 
 export const ListPlaces  = styled.Text`
-    color: #1B1B1B;
-    font-size: 20px;
-    font-weight: bold;
+    color: #1D2939;
+    font-size: 18px;
 `;
 export const ListTime  = styled.Text`
-    color: #1B1B1B;
+    color: #1D2939;
     margin: 1px 0;
-    font-size: 17px;
-    font-weight: 500;
+    font-size: 12px;
 
 `;
 export const ListPic = styled.Image`
-  height: 45px;
-  width: 45px;
+  height: 44px;
+  width: 44px;
   border-radius: 30px;
   margin-left: 0;
 `;

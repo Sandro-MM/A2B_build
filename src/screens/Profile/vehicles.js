@@ -86,7 +86,7 @@ export default function Vehicles(props) {
                             style={{marginTop:20}}
                             buttonColor='#FF5A5F'
                             mode="contained"
-                            onPress={()=>props.navigation.navigate('AddVehicle',{mode:'addVehicle'})}>
+                            onPress={()=>props.navigation.navigate('AddVehicle',{mode:'addVehicle', navigation:navigation})}>
                             <SmallConfirmText>{t('add_car')}</SmallConfirmText>
                         </ConfirmRedBtn>
                     }

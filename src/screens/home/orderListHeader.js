@@ -2,14 +2,24 @@ import React, {useState} from 'react';
 import {Animated, StyleSheet, Text, TouchableHighlight, View} from "react-native";
 import {Button, IconButton} from "react-native-paper";
 import {useTranslation} from "react-i18next";
+import FILTERBTN from "../../../assets/img/Button.png"
+import BACK from "../../../assets/img/CaretLeft.png"
+import ARROWS from "../../../assets/img/ArrowsLeftRight.png"
+import CAR from "../../../assets/img/Car.png"
+import VAN from "../../../assets/img/Van.png"
+import {NotoSans_400Regular, NotoSans_600SemiBold, NotoSans_700Bold, useFonts} from "@expo-google-fonts/noto-sans";
 
-export const OrderListHeader = ({ setModalVisible, navigation, departure, destination, OrdersTotalCount ,scrollY}) => {
+export const OrderListHeader = ({ setModalVisible, navigation, departure, destination, OrdersTotalCount ,scrollY, startDay, endDay}) => {
     const { t } = useTranslation();
     const [expanded, setExpanded] = useState(false);
+    let [fontsLoaded] = useFonts({
+        NotoSans_400Regular, NotoSans_600SemiBold ,NotoSans_700Bold
+    });
+
 
     const categoryContainerTranslateY = scrollY.interpolate({
         inputRange: [0, 90],
-        outputRange: [50, 4.2],
+        outputRange: [54, 4.2],
         extrapolate: 'clamp',
     });
 
@@ -17,36 +27,51 @@ export const OrderListHeader = ({ setModalVisible, navigation, departure, destin
         setExpanded(!expanded);
     };
 
-    return (
-        <View style={{ width: '100%', height: categoryContainerTranslateY+10, backgroundColor: 'white', zIndex: 12, paddingTop:expanded?15:0}}>
+    const formatDate = (dateString) => {
+        const dateObject = new Date(dateString);
+        const month = dateObject.toLocaleString('default', { month: 'short' });
+        const date = dateObject.getDate();
+        return `${month} ${date}`;
+    };
+
+  if (fontsLoaded)  return (
+        <View style={{ width: '100%', height: categoryContainerTranslateY+10, backgroundColor: 'white', zIndex: 12, paddingTop:expanded?18:12}}>
             <View style={{ backgroundColor: 'white', display: expanded ? 'none' : 'block' }}>
                 <TouchableHighlight
-                    style={{ marginHorizontal: 25, marginTop: 3, marginBottom: 2, borderRadius: 16, height: 48 }}
+                    style={{ marginHorizontal: 10, marginTop: 3, marginBottom: 12, borderRadius: 16, height: 64 }}
                     onPress={() => setModalVisible(true)}
                     underlayColor="rgba(128, 128, 128, 0.5)"
                 >
-                    <View style={{ borderRadius: 16, borderStyle: 'solid', borderColor: '#D8D9DA', borderWidth: 1, paddingTop: 3, paddingLeft: 40, height: 40 }}>
+                    <View style={{ borderRadius: 24, borderStyle: 'solid', borderColor: '#EAECF0', borderWidth: 1, paddingTop: 3, paddingLeft: 40, height: 56, background: '#FCFCFD'}}>
                         <IconButton
-                            style={{ position: 'absolute', top: -10, left: -12, zIndex: 3 }}
-                            icon="arrow-left"
+                            style={{ position: 'absolute', top: -2, left: -10, zIndex: 3 }}
+                            icon={BACK}
                             iconColor='#7a7a7a'
                             size={32}
                             onPress={() => navigation.goBack()}
                         />
-                        <Text style={{ fontSize: 20, marginTop: 3 }}>
-                            {departure} → {destination}
-                        </Text>
-                        <Button style={{ position: 'absolute', right: 0, top: 1 }} onPress={() => navigation.navigate('ListFilterScreen')}>
-                            <Text> {t('filter')}</Text>
-                        </Button>
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{  fontSize: 16, marginTop: 2, fontFamily:'NotoSans_700Bold' }}>
+                                {departure}
+                            </Text>
+                            <IconButton icon={ARROWS} size={20} style={{marginTop:0, marginHorizontal:-3}}/>
+                            <Text style={{ fontSize: 16, marginTop: 2 , fontFamily:'NotoSans_700Bold' }}>
+                                {destination}
+                            </Text>
+                        </View>
+                        <Text style={{color: '#475467', fontSize:14, marginTop:-18, fontFamily:'NotoSans_400Regular'}}>{formatDate(startDay)} - {formatDate(endDay)}</Text>
+
+                        <IconButton style={{ position: 'absolute', right: -8, top: -8 }} onPress={() => navigation.navigate('ListFilterScreen')} icon={FILTERBTN} size={44} iconColor={null}>
+
+                        </IconButton>
                     </View>
                 </TouchableHighlight>
             </View>
             <Animated.View style={[styles.categoryContainer, { height:categoryContainerTranslateY ,display: expanded ? 'none' : 'block' }]}>
                 <View style={{ width: '50%', alignItems: 'center' }}>
-                    <Text style={styles.categoryTitle}>{t('car_pool')}</Text>
+                    <Text style={[styles.categoryTitle,{fontFamily:'NotoSans_600SemiBold' }]}>{t('car_pool')}</Text>
                     <View style={{ flexDirection: 'row', marginLeft:'-12%'}}>
-                        <IconButton icon='car' size={25} iconColor={'#667085'} style={styles.categoryIcon} />
+                        <IconButton icon={CAR} size={25} iconColor={'#667085'} style={styles.categoryIcon} />
                         <Text style={styles.categoryText}>
                             {OrdersTotalCount}
                         </Text>
@@ -54,9 +79,9 @@ export const OrderListHeader = ({ setModalVisible, navigation, departure, destin
 
                 </View>
                 <View style={{ width: '50%', alignItems: 'center' }}>
-                    <Text style={styles.categoryTitle}>{t('intercity')}</Text>
+                    <Text  style={[styles.categoryTitle,{fontFamily:'NotoSans_600SemiBold' }]}>{t('intercity')}</Text>
                     <View style={{ flexDirection: 'row', marginLeft:'-12%'}}>
-                        <IconButton icon='bus' size={25} iconColor={'#667085'} style={styles.categoryIcon} />
+                        <IconButton icon={VAN} size={25} iconColor={'#667085'} style={styles.categoryIcon} />
                         <Text style={styles.categoryText}>
                             -
                         </Text>

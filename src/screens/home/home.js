@@ -1,5 +1,5 @@
 
-import { ContainerMid, Title} from "../../styles/styles";
+import {ContainerMid, HomeBg, ProfilePic, Title} from "../../styles/styles";
 import * as React from "react";
 import Navigation from "../../components/navigation";
 import SearchElement from "./searchElement";
@@ -10,7 +10,8 @@ import PlacesSearch from "./placesSearch";
 import {OrdersList} from "./ordersList";
 import {ListFilter} from "../../components/listFilter";
 import {useTranslation} from "react-i18next";
-
+import BG from '../../../assets/img/home-search/bg.png'
+import {ImageBackground} from "react-native";
 
 
 
@@ -30,8 +31,12 @@ export default function HomeScreen({navigation}) {
         <Stack.Navigator>
             <Stack.Screen name="Home" options={{ headerShown: false }}>
                 {({ navigation }) => (
-                <ContainerMid>
-                    <Title>{t('your_pick_of_rides_at_low_prices')}</Title>
+                <ContainerMid style={{paddingTop:90}}>
+                    {/*<Title>{t('your_pick_of_rides_at_low_prices')}</Title>*/}
+                    <HomeBg
+                        style={{marginTop:6}}
+                        source={BG}
+                    />
                     <SearchElement
                         setValue={setValue}
                         control={control}

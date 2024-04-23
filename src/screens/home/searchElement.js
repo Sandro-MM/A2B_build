@@ -1,6 +1,6 @@
-import {View} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import {
-    ReviewBtn, SearchBtnText,
+    ReviewBtn, SearchBtn, SearchBtnText,
     SearchSurface, SearchText,
 } from "../../styles/styles";
 import * as React from "react";
@@ -9,11 +9,21 @@ import {format} from "date-fns";
 import {getAccessToken, GetApi, OrderEndpoints} from "../../services/api";
 import {useTranslation} from "react-i18next";
 import * as SecureStore from "expo-secure-store";
-
+import PIN from '../../../assets/img/home-search/MapPin.png'
+import MAP from '../../../assets/img/home-search/MapTrifold.png'
+import CALENDARIMG from  '../../../assets/img/home-search/CalendarBlank.png'
+import ARROW from  '../../../assets/img/home-search/arrow-circle-right.png'
+import {useFonts, Inter_400Regular, Inter_600SemiBold} from '@expo-google-fonts/inter';
 
 
 export default function SearchElement({navigation, date , leaving, going, control , setValue, close}) {
     const { t } = useTranslation();
+    let [fontsLoaded] = useFonts({
+        Inter_400Regular,
+        Inter_600SemiBold
+    });
+
+    const textStyle = {fontFamily:'Inter_400Regular', fontSize:16, color:'#667085', lineHeight:20}
      async function onSubmit() {
         const v = control._formValues
         const formattedStartDay = format(new Date(v.startDay), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
@@ -47,45 +57,48 @@ export default function SearchElement({navigation, date , leaving, going, contro
     }
 
 
-    return (
-        <SearchSurface>
-            <View style={{width:'100%', justifyContent: 'center'}}>
+  if (fontsLoaded)  return (
+        <SearchSurface style={{marginTop:16}}>
+            <View style={{width:'108%', justifyContent: 'center', marginTop:6}}>
                 <IconButton
-                    iconColor='#969696'
-                    style={{position:'absolute', left:'5%', top:4}}
-                    size={22}
-                    icon='circle-double'/>
+                    iconColor='#1D2939'
+                    style={{position:'absolute', left:'5%', top:5}}
+                    size={20}
+                    icon= {PIN}/>
                 <ReviewBtn contentStyle={{ height: 44, justifyContent: 'flex-start'}} style={{paddingVertical:8, paddingHorizontal:'10%'}} rippleColor='gray' mode="text" onPress={()=>navigation.navigate('Places',{type:'departure'})} >
-                    <SearchText>   {leaving || t('leaving_from')} </SearchText>
+                    <Text style={textStyle}>   {leaving || t('leaving_from')} </Text>
                 </ReviewBtn>
             </View>
-            <Divider style={{ width: '80%' }} horizontalInset={true} bold={true} />
-            <View style={{width:'100%', justifyContent: 'center'}}>
+            <View style={{width:'108%', justifyContent: 'center',marginTop:-12}}>
                 <IconButton
-                    iconColor='#969696'
-                    style={{position:'absolute', left:'5%', top:4}}
-                    size={22}
-                    icon='circle-double'/>
+                    iconColor='#1D2939'
+                    style={{position:'absolute', left:'5%', top:5}}
+                    size={20}
+                    icon={MAP}/>
                 <ReviewBtn contentStyle={{ height: 44, justifyContent: 'flex-start'}} style={{paddingVertical:8, paddingHorizontal:'10%'}} rippleColor='gray' mode="text" onPress={()=>navigation.navigate('Places',{type:'destination'})} >
-                    <SearchText>   {going || t('going_to')} </SearchText>
+                    <Text style={textStyle}>   {going || t('going_to')} </Text>
                 </ReviewBtn>
             </View>
-            <Divider style={{ width: '80%' }} horizontalInset={true} bold={true} />
-            <View style={{width:'100%', justifyContent: 'center'}}>
+            <Divider style={{ width: '94%' }} horizontalInset={true} bold={true} />
+            <View style={{width:'108%', justifyContent: 'center'}}>
                 <IconButton
-                    iconColor='#969696'
-                    style={{position:'absolute', left:'5%', top:4}}
-                    size={22}
-                    icon='calendar-month'/>
+                    iconColor='#1D2939'
+                    style={{position:'absolute', left:'5%', top:5}}
+                    size={20}
+                    icon={CALENDARIMG}/>
                 <ReviewBtn contentStyle={{ height: 44, justifyContent: 'flex-start'}} style={{paddingVertical:8, paddingHorizontal:'10%'}} rippleColor='gray' mode="text" onPress={()=>navigation.navigate('Calendar')} >
-                    <SearchText>   {date} </SearchText>
+                    <Text style={textStyle}>   {date} </Text>
                 </ReviewBtn>
             </View>
-            <ReviewBtn contentStyle={{ height: 60, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:13, borderBottomRightRadius:13}} rippleColor='#ff373c' mode="text"
-                onPress={onSubmit}
-            >
-                <SearchBtnText>{t('search')}</SearchBtnText>
-            </ReviewBtn>
+            <View style={{width:'94%', backgroundColor:'#EB2931', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:16}}>
+                <Image source={ARROW} style={{position:'absolute', zIndex:3, width:20, height:20, left:95, top:16 }}/>
+                <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
+                           onPress={onSubmit}
+                >
+                    <SearchBtnText style={{fontFamily:'Inter_600SemiBold'}}>    {t('search')}</SearchBtnText>
+                </SearchBtn>
+            </View>
+
         </SearchSurface>
     );
 }

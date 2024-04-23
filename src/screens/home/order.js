@@ -1,25 +1,33 @@
-import {Image, Text, TouchableHighlight, View} from 'react-native';
+import { ImageBackground, ScrollView, Text, TouchableHighlight, View} from 'react-native';
 import {
     AboutMe,
     Container, ErrorText, ErrorView,
-    ListPic,
-    SmallBtnText, XIcon,
+    ListPic, SearchBtn, SearchBtnText, XIcon,
 } from "../../styles/styles";
 import { getAccessToken, GetApi, OrderEndpoints, PostApi} from "../../services/api";
 import {useEffect, useState} from "react";
 import UserNoIMage from "../../../assets/img/default_user.png";
-import {Button, Divider, IconButton} from "react-native-paper";
+import {IconButton} from "react-native-paper";
 import {
-    colorMapping,
-     OrderIconColorMapping, OrderIconMapping,
+    ListDisplayMapping,
+    OrderIconMapping,
     vehicleTypeMapping
 } from "../../styles/vehicleMappings";
 import Loading from "../../components/loading";
-import CarImage from "../../../assets/img/car-vertical.png";
-import BlueImage from "../../../assets/img/blue-big.png";
-import GreenImage from "../../../assets/img/green-big.png";
+import GO from "../../../assets/img/chevron-right.png";
+import BACK from "../../../assets/img/Button_back.png";
+import CAR from "../../../assets/img/Car.png"
+
 import {useTranslation} from "react-i18next";
 import * as SecureStore from "expo-secure-store";
+import {
+    NotoSans_400Regular,
+    NotoSans_500Medium,
+    NotoSans_600SemiBold,
+    NotoSans_700Bold,
+    useFonts
+} from "@expo-google-fonts/noto-sans";
+import TicketIMage from "../../../assets/img/orderImg.png";
 export default function Order({route}) {
     const { t } = useTranslation();
     const { item } = route.params;
@@ -28,6 +36,10 @@ export default function Order({route}) {
     const [data, setResponseData] = useState(null);
     const [error, setError] = useState(null);
 
+
+    let [fontsLoaded] = useFonts({
+        NotoSans_400Regular, NotoSans_600SemiBold, NotoSans_500Medium,NotoSans_700Bold
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -89,7 +101,7 @@ export default function Order({route}) {
     };
 
     const formatDate = (dateString) => {
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        const options = { month: 'short', day: 'numeric'};
         const date = new Date(dateString);
         return date.toLocaleDateString('en-GB', options);
     };
@@ -100,161 +112,196 @@ export default function Order({route}) {
 
 
     const Icon = ({ id }) => (
-        <View style={{flexDirection:'row', height:25, marginTop:0, marginBottom:0, width:'50%'}}>
+        <View style={{flexDirection:'row', height:25, marginVertical:9, width:'100%', marginLeft:-15, display:ListDisplayMapping[id.Id]}}>
             <IconButton
                 style={{marginTop:0, marginBottom:0, height:20}}
-                iconColor={OrderIconColorMapping[id.Id]}
+                iconColor={'#667085'}
                 size={20}
                 icon={OrderIconMapping[id.Id]}
             />
-            <Text style={{fontSize:14, color:'#667085'}}>{id.Name}</Text>
+            <Text style={{fontSize:16, color:'#667085', fontFamily:'NotoSans_500Medium', lineHeight:20}}>{id.Name}</Text>
         </View>
 
     );
 
 
-    return (
+   if(fontsLoaded) return (
         <Container>
+
             { data &&
-            <View style={{marginHorizontal:16, flex:1, paddingTop:'0.5%'}}>
-                <IconButton
-                    style={{position:'absolute', top: -4, left:0, zIndex:3}}
-                    icon="arrow-left"
-                    iconColor='#7a7a7a'
-                    size={32}
-                    onPress={() => navigation.navigate(destination)}
-                />
-                <Text  style={{textAlign:'center', fontSize:22, fontWeight:'500', marginVertical:'2%'}}>{formatDate(data.PickUpTime)}</Text>
-                <View style={{backgroundColor:'#FFF', paddingTop:25, paddingBottom:16, paddingHorizontal:20, borderRadius:13}}>
-                    <View style={{flexDirection:'row'}}>
-                        <View>
-                            <Image style={{marginLeft:5, height:18, width:18}} source={BlueImage}/>
-                            <Image style={{marginVertical:10, height:76, width:29}} source={CarImage}/>
-                            <Image style={{marginLeft:5,  height:18, width:18}} source={GreenImage}/>
-                        </View>
-                        <View style={{ justifyContent:'space-between', marginLeft:20, marginTop:-10, marginBottom:-10}}>
-                            <View>
-                                <Text style={{fontSize:18, fontWeight:'600'}}>{data.DepartureParent}</Text>
-                                <Button
-                                    style={{position:'absolute', right:-40, top:-7}}
-                                    onPress={()=> navigation.navigate('MapPointViewScreen',{title:'Departure', startPoint:{latitude: data.DepartureLatitude, longitude: data.DepartureLongitude}, startAddress:data.Departure})}>
-                                    <Text>{t('view')} </Text>
-                                </Button>
-                            </View>
-
-                            <Text style={{ position:'absolute' , top:40, fontSize:15, fontWeight:'500'}}>{formatTime(data.PickUpTime)}</Text>
-                            <Text style={{marginTop:0, backgroundColor:'rgba(165, 190, 0, 0.1)', paddingHorizontal:6 , paddingVertical:2 , borderRadius:15, color:'rgba(165, 190, 0, 1)', fontSize:15, width:135}}>{formatDuration(data.Duration)}{ t('estimated')}</Text>
-                            <View style={{ justifyContent:'space-between', marginLeft:0, marginTop:-10, marginBottom:10}}>
-                            <Text style={{fontSize:18, fontWeight:'600'}}>{data.DestinationParent}</Text>
-                                <Button
-                                    style={{position:'absolute', right:-40, top:-7}}
-                                    onPress={()=> navigation.navigate('MapPointViewScreen',{title:'Destination', startPoint:{latitude: data.DestinationLatitude, longitude: data.DestinationLongitude}, startAddress:data.Destination})}>
-                                <Text> View</Text>
-                            </Button>
-                            </View>
-                        </View>
-                    </View>
-
-                    <Text style={{marginTop:20, backgroundColor:'rgba(147,147,147,0.1)', paddingHorizontal:6 , paddingVertical:2 , borderRadius:15, color:'#667085', fontSize:15, width:160, marginBottom:'2%'}}>{t('distance')}  {data.Distnace} Km</Text>
-
-                    <View style={{ flexDirection:'row', justifyContent:'space-between'}}>
-                        <View  style={{width:'101%', height:1, backgroundColor:'transparent', borderColor:'#667085', borderBottomWidth:1, borderStyle:'dashed', position:'absolute', top:'50%', marginLeft:2}}></View>
-                        <View style={{width:20, height:30, backgroundColor:'#F2F3F4', borderTopRightRadius:15, borderBottomRightRadius:15, marginLeft:-20,}}/>
-                        <View style={{width:20, height:30, backgroundColor:'#F2F3F4', borderTopLeftRadius:15, borderBottomLeftRadius:15, marginRight:-20,}}/>
-                    </View>
-
-
-                    <View style={{justifyContent:'space-between', flexDirection:'row', marginTop:'1%'}}>
-                        <Text style={{fontSize:20, fontWeight:'500', color:'#667085'}}>
-                            {t('price_per_passenger')}
-                        </Text>
-                        <Text style={{fontWeight:'600', fontSize:22}}>
-                            ₾ {data.Price}
-                        </Text>
-                    </View>
+                <ScrollView>
+            <View style={{flex:1, paddingTop:'0'}}>
+                <View style={{ backgroundColor:'#FFF', height:60}}>
+                    <IconButton
+                        style={{position:'absolute', top: 0, left:0, zIndex:3}}
+                        icon={BACK}
+                        iconColor={null}
+                        size={36}
+                        onPress={() => navigation.navigate(destination)}
+                    />
+                    <Text  style={{textAlign:'center', fontFamily:'NotoSans_600SemiBold', fontSize:22, marginVertical:'2%'}}>{formatDate(data.PickUpTime)}</Text>
                 </View>
-                <Text style={{fontSize:20, fontWeight:'500', color:'#667085', marginTop: '3%', marginLeft:16}}>
-                    {t('about_driver')}
-                </Text>
-                <TouchableHighlight
-                    style={{ marginVertical:'1%'}}
-                    onPress={()=>navigation.navigate('Profile',{IsUserOrder: data.UserStatus, userName:data.User.UserName})}
-                    underlayColor="rgba(128, 128, 128, 0.5)"
-                >
-                <View style={{flexDirection:'row',  marginLeft:16, height:60, alignItems:'center'}}>
-                    { data.User.FileDownloadUrl !== null &&
-                        <ListPic
-                            source={{ uri: data.User.FileDownloadUrl}}
-                        />}
-                    { data.User.FileDownloadUrl == null &&
-                        <ListPic
-                            source={UserNoIMage}
-                        />}
-                    <View style={{ marginLeft:16,marginTop:10}}>
-                        <Text style={{fontSize:16}}>{data.User.FirstName} {data.User.LastName}</Text>
-                        <View style={{flexDirection:'row', marginTop:"1.2%"}}>
-                            <Text style={{fontSize:18}}>
-                                {data.User.StarRatingAmount}  </Text>
+
+                <View style={{marginHorizontal:14, marginTop:16, flex:1}}>
+                    <ImageBackground
+                        source={TicketIMage}
+                        style={{flex:1, width:'100%', height: 320, zIndex:10,  }}
+                        resizeMode="stretch"
+                    >
+
+                      <View style={{flexDirection:'row'}}>
+                          <View style={{marginTop:8, marginLeft:'5%'}}>
+                              <Text style={{fontFamily:'NotoSans_600SemiBold',color: '#1D2939', fontSize: 18, textAlign:'right', marginRight:12}}>{formatTime(data.PickUpTime)}</Text>
+                              <Text style={{color: '#667085', fontFamily:'NotoSans_500Medium', fontSize:14, marginTop:26 }}>{formatDuration(data.Duration)}in</Text>
+                              <Text style={{color: '#667085', fontFamily:'NotoSans_500Medium', fontSize:12 }}>{data.Distnace} km</Text>
+                              <Text style={{fontFamily:'NotoSans_600SemiBold',color: '#1D2939', fontSize: 18, marginTop:16, textAlign:'right', marginRight:12}}>{formatTime(data.ArrivalTime)}</Text>
+                          </View>
+
+                          <View style={{marginTop:4, marginLeft:'6.5%', width: '68%'}}>
+                              <TouchableHighlight   onPress={()=> navigation.navigate('MapPointViewScreen',{title:'Departure', startPoint:{latitude: data.DepartureLatitude, longitude: data.DepartureLongitude}, startAddress:data.Departure})}
+                                                    underlayColor="rgba(128, 128, 128, 0.5)">
+                                  <View>
+                                      <IconButton
+                                          style={{position:'absolute', top: -8, right: -8, zIndex:3}}
+                                          icon={GO}
+                                          iconColor={null}
+                                          size={20}
+                                          onPress={() => navigation.navigate(destination)}
+                                      />
+                                      <Text style={{color: '#1D2939', fontFamily:'NotoSans_700Bold', fontSize:18, paddingRight:'15%'}} numberOfLines={1}>{data.Departure}</Text>
+                                      <Text style={{color: '#475467', fontFamily:'NotoSans_400Regular', fontSize:14, marginTop:-4}}>{data.DepartureParent}</Text>
+                                  </View>
+                              </TouchableHighlight>
+                              <TouchableHighlight style={{marginTop:60}} onPress={()=> navigation.navigate('MapPointViewScreen',{title:'Destination', startPoint:{latitude: data.DestinationLatitude, longitude: data.DestinationLongitude}, startAddress:data.Destination})}
+                                                  underlayColor="rgba(128, 128, 128, 0.5)">
+                                  <View>
+                                      <IconButton
+                                          style={{position:'absolute', bottom: -12, right:-8, zIndex:3}}
+                                          icon={GO}
+                                          iconColor={null}
+                                          size={20}
+                                          onPress={() => navigation.navigate(destination)}
+                                      />
+                                      <Text style={{color: '#475467', fontFamily:'NotoSans_400Regular',  fontSize:14}}>{data.DestinationParent}</Text>
+                                      <Text style={{color: '#1D2939', fontFamily:'NotoSans_700Bold',  fontSize:18, paddingRight:'15%', marginTop:-6}} numberOfLines={1}>{data.Destination}</Text>
+                                  </View>
+                              </TouchableHighlight>
+
+                          </View>
+                      </View>
+                        <View style={{justifyContent:'space-between', flexDirection:'row',  marginHorizontal:'4%', marginTop:0}}>
+                            <Text style={{fontSize:18, fontWeight:'600', color:'#667085', marginTop:33, fontFamily:'NotoSans_600SemiBold'}}>
+                                {t('price_per_passenger')}
+                            </Text>
+                            <Text style={{fontWeight:'600', color:'#1D2939', fontSize:28, marginTop:25, fontFamily:'NotoSans_600SemiBold',}}>
+                                ₾ {data.Price}
+                            </Text>
+                        </View>
+                        <TouchableHighlight
+                            style={{ marginTop:16}}
+                            onPress={()=>navigation.navigate('Profile',{IsUserOrder: data.UserStatus, userName:data.User.UserName})}
+                            underlayColor="rgba(128, 128, 128, 0.5)"
+                        >
+                            <View style={{flexDirection:'row',  marginLeft:'4%', height:60, alignItems:'center'}}>
+                                { data.User.FileDownloadUrl !== null &&
+                                    <ListPic
+                                        source={{ uri: data.User.FileDownloadUrl}}
+                                    />}
+                                { data.User.FileDownloadUrl == null &&
+                                    <ListPic
+                                        source={UserNoIMage}
+                                    />}
+                                <View style={{ marginLeft:'4%',marginTop:10}}>
+                                    <Text style={{color: '#344054',fontSize:16, fontFamily:'NotoSans_500Medium', fontWeight:500}}>{data.User.FirstName} {data.User.LastName}</Text>
+                                    <View style={{flexDirection:'row', marginTop:-4}}>
+                                        <Text style={{fontSize:14, color: '#475467',  fontFamily:'NotoSans_400Regular', fontWeight:400}}>
+                                            {data.User.StarRatingAmount}  </Text>
+                                        <IconButton
+                                            style={{marginTop: -4, marginLeft:-12}}
+                                            iconColor='#FDB022'
+                                            size={18}
+                                            icon='star'
+                                        />
+                                        <Text style={{fontSize:18}}>
+                                            {data.User.PhoneNumber}  </Text>
+                                    </View>
+                                </View>
+                                <IconButton
+                                    style={{width:20, height:20, position:'absolute', top:4,right:10}}
+                                    color='#1B1B1B'
+                                    size={20}
+                                    icon={GO}
+                                />
+                            </View>
+                        </TouchableHighlight>
+                    </ImageBackground>
+                    <View
+                         style={{backgroundColor: '#fff', borderStyle:'solid', borderColor:'#EAECF0', borderBottomWidth:1, borderLeftWidth:1, borderRightWidth:1, width:'99.4%', marginTop:0, marginLeft:'0.3%', paddingHorizontal:'4%', borderBottomLeftRadius:20, borderBottomRightRadius:20, paddingBottom:3, marginBottom:60}}
+                    >
+                        <AboutMe style={{ color:'#475467', fontFamily:'NotoSans_400Regular'}}  numberOfLines={3} ellipsizeMode="tail">
+                            {data?.Description || 'Empty'}
+                        </AboutMe>
+                        <View style={{width:'100%', height:1, backgroundColor:'#EAECF0', marginTop:16}}/>
+                        <Text style={{fontSize:18, fontWeight:'600', color:'#667085', marginTop:16, fontFamily:'NotoSans_600SemiBold'}}>
+                            {t('about_driver')}
+                        </Text>
+                        <View style={{flexDirection:'row'}}>
                             <IconButton
-                                style={{marginTop:-8, marginLeft:-12}}
-                                iconColor='#FDB022'
-                                size={25}
-                                icon='star'
+                                style={{width:22, height:22, marginTop:4, marginRight:12, marginLeft:0}}
+                                color='#667085'
+                                size={22}
+                                icon={CAR}
                             />
-                            <Text style={{fontSize:18}}>
-                                {data.User.PhoneNumber}  </Text>
+                            <View>
+                                <Text style={{color:'#344054', fontSize:14, fontFamily:'NotoSans_600SemiBold'}}>{data?.UserOrderCar?.Manufacturer.Name} {data?.UserOrderCar?.Model.Name}</Text>
+                                <Text style={{fontSize:14, color:'#667085', fontFamily:'NotoSans_400Regular', marginTop:-7}}>{data?.UserOrderCar?.Color.Name} </Text>
+                            </View>
                         </View>
+                        <View style={{width:'100%', height:1, backgroundColor:'#EAECF0', marginTop:16}}/>
+                        <View  style={{ width:'100%',justifyContent:'flex-start', marginTop:16, marginBottom:16}}>
+                            {getOrderDescription(data.OrderDescriptionTypeIds)}
+                        </View>
+                        {
+                            data?.ApprovePassangers?.length > 0 &&
+                            <View>
+                                <View style={{width:'100%', height:1, backgroundColor:'#EAECF0', marginBottom: 16}}/>
+                                <Text style={{fontSize:18, fontWeight:'600', color:'#667085', marginTop:0, fontFamily:'NotoSans_600SemiBold'}}>
+                                    {t('passengers')}
+                                </Text>
+                                { data?.ApprovePassangers?.map( (passenger, index) => (
+                                    <TouchableHighlight
+                                        key={index}
+                                        style={{ marginTop:6}}
+                                        underlayColor="rgba(128, 128, 128, 0.5)"
+                                    >
+                                        <View style={{flexDirection:'row',  marginLeft:'4%', height:60, alignItems:'center'}}>
+                                            { passenger.ProfilePictureUrl !== null &&
+                                                <ListPic
+                                                    source={{ uri: passenger.ProfilePictureUrl}}
+                                                />}
+                                            { passenger.ProfilePictureUrl == null &&
+                                                <ListPic
+                                                    source={UserNoIMage}
+                                                />}
+                                            <View style={{ marginLeft:'4%',marginTop:0}}>
+                                                <Text style={{color: '#344054',fontSize:16, fontFamily:'NotoSans_500Medium', fontWeight:500}}>{passenger.FirstName} {passenger.LastName.charAt(0)}.</Text>
+                                            </View>
+                                        </View>
+                                    </TouchableHighlight>
+                                ) ) }
+                            </View>
+
+                        }
+
                     </View>
-                    <IconButton
-                        style={{width:35, height:35, position:'absolute', top:6,right:0}}
-                        color='#1B1B1B'
-                        size={35}
-                        icon={'chevron-right'}
-                    />
+
                 </View>
-                </TouchableHighlight>
-                <AboutMe style={{ marginLeft:16}}  numberOfLines={3} ellipsizeMode="tail">
-                    {data?.Description || 'Empty'}
-                </AboutMe>
-                <Divider style={{ width: '90%', marginBottom:'2%'}} horizontalInset={true} bold={true} />
-                <View style={{flexDirection:'row'}}>
-                    <IconButton
-                        style={{width:35, height:35}}
-                        color='#1B1B1B'
-                        size={35}
-                        icon={vehicleTypeMapping[data?.UserOrderCar?.CarType] || 'car-side'}
-                    />
-                    <View>
-                        <Text style={{fontSize:15}}>{data?.UserOrderCar?.Manufacturer.Name} {data?.UserOrderCar?.Model.Name}</Text>
-                        <Text style={{fontSize:14, color:'#667085'}}>{data?.UserOrderCar?.Color.Name} </Text>
-                        <IconButton
-                            style={{ width:16, height:16, position:'absolute', bottom:3, right:0}}
-                            iconColor={colorMapping[data?.UserOrderCar?.Color.Id]}
-                            size={16}
-                            icon='circle'
-                        />
-                    </View>
-                </View>
-                <Divider style={{ width: '90%', marginBottom:10}} horizontalInset={true} bold={true} />
-                <View  style={{ width:'100%', flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between'}}>
-                    {getOrderDescription(data.OrderDescriptionTypeIds)}
-                </View>
-                { data.UserStatus === 0 &&
-                <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '40%', position:'absolute', bottom:'2%', left:'30%'}} buttonColor='#FF5A5F' mode='contained' onPress={onSubmit}>
-                    <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('ride')}</SmallBtnText>
-                </Button>}
-                { data.UserStatus === 1 &&
-                    <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '50%', position:'absolute', bottom:'2%', left:'30%'}} buttonColor='#FF5A5F' mode='contained' onPress={()=>console.log(2)}>
-                        <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('cancel_order')}</SmallBtnText>
-                    </Button>}
-                { data.UserStatus === 2 &&
-                    <Button style={{height: 40, paddingTop: 3, borderRadius: 30, width: '50%', position:'absolute', bottom:'2%', left:'30%'}} buttonColor='#FF5A5F' mode='contained' onPress={()=>console.log(3)}>
-                        <SmallBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('cancel_ride')}</SmallBtnText>
-                    </Button>}
             </View>
+                </ScrollView>
             }
             {
-                data == null  &&  <Loading/>
+                data == null  &&
+                <Loading/>
             }
             {error !== null && <ErrorView>
                 <ErrorText>{error}</ErrorText>
@@ -265,6 +312,31 @@ export default function Order({route}) {
                     onPress={() => setError(null)}
                 />
             </ErrorView>}
+
+            { data && data?.UserStatus === 0 &&
+                <View style={{width:'92%', backgroundColor:'#EB2931', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:'4%', position:'absolute', bottom:2}}>
+                <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
+                           onPress={onSubmit}>
+                    <SearchBtnText style={{fontSize: 20, textAlign: 'center', fontFamily:'NotoSans_600SemiBold'}}>{t('ride')}</SearchBtnText>
+                </SearchBtn>
+                </View>
+            }
+            {  data && data?.UserStatus === 1 &&
+                <View style={{width:'92%', backgroundColor:'#EB2931', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:'4%', position:'absolute', bottom:2}}>
+                <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
+                        onPress={()=>console.log(2)}>
+                    <SearchBtnText style={{fontSize: 20, textAlign: 'center', fontFamily:'NotoSans_600SemiBold'}}>{t('cancel_order')}</SearchBtnText>
+                </SearchBtn>
+                </View>
+            }
+            {  data && data?.UserStatus === 2 &&
+                <View style={{width:'92%', backgroundColor:'#EB2931', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:'4%', position:'absolute', bottom:2}}>
+                <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center', fontFamily:'NotoSans_600SemiBold'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
+                        onPress={()=>console.log(3)}>
+                    <SearchBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('cancel_ride')}</SearchBtnText>
+                </SearchBtn>
+                </View>
+            }
         </Container>
     );
 }

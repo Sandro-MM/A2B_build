@@ -125,33 +125,33 @@ export const OrderIconMapping = {
     "12": PackageImage,
 };
 
-export const ListIconColorMapping = {
-    "1": "transparent",
-    "2": '#667085',
-    "3": "#ff69b4",
-    "4":  '#667085',
-    "5": "transparent",
-    "6": "#ff69b4",
-    "7": '#667085',
-    "8": "transparent",
-    "9": "transparent",
-    "10": '#667085',
-    "11": '#f60',
-    "12": "transparent",
+export const ListDisplayMapping = {
+    "1": "none",
+    "2": 'block',
+    "3": "block",
+    "4":  'block',
+    "5": "none",
+    "6": "block",
+    "7": 'block',
+    "8": "none",
+    "9": "none",
+    "10": 'block',
+    "11": 'block',
+    "12": "none",
 };
 
 export const ListIconSizeMapping = {
     "1": 0,
-    "2": 20,
-    "3": 20,
-    "4":  20,
+    "2": 22,
+    "3": 22,
+    "4":  22,
     "5": 0,
-    "6": 20,
-    "7": 20,
+    "6": 22,
+    "7": 22,
     "8": 0,
     "9": 0,
-    "10": 20,
-    "11": 20,
+    "10": 22,
+    "11": 22,
     "12": 0,
 };
 export const OrderIconColorMapping = {

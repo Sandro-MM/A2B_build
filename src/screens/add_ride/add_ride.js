@@ -154,38 +154,38 @@ export default function AddRide({navigation, route}) {
                 ]
             }]
 
-            console.log(reqObject,'reqObject')
+        console.log(reqObject,'reqObject')
 
 
         try {
-                 setLoading(true)
-                if (reverseObj === false){
-                    const accessToken = await getAccessToken();
-                    const responseData = await PostApi(OrderEndpoints.post.createOrder, reqObject, {
-                        headers: {
-                            ...headersTextToken.headers,
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    });
-                    setReverseObj(true)
-                    if (activeRidesNumber === 2){
-                        navigation.navigate("RideAddedSucsess");
-                    } else {
-                        navigation.navigate("AreYouGoingBack");
-                    }
-
-                }
-                else {
-
-                    const accessToken = await getAccessToken();
-                    const responseData = await PostApi(OrderEndpoints.post.createOrder, reversReqObject, {
-                        headers: {
-                            ...headersTextToken.headers,
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    });
+            setLoading(true)
+            if (reverseObj === false){
+                const accessToken = await getAccessToken();
+                const responseData = await PostApi(OrderEndpoints.post.createOrder, reqObject, {
+                    headers: {
+                        ...headersTextToken.headers,
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                setReverseObj(true)
+                if (activeRidesNumber === 2){
                     navigation.navigate("RideAddedSucsess");
+                } else {
+                    navigation.navigate("AreYouGoingBack");
                 }
+
+            }
+            else {
+
+                const accessToken = await getAccessToken();
+                const responseData = await PostApi(OrderEndpoints.post.createOrder, reversReqObject, {
+                    headers: {
+                        ...headersTextToken.headers,
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                navigation.navigate("RideAddedSucsess");
+            }
 
 
         } catch (error) {
@@ -200,16 +200,16 @@ export default function AddRide({navigation, route}) {
         <Stack.Navigator>
             <Stack.Screen name="LeavingFrom" options={{ headerShown: false }}>
                 {({ navigation }) => (
-                <MapViewScreen
-                    title={fromTitle}
-                    setValue={setValue}
-                    valueName={'LeavingFrom'}
-                    handleMapChoose={(handleMapChoose) => {
-                        setValue('MapFrom', handleMapChoose);
-                        console.log(control._formValues);
-                        navigation.navigate("Destination")
-                    }}
-                />
+                    <MapViewScreen
+                        title={fromTitle}
+                        setValue={setValue}
+                        valueName={'LeavingFrom'}
+                        handleMapChoose={(handleMapChoose) => {
+                            setValue('MapFrom', handleMapChoose);
+                            console.log(control._formValues);
+                            navigation.navigate("Destination")
+                        }}
+                    />
                 )}
             </Stack.Screen>
             <Stack.Screen name="Destination" options={{ headerShown: false }}>
@@ -255,7 +255,7 @@ export default function AddRide({navigation, route}) {
             <Stack.Screen name="ChooseTime" options={{ headerShown: false }}>
                 {({ navigation }) => (
                     <View style={{width:'100%', flex:1}}>
-                       <TimePicker setValue={setValue}  navigation={() => navigation.navigate("PassengerCount")}/>
+                        <TimePicker setValue={setValue}  navigation={() => navigation.navigate("PassengerCount")}/>
                     </View>
                 )}
             </Stack.Screen>
@@ -270,17 +270,17 @@ export default function AddRide({navigation, route}) {
             <Stack.Screen name="Price" options={{ headerShown: false }}>
                 {({ navigation }) => (
                     <View style={{width:'100%', flex:1}}>
-                   <RidePrice distance={control._formValues.distance}  navigation={navigation} control={control} setValue={setValue}/>
+                        <RidePrice distance={control._formValues.distance}  navigation={navigation} control={control} setValue={setValue}/>
                         <A2BNextIcon onPress={() =>  navigation.navigate("Description")}/>
                     </View>
                 )}
             </Stack.Screen>
             <Stack.Screen name="Description" options={{ headerShown: false }}>
                 {({ navigation }) => (
-                   <Description control={control} navigation={navigation} name={'description'} handleSubmit={(value) => {
-                       console.log(control._formValues);
-                       navigation.navigate("Options");
-                   }}/>
+                    <Description control={control} navigation={navigation} name={'description'} handleSubmit={(value) => {
+                        console.log(control._formValues);
+                        navigation.navigate("Options");
+                    }}/>
                 )}
             </Stack.Screen>
             <Stack.Screen name="Options" options={{ headerShown: false }}>

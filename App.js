@@ -50,6 +50,7 @@ import RidePriceEdit from "./src/screens/rideHistory/ridePriceEdit";
 import Confirm_Price_change from "./src/screens/rideHistory/confirm_price_change";
 
 
+
 export default function App() {
     enableLatestRenderer();
     const Stack = createStackNavigator();

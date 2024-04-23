@@ -175,6 +175,25 @@ export  const Passengers = ({route}) => {
                                 icon={'account-cancel'}
                             />}
                         <Divider style={{ width: '90%', marginBottom: '2%', position: 'absolute', bottom: -10, left: -15 }} horizontalInset={true} bold={true} />
+                        <DeleteConfirmationModal
+                            isVisible={isDelModalVisible}
+                            onCancel={hideDelModal}
+                            confirmButton={{
+                                title: t('confirm'),
+                                onPress: async () => {
+                                    hideDelModal();
+                                    await confirmAction(passenger.Id);
+                                },
+                                color: 'red',
+                            }}
+                            cancelButton={{
+                                title: t('cancel'),
+                                onPress: hideDelModal,
+                                color: 'blue',
+                            }}
+                        >
+                            <Subtitle>{t(modalMessage)}</Subtitle>
+                        </DeleteConfirmationModal>
                     </View>
                 </TouchableHighlight>
             ))}
@@ -201,25 +220,6 @@ export  const Passengers = ({route}) => {
                 <PassengerList data={responseData.RejectedPassangers} title={t('rejected')} />
             )}
             </ScrollView>
-            <DeleteConfirmationModal
-                isVisible={isDelModalVisible}
-                onCancel={hideDelModal}
-                confirmButton={{
-                    title: t('confirm'),
-                    onPress: async () => {
-                        hideDelModal();
-                        await confirmAction(passenger.Id);
-                    },
-                    color: 'red',
-                }}
-                cancelButton={{
-                    title: t('cancel'),
-                    onPress: hideDelModal,
-                    color: 'blue',
-                }}
-            >
-                <Subtitle>{t(modalMessage)}</Subtitle>
-            </DeleteConfirmationModal>
         </Container>
     );
 };

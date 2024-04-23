@@ -26,12 +26,11 @@ import * as SecureStore from "expo-secure-store";
 
 
 const Stack = createStackNavigator();
-export default function AddVehicle({ route }) {
+export default function AddVehicle({ route, navigation }) {
     const { t } = useTranslation();
 
     const { mode } = route.params || {};
    console.log(mode)
-    const { navigation } = route.params || {};
 
     console.log('navigation',navigation, 'navigation')
     const { control,handleSubmit ,formState: { errors }  } = useForm();
@@ -39,11 +38,7 @@ export default function AddVehicle({ route }) {
     const [modelsData, setModelData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [images, setImages] = useState([]);
-    useEffect(() => {
-        if (modelsData.length > 0) {
-            navigation.navigate("Model");
-        }
-    }, [modelsData]);
+
     const [selectedModel, setSelectedModel] = useState('');
     const [selectedType, setSelectedType] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
@@ -151,6 +146,7 @@ export default function AddVehicle({ route }) {
 
             const modelData = await GetApi(endpoint, { headers: commonHeaders });
             setModelData(modelData);
+            navigation.navigate('Model')
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
@@ -238,8 +234,12 @@ export default function AddVehicle({ route }) {
                             size={32}
                             onPress={() => navigation.navigate('Make')}
                         />
-                        <CarList navigation={navigation} data={modelsData} filterFunction={filterData} title={'whats_your_vehicles_model'} placeholder={'Model'} variant={'default'} onSelectItem={(selectedItem) => {setSelectedModel(selectedItem); navigation.navigate("Type");}}
-                        />
+                        {
+                            modelsData &&
+                            <CarList navigation={navigation} data={modelsData} filterFunction={filterData} title={'whats_your_vehicles_model'} placeholder={'Model'} variant={'default'} onSelectItem={(selectedItem) => {setSelectedModel(selectedItem); navigation.navigate("Type");}}
+                            />
+                        }
+
                     </View>
                     )}
             </Stack.Screen>
