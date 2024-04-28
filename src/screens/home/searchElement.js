@@ -58,7 +58,7 @@ export default function SearchElement({navigation, date , leaving, going, contro
 
 
   if (fontsLoaded)  return (
-        <SearchSurface style={{marginTop:16}}>
+        <SearchSurface style={{marginTop:150}}>
             <View style={{width:'108%', justifyContent: 'center', marginTop:6}}>
                 <IconButton
                     iconColor='#1D2939'

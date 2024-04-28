@@ -4,7 +4,12 @@ import PawYesImage from "../../assets/img/paw-yes.png"
 import PawMaybeImage from "../../assets/img/paw-print.png"
 import MusicImage from "../../assets/img/music-notes.png"
 import SuitCaseImage from "../../assets/img/suitcase-rolling.png"
+import CHAT from "../../assets/img/ChatsTeardrop.png"
 import PackageImage from "../../assets/img/package.png"
+import IG from "../../assets/img/instagram.png"
+import FB from "../../assets/img/Facebook.png"
+import TG from "../../assets/img/telegram.png"
+import X from "../../assets/img/x.png"
 export const colorMapping = {
     "1": "#000000",
     "2": "#FEFEFE",
@@ -81,18 +86,18 @@ export const fuelTypeMapping ={
     "8": "ev-station"
 }
 export const iconMapping = {
-    Smoker: 'smoking',
-    'Loves Music': 'music',
-    'Have A Pet': 'paw',
-    'Loves Travelling': 'bag-suitcase',
-    Communicative: 'chat-processing',
+    Smoker: SmokeImage,
+    'Loves Music': MusicImage,
+    'Have A Pet': PawYesImage,
+    'Loves Travelling': SuitCaseImage,
+    Communicative: CHAT,
 };
 
 export const socialMediaMapping={
-    Instagram:'instagram',
-    Facebook:'facebook',
-    Twitter:'twitter',
-    Telegram:'send-circle'
+    Instagram:IG,
+    Facebook:FB,
+    Twitter:X,
+    Telegram:TG
 }
 
 export const ListIconMapping = {

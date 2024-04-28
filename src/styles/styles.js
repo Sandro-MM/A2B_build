@@ -208,24 +208,21 @@ export const VehicleBntText = styled.Text`
 `;
 
 export const ProfilePic = styled.Image`
-  flex: 1;
-  border-radius: 100px;
-  width: 100%;
-  height: 100%;
-  max-height: 110px;
-  max-width: 110px;
-  margin-left: 5%;
+  border-radius: 200px;
+  height: 96px;
+  width: 96px;
 `;
 
 export const HomeBg = styled.Image`
   position: absolute;
   top: 30px;
   width: 100%;
-  height: 45.5%;
+  height: 54.5%;
 `;
 
 
 export const ProfileContainer = styled.View`
+  flex: 1;
   background-color: #F9FAFB;
   align-items: center;
   justify-content: center;
@@ -234,14 +231,13 @@ export const ProfileContainer = styled.View`
 `;
 export const ProfileView = styled.View`
   flex: 1;
-  
   width: 100%;
 `;
 
 export const ProfileName  = styled.Text`
-  color: #1B1B1B;
-  font-size: 22px;
-  width: 100%;
+    margin-top: 24px;
+    color: #101828;
+    font-size: 24px;
 `;
 export const ProfileAge  = styled.Text`
   color: #2f2f2f;
@@ -315,7 +311,7 @@ export const Rides  = styled.Text`
 `;
 export const ProfileSocialMedia  = styled.View`
   height: 50px;
-  justify-content: center;
+  justify-content: start;
   flex-direction: row;
   color: #1B1B1B;
   font-size: 22px;
@@ -363,11 +359,12 @@ export const SurfaceIcon  = styled(Surface)`
   font-size: 22px;
 `;
 export const IconView  = styled.View`
-  padding: 5px;
-  border-radius: 15px;
-  background-color: transparent;
-  justify-content: start;
-  color: #1B1B1B;
+    width: 102%;
+    height: 70px;
+    padding: 12px 16px 12px 16px;
+    gap: 12px;
+    border-radius: 16px;
+    background: #F2F4F7;
 `;
 export const VehiclePic = styled.Image`
   width: 100%;

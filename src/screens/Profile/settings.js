@@ -113,7 +113,7 @@ const SettingsPage = (props) => {
                 icon='close'
                 iconColor='#1B1B1B'
                 size={28}
-                onPress={() => props.navigation.goBack()}
+                onPress={() => props.navigation.navigate('Profile',{ IsUserOrder: 1, navigation: props.navigation })}
             />
             <Title style={{marginBottom:-40, marginTop:-70}}>{t('settings')}</Title>
                 <TouchableHighlight

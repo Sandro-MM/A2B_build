@@ -91,7 +91,7 @@
   "rides": "Rides",
   "no_phone_number": "No Phone Number",
   "verified_email": "Verified email",
-  "since": "Since",
+  "since": "Member Since",
   "email_not_verified": "Email not verified",
   "empty": "Empty",
   "about": "About",
@@ -185,5 +185,8 @@
   "edit_passenger_count": "Edit Passenger Count",
   "edit_time": "Edit Time",
   "edit_date": "Edit Date",
-  "your_price_was_changed_accordingly": "Your price was changed accordingly"
+  "your_price_was_changed_accordingly": "Your price was changed accordingly",
+  "my_preferences": "My preferences",
+  "reveal_number": "reveal number",
+  "socials": "Socials"
 }
