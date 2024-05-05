@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {
-    SettingsVal, Subtitle, Title,
+    ProfileAge,
+    ReviewBtn,
+    SettingsVal, Subtitle, SurfaceArea, Title,
     TitleLeft,
 } from "../../styles/styles";
 import {Divider, Icon, IconButton} from "react-native-paper";
@@ -182,6 +184,14 @@ const SettingsPage = (props) => {
                     <Icon size={30} color={'gray'} source={'chevron-right'}/>
                 </View>
             </TouchableHighlight>
+            <TouchableHighlight   underlayColor='rgba(128, 128, 128, 0.5)'   onPress={() => {
+                    props.navigation.navigate('Vehicles', { carData: userData.UserCarReponseModels, firstName:null, navigation:props.navigation});
+                }}>
+                <View style={viewStyle}>
+                    <SettingsVal>{t('vehicles')}</SettingsVal>
+                    <Icon size={30} color={'gray'} source={'chevron-right'}/>
+                </View>
+                </TouchableHighlight>
             <Divider style={{ width: '90%' }} horizontalInset={true} bold={true} />
             <DeleteConfirmationModal
                 isVisible={isDelModalVisible}

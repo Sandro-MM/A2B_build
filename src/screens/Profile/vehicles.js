@@ -17,7 +17,6 @@ import {useTranslation} from "react-i18next";
 export default function Vehicles(props) {
     const { t } = useTranslation();
     const { carData } = props.route.params;
-    const { profileType } = props.route.params;
     const { firstName } = props.route.params;
     const { navigation } = props.route.params;
 
@@ -81,7 +80,7 @@ export default function Vehicles(props) {
                             color='#7a7a7a'
                             size={100}
                         />
-                        { profileType &&
+
                         <ConfirmRedBtn
                             style={{marginTop:20}}
                             buttonColor='#FF5A5F'
@@ -89,7 +88,6 @@ export default function Vehicles(props) {
                             onPress={()=>props.navigation.navigate('AddVehicle',{mode:'addVehicle', navigation:navigation})}>
                             <SmallConfirmText>{t('add_car')}</SmallConfirmText>
                         </ConfirmRedBtn>
-                    }
                     </Surface>
                 ) : null
             }
@@ -98,8 +96,8 @@ export default function Vehicles(props) {
                         key={item.Id}
                         style={{ width: '100%', height:'100%', display: index === currentIndex ? 'flex' : 'none' }}>
                         <VehicleSubtitleContainer>
-                            <VehicleSubtitle style={{width:'100%', marginTop:-30}}>{ t(profileType? 'my_vehicles':null)} {!profileType? firstName: null } {t(!profileType? 'user_s_vehicles': null )}</VehicleSubtitle>
-                            { profileType &&
+                            <VehicleSubtitle style={{width:'100%', marginTop:-30}}>{t('vehicles')}</VehicleSubtitle>
+
                             <View style={{ flexDirection:'row', position:'absolute', right:0}}>
                                 {  carData.length<3?
                                 <IconButton
@@ -140,7 +138,7 @@ export default function Vehicles(props) {
                                 >
                                     <Subtitle>{t('are_you_sure_you_want_to_remove_your_vehicle')}</Subtitle>
                                 </DeleteConfirmationModal>
-                            </View>}
+                            </View>
                         </VehicleSubtitleContainer>
                         <IconButton
                             style={{position:'absolute', top:95, left:0}}
@@ -170,7 +168,7 @@ export default function Vehicles(props) {
                                 />
                             </View>
                             <TextRight>{item.PlateNumber}</TextRight>
-                            <View style={{ flexDirection: 'row', marginTop: 5 }}>
+                            <View style={{ flexDirection: 'row', marginTop: -15 }}>
                                 <VehicleFuel
                                     contentStyle={{ height: 38, justifyContent: 'flex-start' }}
                                     mode="text"

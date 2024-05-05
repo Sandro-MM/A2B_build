@@ -1,40 +1,37 @@
-import React from 'react';
-import {Controller} from 'react-hook-form';
-import {IconButton} from "react-native-paper";
-import A2btextarea from "../../components/a2btextarea";
 import {ContainerTop, SmallBtnText, SmallRedBtn, Title} from "../../styles/styles";
-import {accEndpoints, getAccessToken, PutApi} from "../../services/api";
+import {IconButton} from "react-native-paper";
+import {Controller, useForm} from "react-hook-form";
+import A2btextarea from "../../components/a2btextarea";
 import {useTranslation} from "react-i18next";
+import {getAccessToken, OrderEndpoints, PostApi} from "../../services/api";
+import {Keyboard} from "react-native";
 
-const DescriptionSetting = (props) => {
+
+export default function CancelReason({navigation, id}) {
     const { t } = useTranslation();
-    const title = props.route.params.title;
-    const defaultValue = props.route.params.defaultValue;
-    const control = props.route.params.control
+    const { control, handleSubmit,formState ,formState: { errors }  } = useForm();
 
 
-    const  Save = async () => {
-        const Value =
-            {
-                UserDetailsModel: {
-                    Description: control._formValues.Description
-                }
-            }
+
+    async function onSubmit(data) {
         try {
+            Keyboard.dismiss()
             const accessToken = await getAccessToken();
-            const responseData = await PutApi(accEndpoints.put.EditProfile, Value, {
+            const responseData = await PostApi(OrderEndpoints.post.cancelRide, {Reason:data.description, OrderId: id}, {
                 headers: {
-                    'Content-Type': 'application/json',
+                    Accept: '*/*',
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-
+            navigation.goBack()
         } catch (error) {
             console.error('Error submitting data:', error);
+        } finally {
         }
-    };
+    }
 
-    return (
+
+    return(
         <ContainerTop style={{paddingTopTop:100}}>
             <IconButton
                 style={{position:'absolute', top:60, left:0, zIndex:3}}
@@ -43,25 +40,23 @@ const DescriptionSetting = (props) => {
                 size={32}
                 onPress={() => props.navigation.goBack()}
             />
-            <Title>{title}</Title>
+            <Title>{t('write_reason')}</Title>
             <Controller
                 control={control}
                 render={({ field }) => (
                     <A2btextarea
-                        placeholder={`Enter description`}
+                        placeholder={`Enter reason`}
                         value={field.value}
                         onChangeText={(value) => field.onChange(value)}
                         variant='default'
                     />
                 )}
-                name={'Description'}
-                defaultValue={defaultValue}
+                name={'description'}
+                defaultValue={''}
             />
-            <SmallRedBtn style={{position:'absolute', bottom:40}} buttonColor='#FF5A5F' mode='contained' onPress={Save}>
-                <SmallBtnText>{t('save')}</SmallBtnText>
+            <SmallRedBtn style={{position:'absolute', bottom:40}} buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit(onSubmit)}>
+                <SmallBtnText>{t('cancel_ride')}</SmallBtnText>
             </SmallRedBtn>
         </ContainerTop>
-    );
-};
-
-export default DescriptionSetting;
+    )
+}

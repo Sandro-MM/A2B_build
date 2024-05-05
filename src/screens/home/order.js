@@ -4,14 +4,13 @@ import {
     Container, ErrorText, ErrorView,
     ListPic, SearchBtn, SearchBtnText, XIcon,
 } from "../../styles/styles";
-import { getAccessToken, GetApi, OrderEndpoints, PostApi} from "../../services/api";
+import {DelApi, getAccessToken, GetApi, OrderEndpoints, PostApi} from "../../services/api";
 import {useEffect, useState} from "react";
 import UserNoIMage from "../../../assets/img/default_user.png";
 import {IconButton} from "react-native-paper";
 import {
     ListDisplayMapping,
     OrderIconMapping,
-    vehicleTypeMapping
 } from "../../styles/vehicleMappings";
 import Loading from "../../components/loading";
 import GO from "../../../assets/img/chevron-right.png";
@@ -35,35 +34,38 @@ export default function Order({route}) {
     const { navigation } = route.params;
     const [data, setResponseData] = useState(null);
     const [error, setError] = useState(null);
-
+    const [dissable, setDissable] = useState(false)
 
     let [fontsLoaded] = useFonts({
         NotoSans_400Regular, NotoSans_600SemiBold, NotoSans_500Medium,NotoSans_700Bold
     });
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const accessToken = await getAccessToken();
-                const language = await SecureStore.getItemAsync('userLanguage');
-                    const responseData = await GetApi(`${OrderEndpoints.get.order}?orderId=${item}&`, {
-                        headers: {
-                            'Accept-Language': language,
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    });
-                    setResponseData(responseData);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
         fetchData();
     }, []);
 
 
+    const fetchData = async () => {
+        try {
+            const accessToken = await getAccessToken();
+            const language = await SecureStore.getItemAsync('userLanguage');
+            const responseData = await GetApi(`${OrderEndpoints.get.order}?orderId=${item}&`, {
+                headers: {
+                    'Accept-Language': language,
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            setResponseData(responseData);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
 
     const onSubmit = async () => {
         try {
+            setDissable(true)
+            setResponseData(null)
             const accessToken = await getAccessToken();
             const orderId = await PostApi(`${OrderEndpoints.post.order}${item}/order-bind`, null, {
                 headers: {
@@ -71,20 +73,61 @@ export default function Order({route}) {
                 },
             });
             console.log(orderId)
-            if (orderId){
-                try {
-                } catch (error) {
-                    console.error('Error', error);
-                }
-            }
+            fetchData();
         } catch (error) {
+           await fetchData();
             const errorTitle = error.response.data.detail;
             setError(errorTitle);
         } finally {
 
+            setDissable(false)
         }
     };
 
+
+    const cancelRide = async () => {
+        try {
+            setDissable(true)
+            setResponseData(null)
+            const accessToken = await getAccessToken();
+            const orderId = await PostApi(`${OrderEndpoints.post.order}${item}/order-bind`, null, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            console.log(orderId)
+            fetchData();
+        } catch (error) {
+            await fetchData();
+            const errorTitle = error.response.data.detail;
+            setError(errorTitle);
+        } finally {
+
+            setDissable(false)
+        }
+    };
+
+    const withdrawRide = async () => {
+        try {
+            setDissable(true)
+            setResponseData(null)
+            const accessToken = await getAccessToken();
+            const orderId = await DelApi(`${OrderEndpoints.delete.cancelRideRequest}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            },  item);
+            console.log(orderId)
+            fetchData();
+        } catch (error) {
+            await fetchData();
+            const errorTitle = error.response.data.detail;
+            setError(errorTitle);
+        } finally {
+
+            setDissable(false)
+        }
+    };
 
 
     const formatTime = (timeString) => {
@@ -303,7 +346,7 @@ export default function Order({route}) {
                 data == null  &&
                 <Loading/>
             }
-            {error !== null && <ErrorView>
+            {error !== null && <ErrorView style={{zIndex:10}}>
                 <ErrorText>{error}</ErrorText>
                 <XIcon
                     icon="window-close"
@@ -315,7 +358,7 @@ export default function Order({route}) {
 
             { data && data?.UserStatus === 0 &&
                 <View style={{width:'92%', backgroundColor:'#EB2931', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:'4%', position:'absolute', bottom:2}}>
-                <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
+                <SearchBtn disabled={dissable} contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
                            onPress={onSubmit}>
                     <SearchBtnText style={{fontSize: 20, textAlign: 'center', fontFamily:'NotoSans_600SemiBold'}}>{t('ride')}</SearchBtnText>
                 </SearchBtn>
@@ -323,19 +366,33 @@ export default function Order({route}) {
             }
             {  data && data?.UserStatus === 1 &&
                 <View style={{width:'92%', backgroundColor:'#EB2931', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:'4%', position:'absolute', bottom:2}}>
-                <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
-                        onPress={()=>console.log(2)}>
+                <SearchBtn disabled={dissable} contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
+                           onPress={()=> navigation.navigate('RideHistory')}>
                     <SearchBtnText style={{fontSize: 20, textAlign: 'center', fontFamily:'NotoSans_600SemiBold'}}>{t('cancel_order')}</SearchBtnText>
                 </SearchBtn>
                 </View>
             }
             {  data && data?.UserStatus === 2 &&
                 <View style={{width:'92%', backgroundColor:'#EB2931', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:'4%', position:'absolute', bottom:2}}>
-                <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center', fontFamily:'NotoSans_600SemiBold'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
-                        onPress={()=>console.log(3)}>
+                <SearchBtn disabled={dissable} contentStyle={{ height: 48, width:'100%' , justifyContent: 'center', fontFamily:'NotoSans_600SemiBold'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
+                        onPress={()=> navigation.navigate('CancelReason',{navigation:navigation, id:item})}>
                     <SearchBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('cancel_ride')}</SearchBtnText>
                 </SearchBtn>
                 </View>
+            }
+            {  data && data?.UserStatus === 3 &&
+                <View style={{width:'92%', backgroundColor:'#EB2931', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:'4%', position:'absolute', bottom:2}}>
+                    <SearchBtn disabled={dissable} contentStyle={{ height: 48, width:'100%' , justifyContent: 'center', fontFamily:'NotoSans_600SemiBold'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
+                               onPress={withdrawRide}>
+                        <SearchBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('withdraw_request')}</SearchBtnText>
+                    </SearchBtn>
+                </View>
+            }
+            {  data && data?.UserStatus === 4 &&
+                        <Text style={{fontSize: 20, textAlign: 'center'}}>{t('ride_canceled')}</Text>
+            }
+            {  data && data?.UserStatus === 5 &&
+                <Text style={{fontSize: 20, textAlign: 'center'}}>{t('user_rejected')}</Text>
             }
         </Container>
     );

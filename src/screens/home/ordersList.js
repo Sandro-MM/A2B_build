@@ -14,6 +14,7 @@ import {
 import TicketIMage from "../../../assets/img/ticket.png"
 import UserNoIMage from "../../../assets/img/default_user.png"
 import BeltImage from "../../../assets/img/seat-belt.png"
+import NODATA from "../../../assets/img/no-data.png"
 import {ListFilterModal} from "../../components/listFilterModal";
 import {OrderListHeader} from "./orderListHeader";
 import {useTranslation} from "react-i18next";
@@ -210,6 +211,13 @@ export const  OrdersList = ({ navigation, data, setValue }) => {
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
             />
+            {
+                listValues.length === 0 &&
+                <View style={{flex:1, marginTop:-880}}>
+                    <Image resizeMode={'contain'} style={{width:'80%', flex:1, marginHorizontal:'10%'}} source={NODATA}/>
+                    <Text style={{marginTop:-680, textAlign:'center', width:'100%', fontFamily:'NotoSans_600SemiBold', fontSize:22, color:'#0F0D13'}}>{t('no_orders_found')}</Text>
+                </View>
+            }
         </Container>
     );
 };

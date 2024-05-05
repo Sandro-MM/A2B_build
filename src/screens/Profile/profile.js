@@ -3,14 +3,23 @@ import {
     ProfilePic,
     ProfileView,
     ProfileName,
-    ProfileSocialMedia, IconView, SmallRedBtn, ListPic,
+    ProfileSocialMedia,
+    IconView,
+    SmallRedBtn,
+    ListPic,
+    VehicleFuel, SurfaceArea, ReviewBtn, ProfileAge,
 } from "../../styles/styles";
 import {Icon, IconButton, Surface} from "react-native-paper";
 import * as React from "react";
 import {AppState, Image, Linking, ScrollView, Text, TouchableHighlight, View} from "react-native";
 import {useCallback, useEffect, useState} from "react";
 import {accEndpoints, getAccessToken, GetApi, headersTextToken} from "../../services/api";
-import {iconMapping, socialMediaMapping} from "../../styles/vehicleMappings";
+import {
+    fuelTypeMapping,
+    iconMapping,
+    socialMediaMapping,
+    vehicleTypeMapping
+} from "../../styles/vehicleMappings";
 import Navigation from "../../components/navigation";
 import UserNoIMage from "../../../assets/img/default_user.png";
 import {useTranslation} from "react-i18next";
@@ -25,6 +34,8 @@ import ABOUT_ME from "../../../assets/img/about.png";
 import INFO from "../../../assets/img/info.png";
 import VERIFY from "../../../assets/img/Verifiedtick.png";
 import REVIEW from "../../../assets/img/review.png";
+import CAR2 from "../../../assets/img/CarProfile.png";
+import GAS from "../../../assets/img/Gas.png";
 import {Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, useFonts} from "@expo-google-fonts/inter";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {debounce} from "lodash";
@@ -126,7 +137,53 @@ export default function Profile() {
                     </View>
                 </View>
             case 'cars':
-                return <Text>Cars Content</Text>;
+                return <View style={{paddingTop:10}}>
+                    {
+                        responseData?.UserCarReponseModels.length > 0 &&
+                            responseData?.UserCarReponseModels.map((item, index)=>(
+                            <View key={index} style={{marginVertical:12, width:'100%', height:337, borderRadius:16, borderColor:'#D0D5DD', borderStyle:'solid', borderWidth:1, borderBottomWidth:3}}>
+                                <Image
+                                    style={{width:'100%', height: 180, borderTopRightRadius:16, borderTopLeftRadius:16}}
+                                    source={{
+                                        uri: item.CarPictureUrls[0]?.Name,
+                                    }}
+                                />
+                                <View style={{marginTop:20, marginHorizontal:16}}>
+                                    <Text style={{color:'#344054', fontFamily:'Inter_600SemiBold'}}> {item.Manufacturer.Name} {item.Model?.Name}
+                                    </Text>
+                                    <Text style={{color:'#344054', fontFamily:'Inter_600SemiBold'}}> {item.ReleaseDate}</Text>
+                                    <Text style={{color:'#667085', fontFamily:'Inter_400Regular'}}> {item.Color?.Name} </Text>
+                                    <Text style={{color: '#101828', fontFamily:'Inter_700Bold', fontSize:24, position:'absolute', top:0, right:0}}>{item.PlateNumber}</Text>
+                                    <View style={{ flexDirection: 'row', marginTop: 5 }}>
+                                        <VehicleFuel
+                                            contentStyle={{ height: 38, justifyContent: 'flex-start' }}
+                                            mode="text"
+                                        >
+                                            <Icon
+                                                source={GAS}
+                                                color="#343330"
+                                                size={20}
+                                            />
+                                            <Text style={{color:'#475467',  fontSize:16, fontFamily:'Inter_400Regular'}}> {item.FuelType?.Name} </Text>
+                                        </VehicleFuel>
+                                        <VehicleFuel
+                                            contentStyle={{ height: 38, justifyContent: 'flex-start' }}
+                                            mode="text"
+                                        >
+                                            <Icon
+                                                source={CAR2}
+                                                color="#343330"
+                                                size={20}
+                                            />
+                                            <Text style={{color:'#475467',  fontSize:16, fontFamily:'Inter_400Regular'}}>  {item.CarType?.Name} </Text>
+                                        </VehicleFuel>
+                                    </View>
+                                </View>
+                            </View>
+                        ))}
+
+
+                </View>
             case 'reviews':
                 return <View style={{paddingTop:10}}>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -353,6 +410,7 @@ export default function Profile() {
                         </View>
                     </View>
                 </View>
+
                 </ScrollView>
             </ProfileView>
             }

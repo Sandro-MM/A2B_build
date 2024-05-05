@@ -121,7 +121,8 @@ export const OrderEndpoints = {
     },
     post:{
         createOrder:'/order/create-order',
-        order:'/order/'
+        order:'/order/',
+        cancelRide:'/order/cancel-ride?orderId='
     },
     put:{
         updateDetails:'/order/update-order-details-mobile/?orderId=',
@@ -132,6 +133,7 @@ export const OrderEndpoints = {
     },
     delete:{
         cancelOrder:'/order/',
+        cancelRideRequest:'/order/cancel-ride-request?orderId='
     }
 };
 

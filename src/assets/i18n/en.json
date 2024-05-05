@@ -188,5 +188,15 @@
   "your_price_was_changed_accordingly": "Your price was changed accordingly",
   "my_preferences": "My preferences",
   "reveal_number": "reveal number",
-  "socials": "Socials"
+  "socials": "Socials",
+  "ride_t": "Ride together Save together",
+  "ride_t_desc": "Connect, split costs, and double the fun with A2B – Easily find your ideal ride share partner",
+  "comp_t": "Trusted Companions",
+  "comp_t_desc": "Travel securely, ensuring you know your companions for a safe and reliable journey",
+  "tap_t": "One Tap to Your Next Ride",
+  "tap_t_desc": "Quickly find and request rides with A2B's user-friendly app, letting you enjoy the journey with ease.",
+  "skip": "Skip",
+  "next": "Next",
+  "launch": "Launch app",
+  "no_orders_found": "No orders found"
 }

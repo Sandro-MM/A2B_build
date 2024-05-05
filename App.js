@@ -48,12 +48,32 @@ import EditMapViewScreen from "./src/screens/rideHistory/editMapView";
 import MapAToBViewEditScreen from "./src/screens/rideHistory/mapAToBViewEdit";
 import RidePriceEdit from "./src/screens/rideHistory/ridePriceEdit";
 import Confirm_Price_change from "./src/screens/rideHistory/confirm_price_change";
+import {useEffect, useState} from "react";
+import * as SecureStore from "expo-secure-store";
+import First_login from "./src/screens/first_login/first_login";
+import CancelReason from "./src/screens/home/cancel_reason";
 
 
 
 export default function App() {
     enableLatestRenderer();
     const Stack = createStackNavigator();
+
+        const [showWelcome, setShowWelcome] = useState(0);
+
+        useEffect(() => {
+            SecureStore.getItemAsync('welcomeShown')
+                .then(value => {
+                    if (!value) {
+                        setShowWelcome(true);
+                    } else {
+                        setShowWelcome(false);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error reading AsyncStorage:', error);
+                });
+        }, []);
 
     return (
 
@@ -64,7 +84,14 @@ export default function App() {
                     backgroundColor="#FFF"
                     barStyle="dark-content"
                 />
+                {showWelcome ?
+                    <Stack.Navigator>
+                    <Stack.Screen  name="First_login"  initialParams={{welcomeShown: setShowWelcome }} options={{ headerShown: false }} component={First_login} />
+                    </Stack.Navigator>
+                    : showWelcome === false &&
+
                 <Stack.Navigator>
+
                         <Stack.Screen
                             name="HomeScreen"
                             options={{ headerShown: false , animationEnabled: false }}
@@ -113,7 +140,9 @@ export default function App() {
                     <Stack.Screen name="MapAToBViewEditScreen"  options={{ headerShown: false , animationEnabled: false}} component={MapAToBViewEditScreen} />
                     <Stack.Screen name="RidePriceEdit"  options={{ headerShown: false , animationEnabled: false}} component={RidePriceEdit} />
                     <Stack.Screen name="Confirm_Price_change"  options={{ headerShown: false , animationEnabled: false}} component={Confirm_Price_change} />
+                    <Stack.Screen name="CancelReason"  options={{ headerShown: false , animationEnabled: false}} component={CancelReason} />
                 </Stack.Navigator>
+            }
             </NavigationContainer>
             </I18nextProvider>
         </Provider>
@@ -133,3 +162,4 @@ const theme = {
         onPrimaryContainer: "#000000",
     },
 };
+
