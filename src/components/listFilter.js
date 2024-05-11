@@ -224,7 +224,7 @@ export const ListFilter = ({navigation, control, setValue}) => {
                         <Text style={{fontSize:16, marginLeft:-5}}> {t('luggage_allowed')}</Text>
                         <Text style={{fontSize:16,position:'absolute', right:0}}>  {control._formValues.results.ComfortCountModel.LuggageAllowedCount}</Text>
                     </View>
-                    <View  style={{flexDirection:'row', alignItems:'center', width:250}}>
+                    <View  style={{flexDirection:'row', alignItems:'center'}}>
                         <Checkbox
 
                             color={'#FF5A5F'}

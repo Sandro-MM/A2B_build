@@ -198,5 +198,8 @@
   "skip": "Skip",
   "next": "Next",
   "launch": "Launch app",
-  "no_orders_found": "No orders found"
+  "no_orders_found": "No orders found",
+  "verify_number": "Verify Number",
+  "info": "Info",
+  "cars": "Cars"
 }

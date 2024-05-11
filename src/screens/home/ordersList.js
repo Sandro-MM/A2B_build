@@ -201,7 +201,15 @@ export const  OrdersList = ({ navigation, data, setValue }) => {
                startDay={data._formValues.startDay}
                endDay={data._formValues.endDay}
            />
-
+            {
+                listValues.length === 0 &&
+                <View style={{flex:1}}>
+                    <Image resizeMode={'contain'} style={{width:'80%', flex:0.6, marginHorizontal:'10%'}} source={NODATA}/>
+                    <Text style={{textAlign:'center', width:'100%', fontFamily:'NotoSans_600SemiBold', fontSize:22, color:'#0F0D13'}}>{t('no_orders_found')}</Text>
+                </View>
+            }
+            {
+                listValues.length > 0 &&
             <FlatList
                 style={{marginTop:12}}
                 scrollEventThrottle={16}
@@ -210,14 +218,7 @@ export const  OrdersList = ({ navigation, data, setValue }) => {
                 data={listValues}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
-            />
-            {
-                listValues.length === 0 &&
-                <View style={{flex:1, marginTop:-880}}>
-                    <Image resizeMode={'contain'} style={{width:'80%', flex:1, marginHorizontal:'10%'}} source={NODATA}/>
-                    <Text style={{marginTop:-680, textAlign:'center', width:'100%', fontFamily:'NotoSans_600SemiBold', fontSize:22, color:'#0F0D13'}}>{t('no_orders_found')}</Text>
-                </View>
-            }
+            />}
         </Container>
     );
 };

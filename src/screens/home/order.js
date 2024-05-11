@@ -193,14 +193,14 @@ export default function Order({route}) {
                     >
 
                       <View style={{flexDirection:'row'}}>
-                          <View style={{marginTop:8, marginLeft:'5%'}}>
+                          <View style={{marginTop:8, marginLeft:18}}>
                               <Text style={{fontFamily:'NotoSans_600SemiBold',color: '#1D2939', fontSize: 18, textAlign:'right', marginRight:12}}>{formatTime(data.PickUpTime)}</Text>
                               <Text style={{color: '#667085', fontFamily:'NotoSans_500Medium', fontSize:14, marginTop:26 }}>{formatDuration(data.Duration)}in</Text>
                               <Text style={{color: '#667085', fontFamily:'NotoSans_500Medium', fontSize:12 }}>{data.Distnace} km</Text>
                               <Text style={{fontFamily:'NotoSans_600SemiBold',color: '#1D2939', fontSize: 18, marginTop:16, textAlign:'right', marginRight:12}}>{formatTime(data.ArrivalTime)}</Text>
                           </View>
 
-                          <View style={{marginTop:4, marginLeft:'6.5%', width: '68%'}}>
+                          <View style={{marginTop:4, marginLeft:30, width: '62%'}}>
                               <TouchableHighlight   onPress={()=> navigation.navigate('MapPointViewScreen',{title:'Departure', startPoint:{latitude: data.DepartureLatitude, longitude: data.DepartureLongitude}, startAddress:data.Departure})}
                                                     underlayColor="rgba(128, 128, 128, 0.5)">
                                   <View>

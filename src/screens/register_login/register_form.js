@@ -1,6 +1,6 @@
 import { ActivityIndicator, Keyboard,} from 'react-native';
 import * as React from 'react';
-import { Divider } from 'react-native-paper';
+import {Divider, IconButton} from 'react-native-paper';
 import {Controller, useForm} from "react-hook-form";
 import {accEndpoints, headers, PostApi} from "../../services/api";
 import {useState} from "react";
@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {TextInputMask} from "react-native-masked-text";
 import moment from "moment";
 import {
-    ContainerMid,
+    ContainerMid, ContainerTop,
     ErrorText,
     ErrorView,
     GenderBntText, LinkLogin,
@@ -22,6 +22,7 @@ import * as SecureStore from "expo-secure-store";
 import {useTranslation} from "react-i18next";
 import MaskInput from "react-native-mask-input/src/MaskInput";
 import {Masks} from "react-native-mask-input";
+import BACK from "../../../assets/img/Button_back.png";
 
 const Stack = createStackNavigator();
 export default function Register_form({navigation}) {
@@ -125,13 +126,21 @@ export default function Register_form({navigation}) {
             <Stack.Navigator>
                 <Stack.Screen name="Email" options={{ headerShown: false }}>
                     {({ navigation }) => (
-                        <ContainerMid>
+                        <ContainerTop style={{paddingTop:150}}>
+                            <IconButton
+                                style={{position:'absolute', top: 35, left:0, zIndex:3}}
+                                icon={BACK}
+                                iconColor={null}
+                                size={36}
+                                onPress={() => navigation.goBack()}
+                            />
                             <TitleLeft>{t("what's_your_email")}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
                                     <React.Fragment>
                                         <A2bInput
+                                            autoFocus={true}
                                             placeholder={t("email")}
                                             value={field.value}
                                             onChangeText={(value) => field.onChange(value)}
@@ -163,17 +172,25 @@ export default function Register_form({navigation}) {
                                     />
                                 </ErrorView>
                             )}
-                        </ContainerMid>
+                        </ContainerTop>
                     )}
                 </Stack.Screen>
                 <Stack.Screen name="Name" options={{ headerShown: false }}>
                     {({ navigation }) => (
-                        <ContainerMid>
+                        <ContainerTop style={{paddingTop:150}}>
+                            <IconButton
+                                style={{position:'absolute', top: 35, left:0, zIndex:3}}
+                                icon={BACK}
+                                iconColor={null}
+                                size={36}
+                                onPress={() => navigation.goBack()}
+                            />
                             <TitleLeft>{t( "tell_us_your_name")}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
                                     <A2bInput
+                                        autoFocus={true}
                                         placeholder={t(  "first_name")}
                                         value={field.value}
                                         onChangeText={(value) => field.onChange(value)}
@@ -196,15 +213,22 @@ export default function Register_form({navigation}) {
                                 name="lastName"
                                 defaultValue=""
                             />
-                            {(formState.dirtyFields.firstName && formState.dirtyFields.lastName) && (
+                            {(watch('firstName')?.length > 1 && watch('lastName')?.length > 1) && (
                                 <A2BNextIcon onPress={() => navigation.navigate('DateOfBirth')} />
                             )}
-                        </ContainerMid>
+                        </ContainerTop>
                     )}
                 </Stack.Screen>
                 <Stack.Screen name="DateOfBirth" options={{ headerShown: false }}>
                     {({ navigation }) => (
-                        <ContainerMid>
+                        <ContainerTop style={{paddingTop:150}}>
+                            <IconButton
+                                style={{position:'absolute', top: 35, left:0, zIndex:3}}
+                                icon={BACK}
+                                iconColor={null}
+                                size={36}
+                                onPress={() => navigation.goBack()}
+                            />
                             <TitleLeft>{t("what's_your_date_of_birth")}</TitleLeft>
                             <Controller
                                 control={control}
@@ -227,12 +251,19 @@ export default function Register_form({navigation}) {
                                 name="birthDate"
                                 defaultValue=""
                             />
-                        </ContainerMid>
+                        </ContainerTop>
                     )}
                 </Stack.Screen>
                 <Stack.Screen name="Gender" options={{ headerShown: false }}>
                     {({ navigation }) => (
                         <ContainerMid>
+                            <IconButton
+                                style={{position:'absolute', top: 35, left:0, zIndex:3}}
+                                icon={BACK}
+                                iconColor={null}
+                                size={36}
+                                onPress={() => navigation.goBack()}
+                            />
                             <TitleLeft>{t('how_would_you_like_to_be_addressed')}</TitleLeft>
                             <Controller
                                 control={control}
@@ -295,13 +326,21 @@ export default function Register_form({navigation}) {
                 </Stack.Screen>
                 <Stack.Screen name="Password" options={{ headerShown: false }}>
                     {({ navigation }) => (
-                        <ContainerMid>
+                        <ContainerTop style={{paddingTop:150}}>
+                            <IconButton
+                                style={{position:'absolute', top: 35, left:0, zIndex:3}}
+                                icon={BACK}
+                                iconColor={null}
+                                size={36}
+                                onPress={() => navigation.goBack()}
+                            />
                             <TitleLeft>{t('define_your_password')}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
                                     <React.Fragment>
                                         <A2bInput
+                                            autoFocus={true}
                                             placeholder={t("password")}
                                             value={field.value}
                                             onChangeText={(value) => field.onChange(value)}
@@ -333,18 +372,19 @@ export default function Register_form({navigation}) {
                                 }}
                             />
                             {isLoading && <ActivityIndicator size="large"  color="#FF5A5F" />}
-                        </ContainerMid>
+                        </ContainerTop>
                     )}
                 </Stack.Screen>
                 <Stack.Screen name="ActivateEmail" options={{ headerShown: false }}>
                     {({ navigation }) => (
-                        <ContainerMid>
+                        <ContainerTop style={{paddingTop:150}}>
                             <TitleLeft>{t('please_confirm_your_email')}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
                                     <React.Fragment>
                                         <A2bInput
+                                            autoFocus={true}
                                             placeholder="Code"
                                             value={field.value}
                                             onChangeText={(value) => field.onChange(value)}
@@ -377,7 +417,7 @@ export default function Register_form({navigation}) {
                                 </ErrorView>
                             )}
                             <LinkLogin onPress={handleSubmit(checkEmail)}>{t('resend_code')}</LinkLogin>
-                        </ContainerMid>
+                        </ContainerTop>
                     )}
                 </Stack.Screen>
             </Stack.Navigator>

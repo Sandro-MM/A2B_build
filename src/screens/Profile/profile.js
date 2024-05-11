@@ -7,11 +7,11 @@ import {
     IconView,
     SmallRedBtn,
     ListPic,
-    VehicleFuel, SurfaceArea, ReviewBtn, ProfileAge,
+    VehicleFuel, SurfaceArea, ReviewBtn, ProfileAge, Container,
 } from "../../styles/styles";
 import {Icon, IconButton, Surface} from "react-native-paper";
 import * as React from "react";
-import {AppState, Image, Linking, ScrollView, Text, TouchableHighlight, View} from "react-native";
+import {AppState, Image, ImageBackground, Linking, ScrollView, Text, TouchableHighlight, View} from "react-native";
 import {useCallback, useEffect, useState} from "react";
 import {accEndpoints, getAccessToken, GetApi, headersTextToken} from "../../services/api";
 import {
@@ -29,7 +29,7 @@ import CAR from "../../../assets/img/profile_car.png";
 import SETTING from "../../../assets/img/settings.png";
 import PERSON from "../../../assets/img/profile_person.png";
 import STAR from "../../../assets/img/star.png";
-import PROFILE_TKT from "../../../assets/img/profile_bg.png";
+import PROFILE_TKT from "../../../assets/img/orderImg2.png";
 import ABOUT_ME from "../../../assets/img/about.png";
 import INFO from "../../../assets/img/info.png";
 import VERIFY from "../../../assets/img/Verifiedtick.png";
@@ -39,6 +39,7 @@ import GAS from "../../../assets/img/Gas.png";
 import {Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, useFonts} from "@expo-google-fonts/inter";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {debounce} from "lodash";
+import TicketIMage from "../../../assets/img/orderImg.png";
 
 export default function Profile() {
     const { t } = useTranslation();
@@ -290,7 +291,7 @@ export default function Profile() {
     };
   if (fontsLoaded)  return (
         <ProfileContainer>
-            {responseData && <ProfileView>
+            {responseData && <Container>
                 <ScrollView>
                 { profileType &&
                 <IconButton
@@ -364,8 +365,7 @@ export default function Profile() {
                             ))}
                         </IconView>
                     </View>
-
-                    <View style={{ width:'100%', paddingHorizontal:16, paddingTop:48 }}>
+                    <View style={{ width:'100%', paddingHorizontal:14, paddingTop:48 }}>
                         <View style={{flexDirection:'row', height:48, width:'100%', backgroundColor:'#FFF', borderStyle:'solid', borderColor:'#EAECF0', borderWidth:1, paddingHorizontal:16, paddingTop:16, gap:16}}>
                             <TouchableHighlight
                                 style={{paddingHorizontal:4, borderStyle:'solid', borderColor:'#FF5A5F', borderBottomWidth:selectedTab === 'about_me' ? 2 : 0}}
@@ -404,15 +404,20 @@ export default function Profile() {
                                 </Text>
                             </TouchableHighlight>
                         </View>
-                        <Image style={{ height:44, resizeMode:'contain', width:'109.4%', marginLeft:-15}} source={PROFILE_TKT}/>
-                        <View style={{backgroundColor: '#fff', borderStyle:'solid', borderColor:'#EAECF0', borderBottomWidth:1, borderLeftWidth:1, borderRightWidth:1, width:'100.1%', marginTop:-1, paddingHorizontal:16, borderBottomLeftRadius:20, borderBottomRightRadius:20, paddingBottom:16, marginBottom:60}}>
+                        <ImageBackground
+                            source={PROFILE_TKT}
+                            style={{flex:1, width:'100.3%', zIndex:10, height:44, marginLeft:'-0.3%'  }}
+                            resizeMode="stretch"
+                        />
+                        <View style={{backgroundColor: '#fff', borderStyle:'solid', borderColor:'#EAECF0', borderBottomWidth:1, borderLeftWidth:1, borderRightWidth:1, width:'100%', marginTop:-1, paddingHorizontal:16, borderBottomLeftRadius:20, borderBottomRightRadius:20, paddingBottom:16, marginBottom:60}}>
                             {renderContent()}
                         </View>
                     </View>
+
                 </View>
 
                 </ScrollView>
-            </ProfileView>
+            </Container>
             }
             { profileType &&
             <Navigation navigation={navigation} activeButton={'Profile'}/>

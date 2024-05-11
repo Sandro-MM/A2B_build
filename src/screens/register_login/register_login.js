@@ -22,7 +22,7 @@ export default function Register_login(props) {
             <SimpleBtn contentStyle={{ height: 55, justifyContent: 'flex-start'}} rippleColor='gray' mode="text" onPress={() => handleButtonPress()}>
                 <Icon
                     source="email-outline"
-                    color='#F2F3F4'
+                    color='#F9FAFB'
                     size={28}
                 />
                 <Icon
@@ -40,7 +40,7 @@ export default function Register_login(props) {
             <SimpleBtn contentStyle={{ height: 55, justifyContent: 'flex-start'}}  rippleColor='gray' mode="text" onPress={() => console.log('Fb')}>
                 <Icon
                     source="email-outline"
-                    color='#F2F3F4'
+                    color='#F9FAFB'
                     size={28}
                 />
                 <Icon

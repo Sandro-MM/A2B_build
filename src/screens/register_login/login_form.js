@@ -12,7 +12,7 @@ import {
     SmallRedBtn,
     TitleLeft,
     XIcon,
-    SmallBtnText,
+    SmallBtnText, Container, ContainerTop,
 } from "../../styles/styles";
 import A2bInput from "../../components/formInput";
 import {useTranslation} from "react-i18next";
@@ -57,8 +57,8 @@ export default function LoginForm(props) {
         }
     };
     return (
-        <ContainerMid>
-            <TitleLeft>{t('login_title')}</TitleLeft>
+        <ContainerTop style={{paddingTop:100}}>
+            <TitleLeft style={{marginBottom:-20}}>{t('login_title')}</TitleLeft>
             <Controller
                 control={control}
                 render={({ field }) => (
@@ -106,6 +106,6 @@ export default function LoginForm(props) {
                     onPress={() => setError(null)}
                 />
             </ErrorView>}
-        </ContainerMid>
+        </ContainerTop>
     );
 }

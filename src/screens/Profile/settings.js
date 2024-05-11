@@ -117,6 +117,7 @@ const SettingsPage = (props) => {
                 size={28}
                 onPress={() => props.navigation.navigate('Profile',{ IsUserOrder: 1, navigation: props.navigation })}
             />
+
             <Title style={{marginBottom:-40, marginTop:-70}}>{t('settings')}</Title>
                 <TouchableHighlight
                     onPress={() => openSettingInput()}
@@ -127,6 +128,14 @@ const SettingsPage = (props) => {
                         <Icon size={30} color={'#FF5A5F'} source={'chevron-right'}/>
                     </View>
                 </TouchableHighlight>
+            <TouchableHighlight   underlayColor='rgba(128, 128, 128, 0.5)'   onPress={() => {
+                props.navigation.navigate('Vehicles', { carData: userData.UserCarReponseModels, firstName:null, navigation:props.navigation});
+            }}>
+                <View style={viewStyle}>
+                    <SettingsVal>{t('vehicles')}</SettingsVal>
+                    <Icon size={30} color={'#FF5A5F'} source={'chevron-right'}/>
+                </View>
+            </TouchableHighlight>
 
             <Divider style={{ width: '90%' }} horizontalInset={true} bold={true} />
             <TouchableHighlight
@@ -184,14 +193,7 @@ const SettingsPage = (props) => {
                     <Icon size={30} color={'gray'} source={'chevron-right'}/>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight   underlayColor='rgba(128, 128, 128, 0.5)'   onPress={() => {
-                    props.navigation.navigate('Vehicles', { carData: userData.UserCarReponseModels, firstName:null, navigation:props.navigation});
-                }}>
-                <View style={viewStyle}>
-                    <SettingsVal>{t('vehicles')}</SettingsVal>
-                    <Icon size={30} color={'gray'} source={'chevron-right'}/>
-                </View>
-                </TouchableHighlight>
+
             <Divider style={{ width: '90%' }} horizontalInset={true} bold={true} />
             <DeleteConfirmationModal
                 isVisible={isDelModalVisible}

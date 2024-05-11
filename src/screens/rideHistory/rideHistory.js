@@ -332,7 +332,7 @@ export default function RideHistory({navigation}) {
                 ListFooterComponent={() => (
                     <View style={{width:'100%', height:60, justifyContent:'center', alignItems:'center', marginTop:30}}>
                         {isLoadingMore && <LoadingSmall />}
-                        {(!isLoadingMore && !isEndOfItems) && (
+                        {(!isLoadingMore && !isEndOfItems && responseData?.TotalItemCount > 0) && (
                             <RedBtn
                                 style={{ position: 'absolute', bottom: 0, width:180 }}
                                 buttonColor='#FF5A5F'
