@@ -21,7 +21,6 @@ function CalendarListScreen({ control, navigation, setValue, noBackNav, RideDate
             }
             return false; // Allow default back navigation
         };
-
         const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
         return () => backHandler.remove();

@@ -15,6 +15,7 @@ import TicketIMage from "../../../assets/img/ticket.png"
 import UserNoIMage from "../../../assets/img/default_user.png"
 import BeltImage from "../../../assets/img/seat-belt.png"
 import NODATA from "../../../assets/img/no-data.png"
+import DESTINATION from "../../../assets/img/destination.png"
 import {ListFilterModal} from "../../components/listFilterModal";
 import {OrderListHeader} from "./orderListHeader";
 import {useTranslation} from "react-i18next";
@@ -52,7 +53,7 @@ export const  OrdersList = ({ navigation, data, setValue }) => {
     };
 
     const renderItem = ({ item }) => (
-        <View style={{ marginBottom: 20 }}>
+        <View style={{ marginBottom: 25 }}>
             <View style={{flexDirection:"row", alignItems:'center', justifyContent:'center'}}>
                 <View style={{backgroundColor: '#EAECF0', width:'40%', height:1, marginRight:5, marginTop:2}}/>
                 <Text style={{color:'#667085', textAlign:'center', fontSize:14,  fontFamily:'NotoSans_500Medium'}}>{formatDate(item.Date)}</Text>
@@ -108,23 +109,28 @@ export const  OrdersList = ({ navigation, data, setValue }) => {
         <SurfaceListItem>
             <ImageBackground
                 source={TicketIMage}
-                style={{flex:1,width:'100%', height:260, zIndex:10}}
+                style={{flex:1,width:'100%', height:290, zIndex:10}}
                 resizeMode="stretch"
             >
-            <View style={{alignItems: 'center',paddingHorizontal:0,paddingBottom:15}}>
-                <Text style={{fontSize:28, position:'absolute' , top:16, right:16, lineHeight:38, fontFamily:'NotoSans_600SemiBold'}}>₾{item.Order.OrderPrice}</Text>
+            <View style={{alignItems: 'center', padding:15}}>
+                <Text style={{fontSize:28, position:'absolute' , top:33, right:33, lineHeight:38, fontFamily:'NotoSans_600SemiBold'}}>₾{item.Order.OrderPrice}</Text>
                 <View style={{flexDirection:'row', marginTop:24, width:'100%'}}>
                     <View style={{marginTop:-7, marginLeft:'4.3%', height:103, justifyContent:'space-between', alignItems:'flex-end'}}>
                         <ListTime style={{fontFamily:'NotoSans_600SemiBold'}}>{formatTime(item.Order.PickUpTime)}</ListTime>
                         <ListTime style={{fontFamily:'NotoSans_600SemiBold'}}>{formatTime(item.Order.ArrivalTime)}</ListTime>
                     </View>
-                    <View style={{marginTop:-12, marginLeft:'6.9%', height:112, justifyContent:'space-between'}}>
+
+                    <Image source={DESTINATION} style={{width:24, height:108, marginTop: -7}}/>
+
+                    <View style={{marginTop:-12, height:112, justifyContent:'space-between'}}>
                         <ListPlaces style={{fontFamily:'NotoSans_600SemiBold'}}>{item.Order.DepartureParent}</ListPlaces>
                         <ListPlaces style={{fontFamily:'NotoSans_600SemiBold'}}>{item.Order.DestionationParent}</ListPlaces>
                     </View>
                     {/*<Text style={{marginTop:3, backgroundColor:'rgba(165, 190, 0, 0.1)', paddingHorizontal:6 , paddingVertical:2 , borderRadius:15, color:'rgba(165, 190, 0, 1)'}}>{formatDuration(item.Order.Duration)} {t('estimated')}</Text>*/}
 
                 </View>
+
+
 
 
                 <View style={{flexDirection:'row', width:'100%', marginTop:1 }}>

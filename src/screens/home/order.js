@@ -195,7 +195,7 @@ export default function Order({route}) {
                       <View style={{flexDirection:'row'}}>
                           <View style={{marginTop:8, marginLeft:18}}>
                               <Text style={{fontFamily:'NotoSans_600SemiBold',color: '#1D2939', fontSize: 18, textAlign:'right', marginRight:12}}>{formatTime(data.PickUpTime)}</Text>
-                              <Text style={{color: '#667085', fontFamily:'NotoSans_500Medium', fontSize:14, marginTop:26 }}>{formatDuration(data.Duration)}in</Text>
+                              <Text style={{color: '#667085', fontFamily:'NotoSans_500Medium', fontSize:14, marginTop:26}}>{formatDuration(data.Duration)}in</Text>
                               <Text style={{color: '#667085', fontFamily:'NotoSans_500Medium', fontSize:12 }}>{data.Distnace} km</Text>
                               <Text style={{fontFamily:'NotoSans_600SemiBold',color: '#1D2939', fontSize: 18, marginTop:16, textAlign:'right', marginRight:12}}>{formatTime(data.ArrivalTime)}</Text>
                           </View>
@@ -205,11 +205,10 @@ export default function Order({route}) {
                                                     underlayColor="rgba(128, 128, 128, 0.5)">
                                   <View>
                                       <IconButton
-                                          style={{position:'absolute', top: -8, right: -8, zIndex:3}}
+                                          style={{position:'absolute', top: -8, right: -20, zIndex:3}}
                                           icon={GO}
                                           iconColor={null}
                                           size={20}
-                                          onPress={() => navigation.navigate(destination)}
                                       />
                                       <Text style={{color: '#1D2939', fontFamily:'NotoSans_700Bold', fontSize:18, paddingRight:'15%'}} numberOfLines={1}>{data.Departure}</Text>
                                       <Text style={{color: '#475467', fontFamily:'NotoSans_400Regular', fontSize:14, marginTop:-4}}>{data.DepartureParent}</Text>
@@ -219,11 +218,11 @@ export default function Order({route}) {
                                                   underlayColor="rgba(128, 128, 128, 0.5)">
                                   <View>
                                       <IconButton
-                                          style={{position:'absolute', bottom: -12, right:-8, zIndex:3}}
+                                          style={{position:'absolute', bottom: -12, right: -20, zIndex:3}}
                                           icon={GO}
                                           iconColor={null}
                                           size={20}
-                                          onPress={() => navigation.navigate(destination)}
+
                                       />
                                       <Text style={{color: '#475467', fontFamily:'NotoSans_400Regular',  fontSize:14}}>{data.DestinationParent}</Text>
                                       <Text style={{color: '#1D2939', fontFamily:'NotoSans_700Bold',  fontSize:18, paddingRight:'15%', marginTop:-6}} numberOfLines={1}>{data.Destination}</Text>
@@ -314,6 +313,8 @@ export default function Order({route}) {
                                 { data?.ApprovePassangers?.map( (passenger, index) => (
                                     <TouchableHighlight
                                         key={index}
+                                        onPress={()=>navigation.navigate('Profile',{IsUserOrder: 2, userName:passenger.UserName})}
+
                                         style={{ marginTop:6}}
                                         underlayColor="rgba(128, 128, 128, 0.5)"
                                     >
@@ -375,7 +376,7 @@ export default function Order({route}) {
             {  data && data?.UserStatus === 2 &&
                 <View style={{width:'92%', backgroundColor:'#EB2931', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:'4%', position:'absolute', bottom:2}}>
                 <SearchBtn disabled={dissable} contentStyle={{ height: 48, width:'100%' , justifyContent: 'center', fontFamily:'NotoSans_600SemiBold'}} style={{ backgroundColor:'#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
-                        onPress={()=> navigation.navigate('CancelReason',{navigation:navigation, id:item})}>
+                        onPress={()=> navigation.navigate('CancelReason',{navigation:navigation, itemId:item})}>
                     <SearchBtnText style={{fontSize: 20, textAlign: 'center'}}>{t('cancel_ride')}</SearchBtnText>
                 </SearchBtn>
                 </View>

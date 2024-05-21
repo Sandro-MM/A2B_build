@@ -7,7 +7,7 @@ import {
 } from "../../styles/styles";
 import * as React from "react";
 import Navigation from "../../components/navigation";
-import {accEndpoints, CarEndpoints, getAccessToken, GetApi, PatchApi, PostApi} from "../../services/api";
+import {accEndpoints, CarEndpoints, getAccessToken, GetApi, PatchApi, PostApi, PutApi} from "../../services/api";
 import {useEffect, useState} from "react";
 import Loading from "../../components/loading";
 import {Button, Divider, Icon, IconButton, RadioButton} from "react-native-paper";
@@ -21,6 +21,7 @@ import {useForm} from "react-hook-form";
 import Next_icon from "../../components/next_icon";
 import {useTranslation} from "react-i18next";
 import * as SecureStore from "expo-secure-store";
+import ProfileSettings from "../Profile/profileSettings";
 
 
 const Stack = createStackNavigator();
@@ -146,6 +147,25 @@ export default function AddRideCheck({navigation}) {
 
     }
 
+
+
+    const addNumber =  async () => {
+        const Value = {phone_number: control._formValues.phone_number};
+        try {
+            const accessToken = await getAccessToken();
+            const responseData = await PutApi(accEndpoints.put.EditProfile, Value, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            fetchData();
+            navigation.navigate('AddRideCheck')
+        } catch (error) {
+            console.error('Error submitting data:', error);
+        }
+    };
+
     const RenderCars = ({ userCars }) => (
 
             <View style={{width:'100%'}}>
@@ -201,7 +221,7 @@ export default function AddRideCheck({navigation}) {
                 <ContainerMid>
                     <Title>{t('vehicles')}</Title>
                     {
-                        userCars ? <RenderCars userCars={userCars}/> :
+                        userCars.length > 0 ? <RenderCars userCars={userCars}/> :
 
                             <View style={{height:80}}>
                              <Text style={{fontSize:16, marginBottom:5}}>
@@ -218,7 +238,7 @@ export default function AddRideCheck({navigation}) {
 
                     {activeRidesNumber && activeRidesNumber.RideNumber < 3 ? (
                         Car ? (
-                                <View style={{position:'absolute', bottom:60, right:0}}>
+                                <View style={{position:'absolute', bottom:70, right:0}}>
                                 <Next_icon
                                     onPress={() => navigationStatus()}
                                 >
@@ -271,7 +291,7 @@ export default function AddRideCheck({navigation}) {
                                 <Text> {t('verify')}</Text>
                             </Button>}
                         </View>
-                        <ProfileAge style={{marginLeft:55, marginBottom:8}}>  {t('phone_number')} </ProfileAge>
+                        <ProfileAge style={{marginLeft:55, marginBottom:8}}>  {t('phonenumber')} </ProfileAge>
                         <View style={{ height: 38,  flexDirection:'row', width:'80%'}} rippleColor='gray' mode="text" onPress={() => console.log('Pressed')}>
                             <Icon
                                 source="cellphone"
@@ -279,7 +299,8 @@ export default function AddRideCheck({navigation}) {
                                 size={18}
                             />
                             <Text style={{fontWeight:'500', color: '#2f2f2f', fontSize: 16, lineHeight: 18, marginBottom: 10}}>   {userContactInfo?.Phone || t('no_phone_number')} </Text>
-                            {userContactInfo?.IsConfirmedPhone ? (
+
+                            {userContactInfo?.Phone? userContactInfo?.IsConfirmedPhone ? (
                                 <Icon
                                     source="check-decagram"
                                     color='#1B1B1B'
@@ -289,6 +310,11 @@ export default function AddRideCheck({navigation}) {
                                 style={{position:'absolute', right:0, top:-11}}
                                 onPress={()=> navigation.navigate('VerifyPhoneNumber', { phoneNumber: userContactInfo?.Phone , nav:'Check'})}>
                                 <Text> {t('verify')}</Text>
+                            </Button> :  <Button
+                                style={{position:'absolute', right:0, top:-11}}
+                                onPress={()=> navigation.navigate('SettingInput', { title: 'add_phone_number', name:'phone_number', defaultValue:'', control: control, handleSubmit:addNumber
+                                })}>
+                                <Text> {t('add')}</Text>
                             </Button>}
                         </View>
 

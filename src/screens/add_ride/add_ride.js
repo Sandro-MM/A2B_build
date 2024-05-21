@@ -232,7 +232,7 @@ export default function AddRide({navigation, route}) {
                         <MapAToBViewScreen
                             startAddress={cf.LeavingFrom.formatted_address}
                             endAddress={cf.Destination.formatted_address}
-                            title={toTitle}
+                            title={'route'}
                             startPoint={control._formValues.MapFrom}
                             endPoint={control._formValues.MapTo}
                             setValue={setValue}
@@ -255,7 +255,7 @@ export default function AddRide({navigation, route}) {
             <Stack.Screen name="ChooseTime" options={{ headerShown: false }}>
                 {({ navigation }) => (
                     <View style={{width:'100%', flex:1}}>
-                        <TimePicker setValue={setValue}  navigation={() => navigation.navigate("PassengerCount")}/>
+                        <TimePicker setValue={setValue}  navigation={() => navigation.navigate("PassengerCount")} Backnavigation={()=>navigation.navigate("Calendar")}/>
                     </View>
                 )}
             </Stack.Screen>

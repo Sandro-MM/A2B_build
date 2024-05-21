@@ -3,7 +3,7 @@ import * as React from "react";
 import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
 import {View, Text, Keyboard} from "react-native";
 import {useEffect, useRef, useState} from "react";
-import {IconButton} from "react-native-paper";
+import {Icon, IconButton} from "react-native-paper";
 import keyboard from "react-native-web/src/exports/Keyboard";
 import {useTranslation} from "react-i18next";
 
@@ -38,9 +38,12 @@ export default function PlacesSearch({navigation, setValue , type ,handleNavigat
                 fetchDetails={true}
                 renderRow={rowData => {
                     return (
+                        <View style={{flex:1}}>
+                            <IconButton style={{position:'absolute', right:-20, marginHorizontal:0, paddingHorizontal:0, top:-5}} size={30} color={'#475467'} icon={'chevron-right'}/>
                         <View style={{minWidth:300,width:'77%', overflow:'hidden'}}>
                             <Text style={{fontSize:18 , lineHeight:22, marginBottom:2, width:'100%'}}>{rowData.structured_formatting.main_text}</Text>
                             <Text style={{fontSize:14, fontWeight:'400', marginLeft:4, color:'#808080'}} >{rowData.structured_formatting.secondary_text}</Text>
+                        </View>
                         </View>
                     )
                 }}

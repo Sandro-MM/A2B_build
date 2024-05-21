@@ -126,7 +126,7 @@ export  const Passengers = ({route}) => {
                             <Text style={{ fontSize: 16 }}>{passenger.FirstName} {passenger.LastName}</Text>
                             <View style={{ flexDirection: 'row', marginTop: "1.2%" }}>
                                 <Text style={{ fontSize: 18 }}>
-                                    {passenger.RatingsCount}  </Text>
+                                    {passenger.RatingsCount || 0}  </Text>
                                 <IconButton
                                     style={{ marginTop: -8, marginLeft: -12 }}
                                     iconColor='#FDB022'

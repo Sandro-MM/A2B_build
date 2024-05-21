@@ -1,13 +1,12 @@
 import {
     ProfileContainer,
     ProfilePic,
-    ProfileView,
     ProfileName,
     ProfileSocialMedia,
     IconView,
     SmallRedBtn,
     ListPic,
-    VehicleFuel, SurfaceArea, ReviewBtn, ProfileAge, Container,
+    VehicleFuel, Container, SearchBtn, SearchBtnText,
 } from "../../styles/styles";
 import {Icon, IconButton, Surface} from "react-native-paper";
 import * as React from "react";
@@ -15,10 +14,8 @@ import {AppState, Image, ImageBackground, Linking, ScrollView, Text, TouchableHi
 import {useCallback, useEffect, useState} from "react";
 import {accEndpoints, getAccessToken, GetApi, headersTextToken} from "../../services/api";
 import {
-    fuelTypeMapping,
     iconMapping,
     socialMediaMapping,
-    vehicleTypeMapping
 } from "../../styles/vehicleMappings";
 import Navigation from "../../components/navigation";
 import UserNoIMage from "../../../assets/img/default_user.png";
@@ -39,7 +36,8 @@ import GAS from "../../../assets/img/Gas.png";
 import {Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, useFonts} from "@expo-google-fonts/inter";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {debounce} from "lodash";
-import TicketIMage from "../../../assets/img/orderImg.png";
+import TicketIMage from "../../../assets/img/tickett.png";
+import ARROW from "../../../assets/img/warning-2.png";
 
 export default function Profile() {
     const { t } = useTranslation();
@@ -56,6 +54,8 @@ export default function Profile() {
     const userName = route.params?.userName;
 
     const [responseData, setResponseData] = useState(null);
+    const [imageViewVisible, setImageViewVisible] = useState(null);
+
 
     const [selectedTab, setSelectedTab] = useState('about_me');
 
@@ -109,7 +109,7 @@ export default function Profile() {
                             {responseData?.PhoneNumber || t('no_phone_number')}
                         </Text>
                         {
-                            profileType && <SmallRedBtn   style={{marginTop:-3, marginLeft:-8}} mode="text" onPress={handlePressPhoneNumber}>
+                            (profileType && responseData?.PhoneNumber && responseData.IsPhoneNumberVerified === false) && <SmallRedBtn style={{marginTop:-3, marginLeft:-8}} mode="text" onPress={handlePressPhoneNumber}>
                                 <Text style={{color:'#FF5A5F', fontSize:16, fontFamily:'Inter_400Regular'}}>{t('verify_number')}</Text>
                             </SmallRedBtn>
                         }
@@ -142,7 +142,10 @@ export default function Profile() {
                     {
                         responseData?.UserCarReponseModels.length > 0 &&
                             responseData?.UserCarReponseModels.map((item, index)=>(
-                            <View key={index} style={{marginVertical:12, width:'100%', height:337, borderRadius:16, borderColor:'#D0D5DD', borderStyle:'solid', borderWidth:1, borderBottomWidth:3}}>
+                                <TouchableHighlight key={index}
+                                                onPress={()=> navigation.navigate('CarGallery',{data:item.CarPictureUrls})}
+                                                    underlayColor="rgba(128, 128, 128, 0.5)">
+                            <View style={{marginVertical:12, width:'100%', height:337, borderRadius:16, borderColor:'#D0D5DD', borderStyle:'solid', borderWidth:1, borderBottomWidth:3}}>
                                 <Image
                                     style={{width:'100%', height: 180, borderTopRightRadius:16, borderTopLeftRadius:16}}
                                     source={{
@@ -181,6 +184,7 @@ export default function Profile() {
                                     </View>
                                 </View>
                             </View>
+                                </TouchableHighlight>
                         ))}
 
 
@@ -199,7 +203,7 @@ export default function Profile() {
                     </View>
 
                     {
-                        responseData?.UserRatingResponseModels.map((item, index)=>(
+                        responseData?.UserRatingResponseModels && responseData?.UserRatingResponseModels.map((item, index)=>(
                             <View key={index} style={{marginTop:24}}>
                                 <View style={{width:'100%', height:1, backgroundColor:'#EAECF0', marginBottom: 24}}/>
                                 <ListPic
@@ -365,6 +369,18 @@ export default function Profile() {
                             ))}
                         </IconView>
                     </View>
+
+                    <View style={{width:'94%', backgroundColor:'#D0D5DD', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:16, marginTop:24}}>
+                        <Image source={ARROW} style={{position:'absolute', zIndex:3, width:20, height:20, left:95, top:16 }}/>
+                        <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#F2F4F7', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
+                                   // onPress={onSubmit}
+                        >
+                            <SearchBtnText style={{fontFamily:'Inter_600SemiBold', color:'#344054'}}>    {t('report_user')}</SearchBtnText>
+                        </SearchBtn>
+                    </View>
+
+
+
                     <View style={{ width:'100%', paddingHorizontal:14, paddingTop:48 }}>
                         <View style={{flexDirection:'row', height:48, width:'100%', backgroundColor:'#FFF', borderStyle:'solid', borderColor:'#EAECF0', borderWidth:1, paddingHorizontal:16, paddingTop:16, gap:16}}>
                             <TouchableHighlight
@@ -405,13 +421,29 @@ export default function Profile() {
                             </TouchableHighlight>
                         </View>
                         <ImageBackground
-                            source={PROFILE_TKT}
-                            style={{flex:1, width:'100.3%', zIndex:10, height:44, marginLeft:'-0.3%'  }}
+                            source={TicketIMage}
+                            style={{flex:1, width:'104.3%', zIndex:-1, height:170, marginLeft:'-4.6%', marginTop:-60  }}
                             resizeMode="stretch"
                         />
-                        <View style={{backgroundColor: '#fff', borderStyle:'solid', borderColor:'#EAECF0', borderBottomWidth:1, borderLeftWidth:1, borderRightWidth:1, width:'100%', marginTop:-1, paddingHorizontal:16, borderBottomLeftRadius:20, borderBottomRightRadius:20, paddingBottom:16, marginBottom:60}}>
+                        <View style={{
+                            //
+                            //
+                            // shadowColor: "#000",
+                            // shadowOffset: {
+                            //     width: 0,
+                            //     height: 6,
+                            // },
+                            // shadowOpacity: 0.39,
+                            // shadowRadius: 8.30,
+                            //
+                            // elevation: 13,
+
+
+
+                            backgroundColor: '#fff', borderStyle:'solid', borderColor:'#EAECF0', borderBottomWidth:1, borderLeftWidth:1, borderRightWidth:1, width:'100%', marginTop:-60, paddingHorizontal:16, borderBottomLeftRadius:20, borderBottomRightRadius:20, paddingBottom:16, marginBottom:60}}>
                             {renderContent()}
                         </View>
+
                     </View>
 
                 </View>

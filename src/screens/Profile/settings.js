@@ -34,6 +34,7 @@ const SettingsPage = (props) => {
     }
     const logOut = async () => {
         try {
+
             const accessToken = await getAccessToken();
             const fetchedData = await PostApi(accEndpoints.post.Logout,null ,{
                 headers: {
@@ -43,6 +44,7 @@ const SettingsPage = (props) => {
             });
             const delToken = await SecureStore.deleteItemAsync('accessToken');
             props.navigation.navigate('HomeScreen')
+
         } catch (error) {
             console.error('Error fetching data:', error);
         }

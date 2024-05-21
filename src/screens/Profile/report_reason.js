@@ -3,11 +3,11 @@ import {IconButton} from "react-native-paper";
 import {Controller, useForm} from "react-hook-form";
 import A2btextarea from "../../components/a2btextarea";
 import {useTranslation} from "react-i18next";
-import {getAccessToken, OrderEndpoints, PostApi} from "../../services/api";
+import {accEndpoints, getAccessToken, OrderEndpoints, PostApi} from "../../services/api";
 import {Keyboard} from "react-native";
 
 
-export default function CancelReason({route}) {
+export default function ReportReason({route}) {
     const { itemId } = route.params;
 
     const {navigation} = route.params;
@@ -23,7 +23,7 @@ export default function CancelReason({route}) {
         try {
             Keyboard.dismiss()
             const accessToken = await getAccessToken();
-            const responseData = await PostApi(OrderEndpoints.post.cancelRide+itemId, {Reason:data.description, OrderId: itemId}, {
+            const responseData = await PostApi(accEndpoints.post.Report, {Reason:data.description, OrderId: itemId}, {
                 headers: {
                     Accept: '*/*',
                     Authorization: `Bearer ${accessToken}`,

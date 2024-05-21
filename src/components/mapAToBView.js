@@ -81,7 +81,7 @@ const MapAToBViewScreen = ({title , startPoint, endPoint, setValue, startAddress
     return (
             <View style={styles.container}>
                 <View style={{zIndex:2, flex:0.5, position:'absolute', backgroundColor: '#F2F3F4', top:0, left:0, width:'100%', paddingLeft:4, paddingTop:5}}>
-                    <TitleMap>{title}</TitleMap>
+                    <TitleMap>{t(title)}</TitleMap>
                     <SurfaceArea>
                         <Text>{startAddress}</Text>
                         <Text>{endAddress}</Text>

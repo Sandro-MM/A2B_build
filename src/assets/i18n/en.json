@@ -201,5 +201,8 @@
   "no_orders_found": "No orders found",
   "verify_number": "Verify Number",
   "info": "Info",
-  "cars": "Cars"
+  "cars": "Cars",
+  "add_phone_number": "Add phone number",
+  "write_reason": "Write reason",
+  "report_user": "Report User"
 }

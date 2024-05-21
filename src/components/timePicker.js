@@ -13,7 +13,7 @@ registerTranslation('en', {
     minute: 'Minute',
     hour: 'Hour'
 })
-const TimePicker = ({ setValue, navigation }) => {
+const TimePicker = ({ setValue, navigation, Backnavigation}) => {
     const { t } = useTranslation();
     const [time, setTime] = React.useState('11:00');
     const [visibleTime, setVisibleTime] = React.useState(false)
@@ -41,6 +41,13 @@ const TimePicker = ({ setValue, navigation }) => {
 
     return (
         <ContainerMid>
+            <IconButton
+                style={{position:'absolute', top:60, left:0, zIndex:3}}
+                icon="arrow-left"
+                iconColor='#7a7a7a'
+                size={32}
+                onPress={Backnavigation}
+            />
            <Title>{t('at_what_time_will_you_pick_passengers_up')}</Title>
             <View style={{width:'100%', alignItems:'center'}}>
             <TimeBtn

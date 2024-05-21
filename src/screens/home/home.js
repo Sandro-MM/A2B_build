@@ -12,19 +12,29 @@ import {ListFilter} from "../../components/listFilter";
 import {useTranslation} from "react-i18next";
 import BG from '../../../assets/img/home-search/bg.png'
 import {ImageBackground} from "react-native";
+import {format} from "date-fns";
 
 
 
 export default function HomeScreen({navigation}) {
+
+
+    const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return format(date, 'dd.MM.yy');
+    };
     const { t } = useTranslation();
     const Stack = createStackNavigator();
     const { control, handleSubmit, watch,setValue} = useForm();
-    const startDay = control._formValues.startDay?.slice(2);
-    const endDay = control._formValues.endDay?.slice(2);
+    const startDay = control._formValues.startDay;
+    const endDay = control._formValues.endDay;
+
     const leaving =  control._formValues.departure || null
     const going =  control._formValues.destination || null
-    const startDateFormatted = startDay ? startDay : "today";
-    const endDateFormatted = endDay ? `/${endDay}` : "";
+    const startDateFormatted = startDay ? formatDate(startDay) : "today";
+    const endDateFormatted = endDay ? `/${formatDate(endDay)}` : "";
+
+
 
 
     return (
@@ -32,7 +42,6 @@ export default function HomeScreen({navigation}) {
             <Stack.Screen name="Home" options={{ headerShown: false }}>
                 {({ navigation }) => (
                 <ContainerMid style={{paddingTop:90}}>
-                    {/*<Title>{t('your_pick_of_rides_at_low_prices')}</Title>*/}
                     <HomeBg
                         style={{marginTop:6}}
                         source={BG}

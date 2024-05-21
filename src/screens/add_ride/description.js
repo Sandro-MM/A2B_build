@@ -1,7 +1,7 @@
 import React from 'react';
 import {Controller} from 'react-hook-form';
 import {IconButton} from "react-native-paper";
-import {ContainerMid, TitleDesc} from "../../styles/styles";
+import {ContainerMid, ContainerTop, TitleDesc} from "../../styles/styles";
 import A2btextarea from "../../components/a2btextarea";
 import A2BNextIcon from "../../components/next_icon";
 import {useTranslation} from "react-i18next";
@@ -10,9 +10,9 @@ const Description = ({name,control, navigation, handleSubmit}) => {
     const { t } = useTranslation();
 
     return (
-        <ContainerMid style={{paddingTop:25}}>
+        <ContainerTop style={{paddingTop:70}}>
             <IconButton
-                style={{position:'absolute', top:60, left:0, zIndex:3}}
+                style={{position:'absolute', top:30, left:0, zIndex:3}}
                 icon="arrow-left"
                 iconColor='#7a7a7a'
                 size={32}
@@ -33,7 +33,7 @@ const Description = ({name,control, navigation, handleSubmit}) => {
                 defaultValue=' '
             />
             <A2BNextIcon onPress={handleSubmit}/>
-        </ContainerMid>
+        </ContainerTop>
     );
 };
 

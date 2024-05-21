@@ -18,7 +18,7 @@ const Description = ({setValue, navigation, onSubmit, isLoading}) => {
 
                 <ContainerMid>
             <IconButton
-                style={{position:'absolute', top:60, left:0, zIndex:3}}
+                style={{position:'absolute', top:70, left:0, zIndex:3}}
                 icon="arrow-left"
                 iconColor='#7a7a7a'
                 size={32}

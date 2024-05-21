@@ -52,6 +52,8 @@ import {useEffect, useState} from "react";
 import * as SecureStore from "expo-secure-store";
 import First_login from "./src/screens/first_login/first_login";
 import CancelReason from "./src/screens/home/cancel_reason";
+import ReportReason from "./src/screens/Profile/report_reason";
+import CarGallery from "./src/screens/Profile/carGallery";
 
 
 
@@ -141,6 +143,8 @@ export default function App() {
                     <Stack.Screen name="RidePriceEdit"  options={{ headerShown: false , animationEnabled: false}} component={RidePriceEdit} />
                     <Stack.Screen name="Confirm_Price_change"  options={{ headerShown: false , animationEnabled: false}} component={Confirm_Price_change} />
                     <Stack.Screen name="CancelReason"  options={{ headerShown: false , animationEnabled: false}} component={CancelReason} />
+                    <Stack.Screen name="ReportReason"  options={{ headerShown: false , animationEnabled: false}} component={ReportReason} />
+                    <Stack.Screen name="CarGallery"  options={{ headerShown: false , animationEnabled: false}} component={CarGallery} />
                 </Stack.Navigator>
             }
             </NavigationContainer>

@@ -7,7 +7,7 @@ import {
     GetApi,
     headers,
     headersTextToken,
-    PostApi,
+    PostApi, PutApi,
 } from "../../services/api";
 import {createStackNavigator} from '@react-navigation/stack';
 import {
@@ -26,18 +26,20 @@ import * as SecureStore from "expo-secure-store";
 
 
 const Stack = createStackNavigator();
-export default function AddVehicle({ route, navigation }) {
+export default function AddVehicle({ route, navigation,  }) {
     const { t } = useTranslation();
 
     const { mode } = route.params || {};
+    const { item } = route.params || {};
    console.log(mode)
+    console.log(item,'datadatadata')
 
     console.log('navigation',navigation, 'navigation')
     const { control,handleSubmit ,formState: { errors }  } = useForm();
     const [selectedManufacturer, setSelectedManufacturer] = useState('');
     const [modelsData, setModelData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState([item.CarPictureUrls[0].Name] || []);
 
     const [selectedModel, setSelectedModel] = useState('');
     const [selectedType, setSelectedType] = useState('');
@@ -94,25 +96,29 @@ export default function AddVehicle({ route, navigation }) {
     async function onSubmit(data) {
         try {
             const ProfileFile = images[0];
-            const formData = new FormData();
             const newImages = images.slice(1);
             Keyboard.dismiss();
             setLoading(true);
-            formData.append('ManufacturerId', selectedManufacturer);
-            formData.append('ModelId', selectedModel);
-            formData.append('ColorId', selectedColor);
-            formData.append('CarTypeId', selectedType);
-            formData.append('PlateNumber', data.PlateNumber);
-            formData.append('FuelTypeId', selectedFuel);
-            formData.append('ReleaseDate', data.Year);
-            formData.append('ProfileFile', { uri: ProfileFile, type: 'image/jpeg', name: 'image.jpg' });
-            newImages.forEach((image, index) => {
-                formData.append('Files', { uri: image, type: 'image/jpeg', name: `image_${index}.jpg` });
-            });
+
 
             const accessToken = await getAccessToken();
 
             if (mode === 'addVehicle') {
+
+                const formData = new FormData();
+
+                formData.append('ManufacturerId', selectedManufacturer);
+                formData.append('ModelId', selectedModel);
+                formData.append('ColorId', selectedColor);
+                formData.append('CarTypeId', selectedType);
+                formData.append('PlateNumber', data.PlateNumber);
+                formData.append('FuelTypeId', selectedFuel);
+                formData.append('ReleaseDate', data.Year);
+                formData.append('ProfileFile', { uri: ProfileFile, type: 'image/jpeg', name: 'image.jpg' });
+                newImages.forEach((image, index) => {
+                    formData.append('Files', { uri: image, type: 'image/jpeg', name: `image_${index}.jpg` });
+                });
+
                 const responseData = await PostApi(CarEndpoints.post.Car, formData, {
                     headers: {
                         ...headers.headers,
@@ -120,7 +126,42 @@ export default function AddVehicle({ route, navigation }) {
                     },
                 });
             } else if (mode === 'editVehicle') {
-                // Handle edit mode if needed
+
+                const dataItem = {
+                    Id: item.Id,
+                    CarTypeId: selectedType,
+                    ColorId: selectedColor,
+                    Description: null,
+                    FuelTypeId: selectedFuel,
+                    ManufacturerId: selectedManufacturer,
+                    ModelId: selectedModel,
+                    PlateNumber: data.PlateNumber,
+                    ReleaseDate: data.Year
+                }
+
+
+                const filesFormData = new FormData();
+                filesFormData.append('CarId', item.Id);
+                images.forEach((image, index) => {
+                    filesFormData.append('Files', { uri: image, type: 'image/jpeg', name: `image_${index}.jpg` });
+                });
+
+                console.log(filesFormData,'filesFormDatafilesFormData')
+
+
+                const responseData = await PutApi(`${CarEndpoints.put.Car}/${item.Id}`, dataItem, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
+                const addFileData = await PostApi(`${CarEndpoints.post.AddPicture}`, filesFormData, {
+                    headers: {
+                        ...headers.headers,
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
             }
         } catch (error) {
             console.error('Error submitting data:', error);
@@ -169,13 +210,16 @@ export default function AddVehicle({ route, navigation }) {
                                 size={28}
                                 onPress={() => navigation.goBack()}
                             />
-                            <TitleLeft>{t('whats_your_licence_plate_number')}</TitleLeft>
+
+                            <TitleLeft style={{position:'absolute', top:120,}}>{t('whats_your_licence_plate_number')}</TitleLeft>
                             <Controller
                                 control={control}
                                 render={({ field }) => (
                                     <React.Fragment>
                                         <A2bInput
-                                            placeholder="XX-000-XX"
+                                            style={{position:'absolute', top:220,}}
+                                            autoFocus={true}
+                                            placeholder="XX123XX"
                                             value={field.value}
                                             onChangeText={(value) => field.onChange(value)}
                                             variant ='default'
@@ -186,8 +230,9 @@ export default function AddVehicle({ route, navigation }) {
                                     </React.Fragment>
                                 )}
                                 name="PlateNumber"
-                                defaultValue=""
+                                defaultValue={item.PlateNumber || ''}
                             />
+
                         </ContainerMid>
                         )}
                     </>
@@ -319,12 +364,14 @@ export default function AddVehicle({ route, navigation }) {
                                     size={32}
                                     onPress={() => navigation.navigate('Image')}
                                 />
-                                <TitleLeft>{t('when_was_your_vehicle_registered')}</TitleLeft>
+                                <TitleLeft style={{position:'absolute', top:120,}}>{t('when_was_your_vehicle_registered')}</TitleLeft>
                                 <Controller
                                     control={control}
                                     render={({ field }) => (
                                         <React.Fragment>
                                             <A2bInput
+                                                autoFocus={true}
+                                                style={{position:'absolute', top:220,}}
                                                 placeholder="2013"
                                                 value={field.value}
                                                 onChangeText={(value) => field.onChange(value)}
@@ -336,7 +383,7 @@ export default function AddVehicle({ route, navigation }) {
                                         </React.Fragment>
                                     )}
                                     name="Year"
-                                    defaultValue=""
+                                    defaultValue={item.ReleaseDate.toString() || ''}
                                 />
                             </ContainerMid>
                         )}

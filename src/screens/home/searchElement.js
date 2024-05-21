@@ -37,7 +37,7 @@ export default function SearchElement({navigation, date , leaving, going, contro
         try {
             const accessToken = await getAccessToken();
             const language = await SecureStore.getItemAsync('userLanguage');
-            const responseData = await GetApi(`${OrderEndpoints.get.orders}?departureLatitude=${v.departureLatitude}&departureLongitude=${v.departureLongitude}&destinationLatitude=${v.destinationLatitude}&destinationLongitude=${v.destinationLongitude}&date=${formattedStart}&date=${formattedEnd}&luggageAllowed=false&musicAllowed=false&petsAllowed=false&smokingAllowed=false&packageDelivery=false&priceFrom=0&priceTo=500&Page=1&Offset=50&`, {
+            const responseData = await GetApi(`${OrderEndpoints.get.orders}?departureLatitude=${v.departureLatitude}&departureLongitude=${v.departureLongitude}&destinationLatitude=${v.destinationLatitude}&destinationLongitude=${v.destinationLongitude}&date=${formattedStart}&date=${formattedEnd}&luggageAllowed=false&musicAllowed=false&petsAllowed=false&smokingAllowed=false&packageDelivery=false&priceFrom=0&priceTo=30&Page=1&Offset=50&`, {
                 headers: {
                      'Accept-Language': language,
                     Authorization: `Bearer ${accessToken || null}`,

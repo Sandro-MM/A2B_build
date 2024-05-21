@@ -14,16 +14,16 @@ import * as SecureStore from "expo-secure-store";
 export const ListFilter = ({navigation, control, setValue}) => {
     const { t } = useTranslation();
 
-    const [checked0_6, setChecked0_6] = React.useState(false);
-    const [checked6_12, setChecked6_12] = React.useState(false);
-    const [checked12_18, setChecked12_18] = React.useState(false);
-    const [checked18_0, setChecked18_0] = React.useState(false);
-    const [pets, setPets] = React.useState(false);
-    const [smoke, setSmoke] = React.useState(false);
-    const [music, setMusic] = React.useState(false);
-    const [luggage, setLuggage] = React.useState(false);
-    const [packageItem, setPackageItem] = React.useState(false);
-    const [sliderVal, setSliderVal] = React.useState([0, 30]);
+    const [checked0_6, setChecked0_6] = React.useState(control._formValues.results.DepartureFilterTimeStateResponse.Night);
+    const [checked6_12, setChecked6_12] = React.useState(control._formValues.results.DepartureFilterTimeStateResponse.Morning);
+    const [checked12_18, setChecked12_18] = React.useState(control._formValues.results.DepartureFilterTimeStateResponse.Afternoon);
+    const [checked18_0, setChecked18_0] = React.useState(control._formValues.results.DepartureFilterTimeStateResponse.Evening);
+    const [pets, setPets] = React.useState(control._formValues.results.FilterStateResponseModel?.PetsAllowed);
+    const [smoke, setSmoke] = React.useState(control._formValues.results.FilterStateResponseModel?.SmokingAllowed);
+    const [music, setMusic] = React.useState(control._formValues.results.FilterStateResponseModel?.MusicAllowed);
+    const [luggage, setLuggage] = React.useState(control._formValues.results.FilterStateResponseModel?.LuggageAllowed);
+    const [packageItem, setPackageItem] = React.useState(control._formValues.results.FilterStateResponseModel?.PackageDelivery);
+    const [sliderVal, setSliderVal] = React.useState([control._formValues.results.FilterStateResponseModel?.PriceFrom, control._formValues.results.FilterStateResponseModel?.PriceTo]);
 
 
     async function onSubmit() {

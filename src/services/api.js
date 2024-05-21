@@ -68,7 +68,8 @@ export const accEndpoints = {
         AddPhone:'/account/add-phone-number',
         VerifyPhone:'/account/verify-phone-number',
         CheckEmailForPassReset:'/account/is-user-email',
-        VerifyEmailPassReset:'/account/verify-email'
+        VerifyEmailPassReset:'/account/verify-email',
+        Report:'/reports/report-user'
 
     },
     put:{
@@ -101,6 +102,7 @@ export const CarEndpoints = {
     },
     post:{
         Car: '/car',
+        AddPicture:'/file/add-car-files'
     },
     put:{
         Car: `/car/`

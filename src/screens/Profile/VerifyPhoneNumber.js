@@ -4,7 +4,7 @@ import {Controller, useForm,} from 'react-hook-form';
 
 import {
     Agreement,
-    ContainerMid,
+    ContainerTop,
     ErrorText,
     ErrorView,
     LinkLogin,
@@ -21,7 +21,7 @@ import {
     PatchApi,
     PostApi
 } from "../../services/api";
-import {Keyboard} from "react-native";
+import {Keyboard, Text, View} from "react-native";
 import Loading from "../../components/loading";
 import {useTranslation} from "react-i18next";
 
@@ -32,6 +32,38 @@ const VerifyPhoneNumber = (props) => {
     const [error, setError] = useState(null);
     const phoneNumber = props.route.params.phoneNumber;
     const nav = props.route.params.nav;
+
+    const [seconds, setSeconds] = useState(60);
+    const [isRunning, setIsRunning] = useState(false);
+
+
+    useEffect(() => {
+        let interval;
+        if (isRunning) {
+            interval = setInterval(() => {
+                setSeconds(prevSeconds => {
+                    if (prevSeconds === 0) {
+                        clearInterval(interval);
+                        // Handle countdown completion here
+                        setIsRunning(false); // Optionally stop the timer here
+                    } else {
+                        return prevSeconds - 1;
+                    }
+                });
+            }, 1000);
+        }
+
+        return () => clearInterval(interval);
+    }, [isRunning]);
+
+    const startCountdown = () => {
+        setSeconds(60);
+        setIsRunning(true);
+    };
+
+
+
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -45,7 +77,7 @@ const VerifyPhoneNumber = (props) => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-
+            startCountdown()
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -81,7 +113,7 @@ const VerifyPhoneNumber = (props) => {
 <>
         {loading && <Loading />}
     {!loading && (
-        <ContainerMid>
+        <ContainerTop style={{paddingTop:90}}>
             <IconButton
                 rippleColor='gray'
                 style={{ position: 'absolute', top: 38, left: 0, zIndex: 3 }}
@@ -91,7 +123,7 @@ const VerifyPhoneNumber = (props) => {
                 onPress={() => props.navigation.goBack()}
             />
             <TitleLeft>{t('verify_your_phone_number')}</TitleLeft>
-            <Agreement>{t('we_send_code_to')}{phoneNumber}</Agreement>
+            <Agreement>{t('we_send_code_to')} {phoneNumber}</Agreement>
             <Controller
                 control={control}
                 render={({ field }) => (
@@ -105,11 +137,15 @@ const VerifyPhoneNumber = (props) => {
                 name='confirmationCode'
                 defaultValue=''
             />
-            <LinkLogin  onPress={()=>fetchData()}>{t('resend_code')}</LinkLogin>
+            <View style={{flexDirection:'row', alignItems:'flex-start', width:'80%'}}>
+                <LinkLogin style={{width:'max-content'}}  disabled={isRunning} onPress={()=>fetchData()}>{t('resend_code')}</LinkLogin>
+                <Text>  {seconds}</Text>
+            </View>
+
             <SmallRedBtn buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit(onSubmit)}>
-                <SmallBtnText>{t('save')}</SmallBtnText>
+                <SmallBtnText>{t('verify')}</SmallBtnText>
             </SmallRedBtn>
-        </ContainerMid>
+        </ContainerTop>
     )}
     {error && <ErrorView>
         <ErrorText>{error}</ErrorText>

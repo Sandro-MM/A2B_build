@@ -75,7 +75,7 @@ export const Link = styled.Text`
 export const Agreement = styled.Text`
   font-size: 14px;
   font-weight: 500;
-  padding: 30px 40px;
+  padding: 0 40px 30px;
   text-align: left;
 `;
 export const ContainerMid = styled.View`
@@ -514,12 +514,12 @@ export const SearchBtnText  = styled.Text`
 `;
 export const SurfaceListItem  = styled.View`
   height: 260px;
-  margin: 16px 4.5% 0;
+
   background-color: transparent ;
   justify-content: center;
   color: #1B1B1B;
   font-size: 22px;
-  width: 91%;
+  width: 100%;
 `;
 
 export const ListPlaces  = styled.Text`

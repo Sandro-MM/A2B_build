@@ -110,14 +110,17 @@ export default function Vehicles(props) {
                                     icon="pencil"
                                     iconColor='#7a7a7a'
                                     size={22}
-                                    onPress={()=>props.navigation.navigate('AddVehicle',{mode:'editVehicle',data:item,  navigation:navigation})}
+                                    onPress={()=>props.navigation.navigate('AddVehicle',{mode:'editVehicle', item:item,  navigation:navigation})}
                                 />
-                                <IconButton
-                                    icon="trash-can-outline"
-                                    iconColor='#FF5A5F'
-                                    size={22}
-                                    onPress={deleteButtonPress}
-                                />
+                                { item.IsCarRelateToOrders === false &&
+                                    <IconButton
+                                        icon="trash-can-outline"
+                                        iconColor='#FF5A5F'
+                                        size={22}
+                                        onPress={deleteButtonPress}
+                                    />
+                                }
+
                                 <DeleteConfirmationModal
                                     isVisible={isModalVisible}
                                     onCancel={hideModal}
