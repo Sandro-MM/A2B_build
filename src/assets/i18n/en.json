@@ -204,5 +204,8 @@
   "cars": "Cars",
   "add_phone_number": "Add phone number",
   "write_reason": "Write reason",
-  "report_user": "Report User"
+  "report_user": "Report User",
+  "report": "Report",
+  "write_review": "Write Review",
+  "send": "send"
 }

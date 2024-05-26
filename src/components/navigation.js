@@ -20,7 +20,7 @@ export default function Navigation({ navigation, activeButton }) {
         { icon: SEARCH , route: 'HomeScreen', label: 'search' },
         { icon: PLUS, route: 'AddRideCheck', label: 'publish' },
         { icon: CAR, route: 'RideHistory', label: 'your_rides' },
-        { icon: CHAT, route: 'Notifications', label: 'inbox' },
+        { icon: CHAT, route: 'NotificationsScreen', label: 'inbox' },
         { icon: PROFILE, route: 'Profile', label: 'profile', params: { IsUserOrder: 1, navigation: navigation } }
     ];
 

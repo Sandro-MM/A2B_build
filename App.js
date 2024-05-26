@@ -18,12 +18,11 @@ import VerifyPhoneNumber from "./src/screens/Profile/VerifyPhoneNumber";
 import AddRide from "./src/screens/add_ride/add_ride";
 import {enableLatestRenderer} from 'react-native-maps';
 import AddRideCheck from "./src/screens/add_ride/addRideCheck";
-import Notifications from "./src/screens/notifications/notifications";
 import RideHistory from "./src/screens/rideHistory/rideHistory";
 import Order from "./src/screens/home/order";
 import MapPointViewScreen from "./src/components/mapPointView";
 import {ListFilter} from "./src/components/listFilter";
-import {StatusBar} from "react-native";
+import {Platform, StatusBar} from "react-native";
 import {RideAddedSucsess} from "./src/screens/add_ride/rideAddedSucsess";
 import {Passengers} from "./src/screens/rideHistory/passengers";
 import SettingsPage from "./src/screens/Profile/settings";
@@ -54,6 +53,11 @@ import First_login from "./src/screens/first_login/first_login";
 import CancelReason from "./src/screens/home/cancel_reason";
 import ReportReason from "./src/screens/Profile/report_reason";
 import CarGallery from "./src/screens/Profile/carGallery";
+import WriteReview from "./src/screens/Profile/write_review";
+import NotificationsScreen from "./src/screens/notifications/notifications";
+import {startConnection} from "./src/services/signalRClient";
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 
 
 
@@ -62,6 +66,57 @@ export default function App() {
     const Stack = createStackNavigator();
 
         const [showWelcome, setShowWelcome] = useState(0);
+
+
+
+    const [notification, setNotification] = useState(null);
+
+    useEffect(() => {
+        registerForPushNotificationsAsync();
+        setupNotificationChannels();
+        startConnection();
+
+        const subscription = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        });
+
+        return () => subscription.remove();
+    }, []);
+
+    async function registerForPushNotificationsAsync() {
+        let status = (await Notifications.getPermissionsAsync()).status;
+        if (status !== 'granted') {
+            const { status: newStatus } = await Notifications.requestPermissionsAsync();
+            status = newStatus;
+        }
+        if (status !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+        }
+    }
+
+    async function setupNotificationChannels() {
+        if (Platform.OS === 'android') {
+            await Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+    }
+
+    Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: true,
+            shouldSetBadge: false,
+        }),
+    });
+
+
+
+
 
         useEffect(() => {
             SecureStore.getItemAsync('welcomeShown')
@@ -115,7 +170,7 @@ export default function App() {
                     <Stack.Screen name="SettingInput"  options={{ headerShown: false }} component={SettingInput} />
                     <Stack.Screen name="VerifyPhoneNumber"  options={{ headerShown: false }} component={VerifyPhoneNumber} />
                     <Stack.Screen name="AddRide"  options={{ headerShown: false }} component={AddRide} />
-                    <Stack.Screen name="Notifications"  options={{ headerShown: false , animationEnabled: false }} component={Notifications} />
+                    <Stack.Screen name="NotificationsScreen"  options={{ headerShown: false , animationEnabled: false }} component={NotificationsScreen} />
                     <Stack.Screen name="RideHistory"  options={{ headerShown: false , animationEnabled: false }} component={RideHistory} />
                     <Stack.Screen name="Order"  options={{ headerShown: false , animationEnabled: false }} component={Order} />
                     <Stack.Screen name="MapPointViewScreen"  options={{ headerShown: false , animationEnabled: false }} component={MapPointViewScreen} />
@@ -145,6 +200,7 @@ export default function App() {
                     <Stack.Screen name="CancelReason"  options={{ headerShown: false , animationEnabled: false}} component={CancelReason} />
                     <Stack.Screen name="ReportReason"  options={{ headerShown: false , animationEnabled: false}} component={ReportReason} />
                     <Stack.Screen name="CarGallery"  options={{ headerShown: false , animationEnabled: false}} component={CarGallery} />
+                    <Stack.Screen name="WriteReview"  options={{ headerShown: false , animationEnabled: false}} component={WriteReview} />
                 </Stack.Navigator>
             }
             </NavigationContainer>

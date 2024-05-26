@@ -37,24 +37,24 @@ export default function Register_login(props) {
                 />
             </SimpleBtn>
             <Divider horizontalInset={true} bold={true}  />
-            <SimpleBtn contentStyle={{ height: 55, justifyContent: 'flex-start'}}  rippleColor='gray' mode="text" onPress={() => console.log('Fb')}>
-                <Icon
-                    source="email-outline"
-                    color='#F9FAFB'
-                    size={28}
-                />
-                <Icon
-                    source="facebook"
-                    color='#1B1B1B'
-                    size={24}
-                />
-                <BtnText>{t('c_with_fb')}</BtnText>
-                <Icon
-                    source="chevron-right"
-                    color='#1B1B1B'
-                    size={24}
-                />
-            </SimpleBtn>
+            {/*<SimpleBtn contentStyle={{ height: 55, justifyContent: 'flex-start'}}  rippleColor='gray' mode="text" onPress={() => console.log('Fb')}>*/}
+            {/*    <Icon*/}
+            {/*        source="email-outline"*/}
+            {/*        color='#F9FAFB'*/}
+            {/*        size={28}*/}
+            {/*    />*/}
+            {/*    <Icon*/}
+            {/*        source="facebook"*/}
+            {/*        color='#1B1B1B'*/}
+            {/*        size={24}*/}
+            {/*    />*/}
+            {/*    <BtnText>{t('c_with_fb')}</BtnText>*/}
+            {/*    <Icon*/}
+            {/*        source="chevron-right"*/}
+            {/*        color='#1B1B1B'*/}
+            {/*        size={24}*/}
+            {/*    />*/}
+            {/*</SimpleBtn>*/}
             <Subtitle>{t(screenMode === 'Register' ? 'alr_member' : 'n_member_yet')}</Subtitle>
             <SubtitleLink  onPress={() => handleSwitchMode()}>{t(screenMode === 'Register' ? 'login' : 'register')}</SubtitleLink>
             <View>{screenMode === 'Register' ?

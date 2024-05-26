@@ -26,7 +26,6 @@ import CAR from "../../../assets/img/profile_car.png";
 import SETTING from "../../../assets/img/settings.png";
 import PERSON from "../../../assets/img/profile_person.png";
 import STAR from "../../../assets/img/star.png";
-import PROFILE_TKT from "../../../assets/img/orderImg2.png";
 import ABOUT_ME from "../../../assets/img/about.png";
 import INFO from "../../../assets/img/info.png";
 import VERIFY from "../../../assets/img/Verifiedtick.png";
@@ -38,6 +37,8 @@ import {useNavigation, useRoute} from "@react-navigation/native";
 import {debounce} from "lodash";
 import TicketIMage from "../../../assets/img/tickett.png";
 import ARROW from "../../../assets/img/warning-2.png";
+import CHAT from "../../../assets/img/ChatsTeardrop.png";
+import WriteReview from "./write_review";
 
 export default function Profile() {
     const { t } = useTranslation();
@@ -52,9 +53,15 @@ export default function Profile() {
     const route = useRoute();
     const profileType = route.params.IsUserOrder === 1;
     const userName = route.params?.userName;
+    const orderId = route.params?.orderId || null;
+    const orderStatus = route.params?.orderStatus || null;
+
+
+
 
     const [responseData, setResponseData] = useState(null);
-    const [imageViewVisible, setImageViewVisible] = useState(null);
+    const [phoneNumber, setPhoneNumber] = useState(null);
+    const [canWriteReview, setCanWriteReview] = useState(false);
 
 
     const [selectedTab, setSelectedTab] = useState('about_me');
@@ -106,7 +113,7 @@ export default function Profile() {
 
 
                         <Text style={{color: '#667085', fontSize:16, fontFamily:'Inter_600SemiBold'}}>
-                            {responseData?.PhoneNumber || t('no_phone_number')}
+                            {phoneNumber || responseData?.PhoneNumber || t('no_phone_number')}
                         </Text>
                         {
                             (profileType && responseData?.PhoneNumber && responseData.IsPhoneNumberVerified === false) && <SmallRedBtn style={{marginTop:-3, marginLeft:-8}} mode="text" onPress={handlePressPhoneNumber}>
@@ -114,7 +121,7 @@ export default function Profile() {
                             </SmallRedBtn>
                         }
                         {
-                            (!profileType && responseData?.PhoneNumber) && <SmallRedBtn   style={{marginTop:-3, marginLeft:-8}} mode="text" onPress={()=>console.log(1)}>
+                            (!profileType && responseData?.PhoneNumber && !phoneNumber) && <SmallRedBtn   style={{marginTop:-3, marginLeft:-8}} mode="text" onPress={()=> getPhoneNumber()}>
                                 <Text style={{color:'#FF5A5F', fontSize:16, fontFamily:'Inter_400Regular'}}>{t('reveal_number')}</Text>
                             </SmallRedBtn>
                         }
@@ -234,6 +241,25 @@ export default function Profile() {
     };
 
 
+    const getPhoneNumber = async () => {
+        try {
+            let phoneNumber;
+            const accessToken = await getAccessToken();
+            phoneNumber = await GetApi(`${accEndpoints.get.ComProfPhoneNum}?userId=${responseData.Id}`, {
+                headers: {
+                    ...headersTextToken.headers,
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            setPhoneNumber(phoneNumber.PhoneNumber)
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+
+
     useEffect(() => {
         const handleAppStateChange = (nextAppState) => {
             if (nextAppState === 'active' && navigation.isFocused()) {
@@ -266,12 +292,27 @@ export default function Profile() {
                     },
                 });
             } else {
+
                 responseData = await GetApi(`${accEndpoints.get.CommonProfile}?userName=${userName}&`, {
                     headers: {
                         'Accept-Language': language,
                         ...headersTextToken.headers,
                     },
                 });
+
+
+                if (orderStatus === 2 || orderStatus === 3){
+                    const accessToken = await getAccessToken();
+                    let carReview = await GetApi(`${accEndpoints.get.CheckForReviews}?userid=${responseData.Id}&orderId=${orderId}`, {
+                        headers: {
+                            'Accept-Language': language,
+                            ...headersTextToken.headers,
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+                    setCanWriteReview(carReview)
+                }
+
             }
             setResponseData(responseData);
             console.log(responseData?.UserDetail?.UserContacts); // Conditional chaining for safer access
@@ -370,14 +411,36 @@ export default function Profile() {
                         </IconView>
                     </View>
 
-                    <View style={{width:'94%', backgroundColor:'#D0D5DD', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:16, marginTop:24}}>
-                        <Image source={ARROW} style={{position:'absolute', zIndex:3, width:20, height:20, left:95, top:16 }}/>
-                        <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor:'#F2F4F7', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
-                                   // onPress={onSubmit}
-                        >
-                            <SearchBtnText style={{fontFamily:'Inter_600SemiBold', color:'#344054'}}>    {t('report_user')}</SearchBtnText>
-                        </SearchBtn>
-                    </View>
+
+
+                    {
+                        !profileType &&
+
+                        <View style={{width:'94%', backgroundColor:'#EB2931', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:16, marginTop:24}}>
+                            <IconButton size={22} iconColor={'#FFFFFF'} style={{position:'absolute', zIndex:3, width:22, height:22, left:95, top:10 }} icon={ARROW}/>
+                            <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor: '#FF5A5F', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#ff373c' mode="text"
+                                       onPress={()=> navigation.navigate('ReportReason',{itemId:responseData.Id, navigation:navigation})}
+                            >
+                                <SearchBtnText style={{fontFamily:'Inter_600SemiBold', color:'#FFFFFF'}}>    {t('report_user')}</SearchBtnText>
+                            </SearchBtn>
+                        </View>
+
+                    }
+
+                    {
+                        canWriteReview &&
+
+                        <View style={{width:'94%', backgroundColor:'#D0D5DD', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16, height:49, marginHorizontal:16, marginTop:24}}>
+                            <IconButton size={22} iconColor={'#344054'} style={{position:'absolute', zIndex:3, width:26, height:24, left:95, top:7 }} icon={CHAT}/>
+                            <SearchBtn contentStyle={{ height: 48, width:'100%' , justifyContent: 'center'}} style={{ backgroundColor: '#F2F4F7', borderBottomLeftRadius:16, borderBottomRightRadius:16, borderTopLeftRadius:16, borderTopRightRadius:16}} rippleColor='#D0D5DD' mode="text"
+                                       onPress={()=> navigation.navigate('WriteReview',{itemId:responseData.Id, navigation:navigation, orderId:orderId})}
+                            >
+                                <SearchBtnText style={{fontFamily:'Inter_600SemiBold', color:'#344054'}}>    {t('write_review')}</SearchBtnText>
+                            </SearchBtn>
+                        </View>
+
+                    }
+
 
 
 

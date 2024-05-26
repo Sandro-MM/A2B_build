@@ -52,7 +52,8 @@ export const accEndpoints = {
         ChangeLang:'/account/change-language/?language=',
         ActiveRidesNumber:'/account/ride-number',
         IsUserVerified:'/account/user-verification',
-        NotificationStatus:'/usersettings/notification'
+        NotificationStatus:'/usersettings/notification',
+        CheckForReviews:'/userrating/check-reviews'
     },
     post:{
         Register: '/account/register',
@@ -69,7 +70,8 @@ export const accEndpoints = {
         VerifyPhone:'/account/verify-phone-number',
         CheckEmailForPassReset:'/account/is-user-email',
         VerifyEmailPassReset:'/account/verify-email',
-        Report:'/reports/report-user'
+        Report:'/reports/report-user',
+        Review:'/userrating/create-rating'
 
     },
     put:{
@@ -139,6 +141,9 @@ export const OrderEndpoints = {
     }
 };
 
+ export const NotificationEndpoints ={
+     Get:"/notification/notifications"
+ }
 
 export async function PostApi(urlRoute, data, optParam) {
     const route = BASE_URL + urlRoute;

@@ -15,9 +15,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        },
+        "UIBackgroundModes": ["fetch", "remote-notification"],
+        "NSUserNotificationUsageDescription": "This app uses notifications to keep you informed about important updates."
+      }
     },
     "android": {
+      "permissions": ["RECEIVE_BOOT_COMPLETED"],
+      "useNextNotificationsApi": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

@@ -4,13 +4,16 @@ import {Controller, useForm} from "react-hook-form";
 import A2btextarea from "../../components/a2btextarea";
 import {useTranslation} from "react-i18next";
 import {accEndpoints, getAccessToken, headers, OrderEndpoints, PostApi} from "../../services/api";
-import {Keyboard} from "react-native";
+import {Keyboard, View} from "react-native";
+import {useState} from "react";
 
 
-export default function ReportReason({route}) {
+export default function WriteReview({route}) {
     const { itemId } = route.params;
-
+    const { orderId } = route.params;
     const {navigation} = route.params;
+    const [rating, setRating] = useState(0);
+
 
     console.log(itemId, 'id');
     const { t } = useTranslation();
@@ -20,16 +23,22 @@ export default function ReportReason({route}) {
 
 
     async function onSubmit(data) {
-        const formData = new FormData();
-        formData.append('ReportedId', itemId);
-        formData.append('Description', data.description);
-        formData.append('Title', 'report');
+        const formData = {
+            StarCount: rating,
+            UserBadgeTypeIds: [
+                0
+            ],
+            Review: data.description,
+            CreatedFor: itemId,
+            OrderId: orderId
+        }
+
         try {
             Keyboard.dismiss()
             const accessToken = await getAccessToken();
-            const responseData = await PostApi(accEndpoints.post.Report, formData, {
+            const responseData = await PostApi(accEndpoints.post.Review, formData, {
                 headers: {
-                    ...headers.headers,
+
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
@@ -41,21 +50,26 @@ export default function ReportReason({route}) {
     }
 
 
+    const handlePress = (value) => {
+        setRating(value);
+        console.log(value)
+    };
+
     return(
         <ContainerTop style={{paddingTopTop:100}}>
             <IconButton
-                style={{position:'absolute', top:60, left:0, zIndex:3}}
+                style={{position:'absolute', top:45, left:0, zIndex:3}}
                 icon="arrow-left"
                 iconColor='#7a7a7a'
                 size={32}
                 onPress={() => navigation.goBack()}
             />
-            <Title>{t('write_reason')}</Title>
+            <Title style={{marginBottom:-40}}>{t('write_review')}</Title>
             <Controller
                 control={control}
                 render={({ field }) => (
                     <A2btextarea
-                        placeholder={`Enter reason`}
+                        placeholder={''}
                         value={field.value}
                         onChangeText={(value) => field.onChange(value)}
                         variant='default'
@@ -64,9 +78,24 @@ export default function ReportReason({route}) {
                 name={'description'}
                 defaultValue={''}
             />
-            <SmallRedBtn style={{position:'absolute', bottom:40}} buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit(onSubmit)}>
-                <SmallBtnText>{t('report')}</SmallBtnText>
+            <View style={{ flexDirection: 'row',
+                justifyContent: 'center', marginTop:-10}}>
+                {[1, 2, 3, 4, 5].map((star) => (
+                    <IconButton
+                        key={star}
+                        icon="star"
+                        iconColor={star <= rating ? '#FDB022' : '#667085'}
+                        size={30}
+                        onPress={() => handlePress(star)}
+                    />
+                ))}
+            </View>
+            <SmallRedBtn style={{position:'absolute', bottom:20}} buttonColor='#FF5A5F' mode='contained' onPress={handleSubmit(onSubmit)}>
+                <SmallBtnText>{t('send')}</SmallBtnText>
             </SmallRedBtn>
         </ContainerTop>
     )
 }
+
+
+

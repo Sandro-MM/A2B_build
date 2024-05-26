@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import * as React from "react";
 import {DelApi, getAccessToken, GetApi, headersTextToken, OrderEndpoints} from "../../services/api";
 import {useEffect, useState} from "react";
@@ -17,6 +17,7 @@ import Navigation from "../../components/navigation";
 import DeleteConfirmationModal from "../../components/modal";
 import {useTranslation} from "react-i18next";
 import * as SecureStore from "expo-secure-store";
+import NODATA from "../../../assets/img/no_rides.png";
 
 export default function RideHistory({navigation}) {
     const { t } = useTranslation();
@@ -166,8 +167,10 @@ export default function RideHistory({navigation}) {
                     const newData = fetchedData;
                     const isLastPage = newData.PageCount === 1;
                     setIsEndOfItems(isLastPage);
+                    console.log(newData,'  console.log(newData)')
                     return newData;
                 }
+
             });
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -325,8 +328,17 @@ export default function RideHistory({navigation}) {
                         </View>
                     </TouchableHighlight>
                 </View>
+                {
+                    responseData?.TotalItemCount === 0 &&
+
+                    <View style={{width:'100%'}}>
+                        <Image resizeMode={'contain'} style={{width:'100%', height:300}} source={NODATA}/>
+                        <Text style={{textAlign:'center', width:'100%', fontSize:22, color:'#0F0D13'}}>{t('no_orders_found')}</Text>
+                    </View>
+
+                }
             <FlatList
-                style={{width:'100%', marginBottom:50}}
+                style={{width:'100%', marginBottom:70}}
                 data={responseData.Data}
                 renderItem={renderItem}
                 ListFooterComponent={() => (
@@ -348,6 +360,8 @@ export default function RideHistory({navigation}) {
             />
             </ContainerTop> : <Loading/>
         }
+
+
             {error && <ErrorView style={{marginBottom:50}}>
                 <ErrorText>{error}</ErrorText>
                 <XIcon

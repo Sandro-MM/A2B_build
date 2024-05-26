@@ -1,7 +1,14 @@
-import {FlatList, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {AppState, FlatList, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import * as React from "react";
-import {DelApi, getAccessToken, GetApi, headersTextToken, OrderEndpoints} from "../../services/api";
-import {useEffect, useState} from "react";
+import {
+    DelApi,
+    getAccessToken,
+    GetApi,
+    headersTextToken,
+    NotificationEndpoints,
+    OrderEndpoints
+} from "../../services/api";
+import {useCallback, useEffect, useState} from "react";
 import {
     BtnTextAuth,
     ContainerTop,
@@ -17,8 +24,9 @@ import Navigation from "../../components/navigation";
 import DeleteConfirmationModal from "../../components/modal";
 import {useTranslation} from "react-i18next";
 import * as SecureStore from "expo-secure-store";
+import {debounce} from "lodash";
 
-export default function Notifications({navigation}) {
+export default function NotificationsScreen({navigation}) {
     const { t } = useTranslation();
     const [responseData, setResponseData] = useState(null);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -85,29 +93,21 @@ export default function Notifications({navigation}) {
         return `${day}/${month}/${year}`;
     };
 
-    // useEffect(() => {
-    //     fetchData(1, 15,1);
-    // }, []);
+    useEffect(() => {
+        fetchData(1, 15,1);
+    }, []);
 
     const renderItem = ({ item, index }) => (
         <TouchableHighlight style={{width:'100%'}} key={`${item.Id}_${index}`}
                             underlayColor="rgba(128, 128, 128, 0.5)"
-                            onPress={()=>navigation.navigate('Order',{item:item.Id, navigation:navigation,  destination:'RideHistory'})}>
+                            onPress={()=>console.log(1)}
+        >
 
             <View style={{justifyContent:'center', alignItems:'center', backgroundColor:'white', borderRadius:15, marginHorizontal:5, marginVertical:8}}>
-                <Text style={{marginHorizontal:15, marginTop:10}}> {getFormattedDate(item.PickUpTime)}</Text>
+                <Text style={{marginHorizontal:15, marginTop:10}}> {item.Text}</Text>
                 <View  style={{width:'100%', flexDirection:'row', height:60, justifyContent:'space-between'}}>
-                    <Text style={{marginHorizontal:15, marginTop:30}}>{item.From || 'no item'}</Text>
-                    <Text style={{marginHorizontal:15, marginTop:30}}>{item.To|| 'no item'}</Text>
+                    <Text style={{marginHorizontal:15, marginTop:30}}>{getFormattedDate(item.CreateDate)}</Text>
                 </View>
-                <Text style={{
-                    marginVertical:8,
-                    paddingHorizontal: 6,
-                    paddingVertical: 2,
-                    borderRadius: 15,
-                    color: getStatusStyles(item.Status.Name).textColor,
-                    backgroundColor: getStatusStyles(item.Status.Name).backgroundColor
-                }}>{item.Status.Name}</Text>
             </View>
         </TouchableHighlight>
 
@@ -136,11 +136,11 @@ export default function Notifications({navigation}) {
     }
 
 
-    const fetchData = async (page, offset, type) => {
+    const fetchData = useCallback(async (page, offset, type) => {
         try {
             const accessToken = await getAccessToken();
             const language = await SecureStore.getItemAsync('userLanguage');
-            const fetchedData = await GetApi(`${OrderEndpoints.get.userOrders}?Page=${page}&Offset=${offset}&sortingField=PickUpTime&sortDirection=1&MyOrderTypes=${type}`, {
+            const fetchedData = await GetApi(`${NotificationEndpoints.Get}?Page=${page}&Offset=${offset}&`, {
                 headers: {
                     'Accept-Language': language,
                     Authorization: `Bearer ${accessToken}`,
@@ -164,7 +164,31 @@ export default function Notifications({navigation}) {
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-    };
+    }, []);
+
+    const debouncedFetchData = useCallback(debounce(fetchData, 1000), [fetchData]);
+
+    useEffect(() => {
+        const handleAppStateChange = (nextAppState) => {
+            if (nextAppState === 'active' && navigation.isFocused()) {
+                debouncedFetchData(1, 15, 1); // Update with appropriate parameters if needed
+            }
+        };
+
+        const focusListener = navigation.addListener('focus', () => debouncedFetchData(1, 15, 1));
+        const appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
+
+        return () => {
+            focusListener();
+            appStateSubscription.remove();
+            debouncedFetchData.cancel();
+        };
+    }, [debouncedFetchData, navigation]);
+
+    useEffect(() => {
+        debouncedFetchData(1, 15, 1);
+    }, [debouncedFetchData]);
+
 
     const deleteOrder = async (id) =>{
         const accessToken = await getAccessToken();
@@ -262,7 +286,7 @@ export default function Notifications({navigation}) {
                     onPress={() => setError(null)}
                 />
             </ErrorView>}
-            <Navigation navigation={navigation} activeButton={'Notifications'}/>
+            <Navigation navigation={navigation} activeButton={'NotificationsScreen'}/>
         </View>
     );
 }

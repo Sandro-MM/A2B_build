@@ -3,7 +3,7 @@ import {ContainerMid, HomeBg, ProfilePic, Title} from "../../styles/styles";
 import * as React from "react";
 import Navigation from "../../components/navigation";
 import SearchElement from "./searchElement";
-import {createStackNavigator} from "@react-navigation/stack";
+import {CardStyleInterpolators, createStackNavigator} from "@react-navigation/stack";
 import CalendarRange from "../../components/calendarRange";
 import {useForm} from "react-hook-form";
 import PlacesSearch from "./placesSearch";
@@ -58,7 +58,10 @@ export default function HomeScreen({navigation}) {
                 </ContainerMid>
                     )}
             </Stack.Screen>
-            <Stack.Screen name="Calendar" options={{ headerShown: false }}>
+            <Stack.Screen name="Calendar"  options={{
+                gestureEnabled: true,
+                cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,  headerShown: false
+            }} >
                 {({ navigation }) => (
                     <CalendarRange navigation={navigation} setValue={setValue} control={control}/>
                 )}

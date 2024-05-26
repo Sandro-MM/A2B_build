@@ -241,7 +241,7 @@ export default function Order({route}) {
                         </View>
                         <TouchableHighlight
                             style={{ marginTop:16}}
-                            onPress={()=>navigation.navigate('Profile',{IsUserOrder: data.UserStatus, userName:data.User.UserName})}
+                            onPress={()=>navigation.navigate('Profile',{IsUserOrder: data.UserStatus, userName:data.User.UserName,  orderId:item, orderStatus:data.StatusId})}
                             underlayColor="rgba(128, 128, 128, 0.5)"
                         >
                             <View style={{flexDirection:'row',  marginLeft:'4%', height:60, alignItems:'center'}}>
@@ -313,7 +313,7 @@ export default function Order({route}) {
                                 { data?.ApprovePassangers?.map( (passenger, index) => (
                                     <TouchableHighlight
                                         key={index}
-                                        onPress={()=>navigation.navigate('Profile',{IsUserOrder: 2, userName:passenger.UserName})}
+                                        onPress={()=>navigation.navigate('Profile',{IsUserOrder: 2, userName:passenger.UserName, orderId:item})}
 
                                         style={{ marginTop:6}}
                                         underlayColor="rgba(128, 128, 128, 0.5)"

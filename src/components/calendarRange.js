@@ -1,61 +1,49 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
     View,
+
 } from 'react-native';
 import { CalendarList } from 'react-native-calendars';
-import { TitleMap } from "../styles/styles";
-import {calculateDate28Day} from "../services/TodayAndThreeMonthRange";
+import {Container, TitleMap} from "../styles/styles";
+import { calculateDate28Day } from "../services/TodayAndThreeMonthRange";
 import A2BNextIcon from "./next_icon";
+import Loading from "./loading";
+
+
 function CalendarRange({ navigation, setValue }) {
-
-    useEffect(() => {
-        calculateDate28Day(setFormattedDate, setMaxDate);
-    }, []);
-
-
     const [formattedDate, setFormattedDate] = useState('');
     const [maxDate, setMaxDate] = useState('');
     const [startDay, setStartDay] = useState('');
     const [endDay, setEndDay] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [calendarVisible, setCalendarVisible] = useState(false);
+
+    useEffect(() => {
+        calculateDate28Day(setFormattedDate, setMaxDate);
+        setTimeout(() => {
+            setLoading(false)
+            setCalendarVisible(true);
+        }, 500); // Simulating a delay, replace with your actual data fetching
+    }, []);
 
     const handleDayPress = (day) => {
         if (!startDay) {
-            console.log(0)
             setStartDay(day.dateString);
             setEndDay('');
         } else if (!endDay) {
-
-            console.log(startDay > day.dateString)
-            if (day.dateString > startDay){
-                console.log(123)
+            if (day.dateString > startDay) {
                 setEndDay(day.dateString);
             } else {
-                setEndDay(startDay)
-                setStartDay(day.dateString)
+                setEndDay(startDay);
+                setStartDay(day.dateString);
             }
-
         } else {
-            console.log(11)
             setStartDay(day.dateString);
             setEndDay('');
         }
     };
-
-    const styles = StyleSheet.create({
-        startEndDays: {
-            color:'blue',
-            backgroundColor:'red'
-        },
-        range: {
-            marginTop: 4,
-            backgroundColor:'#FEE4E2',
-            borderRadius:0,
-            height:26,
-            width:47
-        },
-    })
 
     const getMarked = () => {
         let marked = {};
@@ -68,8 +56,6 @@ function CalendarRange({ navigation, setValue }) {
                     textColor: dateString === startDay ? 'white' : dateString === endDay ? 'white' : 'black',
                     startingDay: dateString === startDay,
                     endingDay: dateString === endDay,
-                    // customContainerStyle: dateString === startDay ?  styles.startEndDays : dateString === endDay ? styles.startEndDays : styles.range,
-                    container: {borderRadius:30}
                 };
             }
         } else if (startDay) {
@@ -84,24 +70,37 @@ function CalendarRange({ navigation, setValue }) {
         return marked;
     };
 
-   const handleSubmit = () =>{
-       setValue('startDay', startDay)
-       setValue('endDay', endDay || null )
-       navigation.goBack()
-   }
+    const handleSubmit = () => {
+        setValue('startDay', startDay);
+        setValue('endDay', endDay || null);
+        navigation.goBack();
+    };
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{zIndex:2, flex:0.5, position:'absolute', backgroundColor: '#F2F3F4', top:0, left:0, width:'100%', paddingLeft:4, paddingTop:0}}>
+            <View style={styles.header}>
                 <TitleMap>Choose date</TitleMap>
             </View>
-            {formattedDate && (
+            {
+                loading &&
+                <Container style={{zIndex:10, position:'absolute', flex:1, width:'100%', height:'100%'}}>
+                    <Loading/>
+                </Container>
+            }
+
                 <CalendarList
-                    theme={{calendarBackground: '#F2F3F4', todayTextColor:'#FF5A5F',  dayTextColor: '#000',
-                        monthTextColor: '#000', selectedDayBackgroundColor: '#FF5A5F', selectedDayTextColor: '#ffffff', day:{
-                        borderRadius:0
-                        }}}
-                    style={{ paddingTop:29}}
+                    theme={{
+                        calendarBackground: '#F2F3F4',
+                        todayTextColor: '#FF5A5F',
+                        dayTextColor: '#000',
+                        monthTextColor: '#000',
+                        selectedDayBackgroundColor: '#FF5A5F',
+                        selectedDayTextColor: '#ffffff',
+                        day: {
+                            borderRadius: 0,
+                        },
+                    }}
+                    style={styles.calendar}
                     pastScrollRange={0}
                     futureScrollRange={1}
                     minDate={formattedDate}
@@ -111,8 +110,7 @@ function CalendarRange({ navigation, setValue }) {
                     markedDates={getMarked()}
                 />
 
-            )}
-            <A2BNextIcon onPress={handleSubmit}/>
+            <A2BNextIcon onPress={handleSubmit} />
         </SafeAreaView>
     );
 }
@@ -121,6 +119,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+    },
+    header: {
+        zIndex: 2,
+        flex: 0.5,
+        position: 'absolute',
+        backgroundColor: '#F2F3F4',
+        top: 0,
+        left: 0,
+        width: '100%',
+        paddingLeft: 4,
+        paddingTop: 0,
+    },
+    calendar: {
+        paddingTop: 29,
     },
 });
 
