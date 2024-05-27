@@ -41,7 +41,6 @@
         "com.sec.android.provider.badge.permission.WRITE",
         "com.sonyericsson.home.permission.BROADCAST_BADGE"
       ],
-      "useNextNotificationsApi": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
